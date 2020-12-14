@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: UI text Shared Data
   m_EditorClassIdentifier: 
   m_TableCollectionName: UI text
-  m_TableCollectionNameGuidString: 00000000000000000000000000000000
-  m_Entries: []
+  m_TableCollectionNameGuidString: 04c2ac2e27127f240b175076f283179c
+  m_Entries:
+  - m_Id: 80295890944
+    m_Key: StartButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
