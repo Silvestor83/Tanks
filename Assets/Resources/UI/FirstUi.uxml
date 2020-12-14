@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Default.uss" />
+    <ui:VisualElement name="screen" style="height: 100%; align-items: center; justify-content: center;">
+        <ui:VisualElement name="plate" class="plate">
+            <ui:Button focusable="True" text="Strt" name="start" class="button" />
+            <ui:Button focusable="True" text="Options" name="options" class="button" />
+            <ui:Button focusable="True" text="Exit" name="exit" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
