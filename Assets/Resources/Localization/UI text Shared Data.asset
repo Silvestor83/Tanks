@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
   m_Name: UI text Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: UI text
+  m_TableCollectionName: UI
   m_TableCollectionNameGuidString: 04c2ac2e27127f240b175076f283179c
   m_Entries:
   - m_Id: 80295890944
