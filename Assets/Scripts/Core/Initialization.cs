@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Core.Settings;
+using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using Assets.Scripts.ScriptableObjects;
 using UnityEngine;
 using Zenject;
@@ -12,25 +14,22 @@ namespace Assets.Scripts.Core
 
         [SerializeField]
         private SettingsSO settingsSo;
+        private SceneManager sceneManager;
 
         private int count;
 
         [Inject]
-        public void Init(MainSettings mainSettings)
+        public void Init(MainSettings mainSettings, SceneManager sceneManager)
         {
             this.mainSettings = mainSettings;
+            this.sceneManager = sceneManager;
         }
 
         // Start is called before the first frame update
-        void Start()
+        private async void Start()
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            sceneManager.InitScenes();
+            await sceneManager.LoadScene(SceneName.GameMenu);
         }
 
         private void OnDrawGizmos()

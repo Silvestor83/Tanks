@@ -1,7 +1,10 @@
-﻿using Assets.Scripts.Infrastructure.Enums;
+﻿using Assets.Scripts.Core.Settings;
+using Assets.Scripts.Infrastructure;
+using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Zenject;
 
@@ -11,8 +14,10 @@ namespace Assets.Scripts.UI
     {
         private VisualElement root;
         private LocalizationService locService;
+        private SceneManager sceneManager;
+        private MainSettings mainSettings;
 
-        public void Start()
+        private void Start()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -31,22 +36,21 @@ namespace Assets.Scripts.UI
             exitButton.clicked += ExitButtonPressed;
         }
 
+        [Inject]
+        public void Init(SceneManager sceneManager, MainSettings mainSettings)
+        {
+            this.sceneManager = sceneManager;
+            this.mainSettings = mainSettings;
+        }
+
         private void StartButtonPressed()
         {
-            SceneManager.LoadSceneAsync("Level 1");
+            sceneManager.LoadScene(SceneName.Level);
         }
 
         private void ExitButtonPressed()
         {
             Application.Quit();
         }
-
-        
-
-        //[Inject]
-        //public void Init(LocalizationService locService)
-        //{
-        //    this.locService = locService;
-        //}
     }
 }

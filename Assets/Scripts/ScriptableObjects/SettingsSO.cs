@@ -19,7 +19,7 @@ namespace Assets.Scripts.ScriptableObjects
         public override void InstallBindings()
         {
             UpdateSettingsFromFiles();
-
+            
             Container.BindInstance(mainSettings);
         }
 
