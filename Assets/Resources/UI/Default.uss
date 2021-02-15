@@ -3,7 +3,7 @@
     width: 100%;
     margin: 5px;
     font-size: 32px;
-    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Electronic Highway Sign.TTF');
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf');
     white-space: normal;
     -unity-text-align: upper-center;
 }

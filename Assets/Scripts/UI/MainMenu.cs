@@ -32,7 +32,7 @@ namespace Assets.Scripts.UI
 
 
             startButton.clicked += StartButtonPressed;
-            optionsButton.clicked += StartButtonPressed;
+            optionsButton.clicked += OptionsButtonPressed;
             exitButton.clicked += ExitButtonPressed;
         }
 
@@ -45,7 +45,12 @@ namespace Assets.Scripts.UI
 
         private void StartButtonPressed()
         {
-            sceneManager.LoadScene(SceneName.Level);
+            _ = sceneManager.LoadScene(SceneName.Level);
+        }
+
+        private void OptionsButtonPressed()
+        {
+            _ = sceneManager.LoadScene(SceneName.Workshop);
         }
 
         private void ExitButtonPressed()

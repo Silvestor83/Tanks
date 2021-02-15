@@ -16,8 +16,6 @@ namespace Assets.Scripts.Core
         private SettingsSO settingsSo;
         private SceneManager sceneManager;
 
-        private int count;
-
         [Inject]
         public void Init(MainSettings mainSettings, SceneManager sceneManager)
         {
@@ -34,8 +32,6 @@ namespace Assets.Scripts.Core
 
         private void OnDrawGizmos()
         {
-            count++;
-
             Gizmos.color = Color.cyan;
             Gizmos.DrawCube(Vector3.zero, Vector3.one * 10f);
 
@@ -44,9 +40,6 @@ namespace Assets.Scripts.Core
 
             Gizmos.color = Color.red;
             Gizmos.DrawCube(new Vector3(0, mainSettings.DistanceForRed), Vector3.one * 10f);
-
-            Debug.Log(count);
-            Debug.Log(count);
         }
 
         private void OnApplicationQuit()

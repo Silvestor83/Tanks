@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="/Assets/Resources/UI/Default.uss" />
+    <ui:VisualElement name="screen" style="height: 100%; align-items: center; justify-content: center;">
+        <ui:VisualElement style="height: 72px; width: 101px; align-items: auto; justify-content: flex-start; left: 0; top: 0; position: absolute; background-image: url(&apos;/Assets/3rdParty/TankConstructor/Images/MapTiles/D.png&apos;);" />
+        <ui:VisualElement name="plate" class="plate">
+            <ui:Button focusable="True" text="Strt" name="start" class="button" />
+            <ui:Button focusable="True" text="Options" name="options" class="button" />
+            <ui:Button focusable="True" text="Exit" name="exit" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

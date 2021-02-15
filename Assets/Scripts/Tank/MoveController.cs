@@ -1,76 +1,151 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using System;
+using Assets.Scripts.Services;
+using Microsoft.Extensions.Logging;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
+using Zenject;
+using ZLogger;
+using Button = UnityEngine.UIElements.Button;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-public class MoveController : MonoBehaviour
+namespace Assets.Scripts.Tank
 {
-    public float MaxSpeed = 2f;
-    public float MinSpeed = -1f;
-
-    public Vector2 currentDirection;
-    public int ForwardAccelerate = 4;
-    public int BackAccelerate = -2;
-
-    private int rotateSpeed = 30;
-
-    public float currentSpeed;
-    private bool isInit;
-
-
-    public Vector3 destination;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MoveController : MonoBehaviour
     {
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * 5, Color.green, 60f);
-        Debug.DrawRay(gameObject.transform.position, new Vector3(2.05f, -1.66f, 0) * 5, Color.green, 60f);
-    }
+        public float MaxSpeed = 4f;
+        public float MinSpeed = -2f;
 
-    void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.W))
+        public int ForwardAccelerate = 8;
+        public int RearAccelerate = -8;
+        public int BrakingAcceleration = 16;
+
+        private int rotateSpeed = 120;
+        private int currentRotationSpeed;
+        private float rotateInputValue;
+        private float moveInputValue;
+
+        public float currentSpeed;
+        private bool isInit;
+        public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
+        
+        private LogService logService;
+
+        [Inject]
+        public void Init(LogService logService)
         {
-            if (currentSpeed <= MaxSpeed)
+            this.logService = logService;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * 5, Color.green, 60f);
+            Debug.DrawRay(gameObject.transform.position, new Vector3(2.05f, -1.66f, 0) * 5, Color.blue, 60f);
+        }
+
+        void FixedUpdate()
+        {
+            var startingSpeed = currentSpeed;
+            var startingRotationSpeed = currentRotationSpeed;
+
+            Rotate();
+            Move();
+            //OtherActions();
+
+            EventsInvocation(startingSpeed, startingRotationSpeed);
+        }
+
+        private void Rotate()
+        {
+            currentRotationSpeed = rotateSpeed;
+
+            if (rotateInputValue > 0)
             {
-                var tempSpeed = ForwardAccelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                currentSpeed = tempSpeed > MaxSpeed ? MaxSpeed : tempSpeed;
+                transform.Rotate(Vector3.forward, -rotateSpeed * Time.fixedUnscaledDeltaTime);
+            }
+            else if (rotateInputValue < 0)
+            {
+                transform.Rotate(Vector3.forward, rotateSpeed * Time.fixedUnscaledDeltaTime);
+            }
+            else
+            {
+                currentRotationSpeed = 0;
             }
         }
 
-        if (Input.GetKey(KeyCode.S))
+        private void Move()
         {
-            if (currentSpeed >= MinSpeed)
+            float accelerate;
+            float tempSpeed;
+
+            if (moveInputValue > 0)
             {
-                var tempSpeed = BackAccelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                currentSpeed = tempSpeed < MinSpeed ? MinSpeed : tempSpeed;
+                if (currentSpeed <= MaxSpeed)
+                {
+                    accelerate = currentSpeed > 0 ? ForwardAccelerate : BrakingAcceleration;
+                    tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
+                    currentSpeed = tempSpeed > MaxSpeed ? MaxSpeed : tempSpeed;
+                }
+            }
+            else if (moveInputValue < 0)
+            {
+                if (currentSpeed >= MinSpeed)
+                {
+                    accelerate = currentSpeed < 0 ? RearAccelerate : -BrakingAcceleration;
+                    tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
+                    currentSpeed = tempSpeed < MinSpeed ? MinSpeed : tempSpeed;
+                }
+            }
+            else
+            {
+                accelerate = currentSpeed > 0 ? -BrakingAcceleration : BrakingAcceleration;
+                tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
+                currentSpeed = (currentSpeed > 0 && tempSpeed > 0) || (currentSpeed < 0 && tempSpeed < 0) ? tempSpeed : 0;
+            }
+
+            transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
+        }
+
+        private void OtherActions()
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                var posX = gameObject.transform.position.x;
+                var posY = gameObject.transform.position.y;
+                var posZ = gameObject.transform.position.z;
+
+                Debug.Log($"X: {posX}, Y: {posY}, Z: {posZ}");
+            }
+
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                logService.Loggger.ZLogTrace("Application quite");
+                Application.Quit();
             }
         }
 
-        if (Input.GetKey(KeyCode.D))
+        private void EventsInvocation(float startingSpeed, float startingRotationSpeed)
         {
-            transform.Rotate(Vector3.forward, -rotateSpeed * Time.fixedUnscaledDeltaTime);
+            if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
+            {
+                StateChanged.Invoke(currentSpeed, currentRotationSpeed);
+            }
         }
 
-        if (Input.GetKey(KeyCode.A))
+        private void OnMove(InputValue value)
         {
-            transform.Rotate(Vector3.forward, rotateSpeed * Time.fixedUnscaledDeltaTime);
+            moveInputValue = value.Get<float>();
         }
 
-
-        if (Input.GetKey(KeyCode.Space))
+        private void OnRotate(InputValue value)
         {
-            var posX = gameObject.transform.position.x;
-            var posY = gameObject.transform.position.y;
-            var posZ = gameObject.transform.position.z;
-
-            Debug.Log($"X: {posX}, Y: {posY}, Z: {posZ}");
+            rotateInputValue = value.Get<float>();
         }
-
-        //var newDirection = currentDirection * 2;
-
-        transform.Translate(currentSpeed * Time.fixedUnscaledDeltaTime * gameObject.transform.up, Space.World);
     }
 }

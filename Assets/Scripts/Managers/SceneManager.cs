@@ -39,7 +39,7 @@ namespace Assets.Scripts.Managers
                 await LoadLoadingScreen();
                 await UnloadScenes(SceneName.LoadingScreen);
 
-                await UniTask.WhenAll(LoadSceneRecursively(scene, false), UniTask.Delay(10000));
+                await UniTask.WhenAll(LoadSceneRecursively(scene, false), UniTask.Delay(3000));
                 await UnloadScenes(scene.Name);
                 ActivateSceneObjectsRecursively(scene);
                 return;
