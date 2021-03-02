@@ -13,7 +13,9 @@ namespace Assets.Scripts.ScriptableObjects
     {
         [SerializeField]
         private MainSettings mainSettings;
-        
+        [SerializeField]
+        private PlayerSettings playerSettings;
+
         public bool rewriteSettingFiles;
         
         public override void InstallBindings()
@@ -21,11 +23,13 @@ namespace Assets.Scripts.ScriptableObjects
             UpdateSettingsFromFiles();
             
             Container.BindInstance(mainSettings);
+            Container.BindInstance(playerSettings);
         }
 
         private void UpdateSettingsFromFiles()
         {
             UpdateSettingsFromFile(ref mainSettings);
+            UpdateSettingsFromFile(ref playerSettings);
         }
 
         private void UpdateSettingsFromFile<T>(ref T settings) where T : class
@@ -42,6 +46,7 @@ namespace Assets.Scripts.ScriptableObjects
         public void UpdateSettingFiles()
         {
             UpdateSettingFile(mainSettings);
+            UpdateSettingFile(playerSettings);
         }
 
         private void UpdateSettingFile<T>(T settings) where T : class

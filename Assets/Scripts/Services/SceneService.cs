@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure;
+﻿using System;
+using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Enums;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -18,15 +19,24 @@ namespace Assets.Scripts.Services
             return SceneManager.UnloadSceneAsync(sceneName.GetString()).ToUniTask();
         }
 
-        public void ActivateSceneObjects(SceneName sceneName, bool isActive)
+        public void ActivateSceneObjects(SceneName sceneName, bool isActive, string withoutTagged = null)
         {
             var scene = SceneManager.GetSceneByName(sceneName.GetString());
             var objects = scene.GetRootGameObjects();
 
             foreach (var obj in objects)
             {
-                obj.SetActive(isActive);
+                if (withoutTagged == null || !obj.CompareTag(withoutTagged))
+                {
+                    obj.SetActive(isActive);
+                }
             }
+        }
+
+        public void SetActiveScene(SceneName sceneName)
+        {
+            var scene = SceneManager.GetSceneByName(sceneName.GetString());
+            SceneManager.SetActiveScene(scene);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.GameEntities.Units
 {
+    [Serializable]
     public class Platform : MechanicalPart
     { 
 

@@ -16,4 +16,115 @@ MonoBehaviour:
     Height: 0
     Width: 0
     DistanceForRed: 28
-  rewriteSettingFiles: 0
+  playerSettings:
+    Hulls:
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallA.prefab
+      Durability: 500
+      Cost: 1000
+      Name: 0
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallB.prefab
+      Durability: 600
+      Cost: 1200
+      Name: 1
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallC.prefab
+      Durability: 700
+      Cost: 1500
+      Name: 2
+    Towers:
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallA.prefab
+      Durability: 300
+      Cost: 1000
+      Name: 0
+      RotationSpeed: 90
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallB.prefab
+      Durability: 400
+      Cost: 1200
+      Name: 1
+      RotationSpeed: 90
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallC.prefab
+      Durability: 500
+      Cost: 1500
+      Name: 2
+      RotationSpeed: 100
+    Tracks:
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackA.prefab
+      Durability: 200
+      Cost: 500
+      Name: 0
+      MaxSpeed: 4
+      MinSpeed: -2
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackB.prefab
+      Durability: 250
+      Cost: 500
+      Name: 1
+      MaxSpeed: 4
+      MinSpeed: -2
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackC.prefab
+      Durability: 300
+      Cost: 500
+      Name: 2
+      MaxSpeed: 4
+      MinSpeed: -2
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackD.prefab
+      Durability: 400
+      Cost: 500
+      Name: 3
+      MaxSpeed: 4
+      MinSpeed: -2
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+    Guns:
+    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallA.prefab
+      Durability: 0
+      Cost: 100
+      Name: 0
+      FiringRate: 1
+      ProjectileType: 0
+    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallB.prefab
+      Durability: 0
+      Cost: 200
+      Name: 1
+      FiringRate: 1
+      ProjectileType: 0
+    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallC.prefab
+      Durability: 0
+      Cost: 300
+      Name: 2
+      FiringRate: 1
+      ProjectileType: 3
+    Projectiles:
+    - type: 0
+      explosionType: 0
+      Damage: 100
+      Speed: 0.001
+    - type: 1
+      explosionType: 1
+      Damage: 200
+      Speed: 10
+    - type: 2
+      explosionType: 2
+      Damage: 300
+      Speed: 10
+    - type: 3
+      explosionType: 3
+      Damage: 150
+      Speed: 10
+    - type: 4
+      explosionType: 3
+      Damage: 500
+      Speed: 1
+  rewriteSettingFiles: 1

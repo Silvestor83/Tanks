@@ -18,6 +18,7 @@ namespace Assets.Scripts.Managers
 {
     public class SceneManager
     {
+        private const string TAG_FOR_NOT_ACTIVATED_OBJECTS = "ShouldBeActive";
         private Dictionary<SceneName, SceneComponent> scenes { get; set; }
         
         private SceneService sceneService;
@@ -37,16 +38,20 @@ namespace Assets.Scripts.Managers
             if (scene.LoadingScreenNeeded)
             {
                 await LoadLoadingScreen();
-                await UnloadScenes(SceneName.LoadingScreen);
+                await UnloadScenesWithExcept(SceneName.LoadingScreen);
 
                 await UniTask.WhenAll(LoadSceneRecursively(scene, false), UniTask.Delay(3000));
-                await UnloadScenes(scene.Name);
+                await UnloadScenesWithExcept(scene.Name);
                 ActivateSceneObjectsRecursively(scene);
-                return;
+            }
+            else
+            {
+                await LoadSceneRecursively(scene);
+                await UnloadScenesWithExcept(scene.Name);
             }
 
-            await LoadSceneRecursively(scene);
-            await UnloadScenes(scene.Name);
+            sceneService.SetActiveScene(scene.Name);
+            logService.Loggger.ZLogTrace($"Scene was set to active state. ({scene.Name.GetString()})");
         }
 
         private async UniTask LoadSceneRecursively(SceneComponent scene, bool isSceneObjectsActive = true)
@@ -57,7 +62,7 @@ namespace Assets.Scripts.Managers
 
             if (!isSceneObjectsActive)
             {
-                sceneService.ActivateSceneObjects(scene.Name, false);
+                sceneService.ActivateSceneObjects(scene.Name, false, TAG_FOR_NOT_ACTIVATED_OBJECTS);
                 logService.Loggger.ZLogTrace($"Scene objects deactivated. ({scene.Name.GetString()})");
             }
 
@@ -74,7 +79,7 @@ namespace Assets.Scripts.Managers
             await LoadSceneRecursively(loadingScene);
         }
 
-        private async UniTask UnloadScenes(SceneName exceptSceneName)
+        private async UniTask UnloadScenesWithExcept(SceneName exceptSceneName)
         {
             foreach (var scene in scenes)
             {

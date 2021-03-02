@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Assets.Scripts.Services;
 using Microsoft.Extensions.Logging;
 using UnityEditor;
@@ -10,7 +11,11 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 using ZLogger;
+using Assets.Scripts.Core.Settings;
+using Assets.Scripts.GameEntities.Units;
+using Assets.Scripts.Infrastructure.Enums;
 using Button = UnityEngine.UIElements.Button;
+using PlayerSettings = Assets.Scripts.Core.Settings.PlayerSettings;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -18,35 +23,46 @@ namespace Assets.Scripts.Tank
 {
     public class MoveController : MonoBehaviour
     {
-        public float MaxSpeed = 4f;
-        public float MinSpeed = -2f;
+        private float maxSpeed;
+        private float minSpeed;
+        private float forwardAcceleration;
+        private float rearAcceleration;
+        private float breakingAcceleration;
+        private float rotateSpeed;
 
-        public int ForwardAccelerate = 8;
-        public int RearAccelerate = -8;
-        public int BrakingAcceleration = 16;
-
-        private int rotateSpeed = 120;
-        private int currentRotationSpeed;
+        private float currentSpeed;
+        private float currentRotationSpeed;
         private float rotateInputValue;
         private float moveInputValue;
 
-        public float currentSpeed;
-        private bool isInit;
-        public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
-        
+        private Track track;
         private LogService logService;
+        private PlayerSettings playerSettings;
+
+        public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
 
         [Inject]
-        public void Init(LogService logService)
+        public void Init(PlayerSettings playerSettings, LogService logService, Track track = null)
         {
+            this.playerSettings = playerSettings;
             this.logService = logService;
+            this.track = track;
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * 5, Color.green, 60f);
-            Debug.DrawRay(gameObject.transform.position, new Vector3(2.05f, -1.66f, 0) * 5, Color.blue, 60f);
+            if (track == null)
+            {
+                track = playerSettings.Tracks.First(t => t.Name == TrackName.TrackA);
+            }
+            
+            maxSpeed = track.MaxSpeed;
+            minSpeed = track.MinSpeed;
+            forwardAcceleration = track.ForwardAcceleration;
+            rearAcceleration = track.RearAcceleration;
+            breakingAcceleration = track.BreakingAcceleration;
+            rotateSpeed = track.rotateSpeed;
         }
 
         void FixedUpdate()
@@ -86,25 +102,25 @@ namespace Assets.Scripts.Tank
 
             if (moveInputValue > 0)
             {
-                if (currentSpeed <= MaxSpeed)
+                if (currentSpeed <= maxSpeed)
                 {
-                    accelerate = currentSpeed > 0 ? ForwardAccelerate : BrakingAcceleration;
+                    accelerate = currentSpeed >= 0 ? forwardAcceleration : breakingAcceleration;
                     tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                    currentSpeed = tempSpeed > MaxSpeed ? MaxSpeed : tempSpeed;
+                    currentSpeed = tempSpeed > maxSpeed ? maxSpeed : tempSpeed;
                 }
             }
             else if (moveInputValue < 0)
             {
-                if (currentSpeed >= MinSpeed)
+                if (currentSpeed >= minSpeed)
                 {
-                    accelerate = currentSpeed < 0 ? RearAccelerate : -BrakingAcceleration;
+                    accelerate = currentSpeed <= 0 ? -rearAcceleration : -breakingAcceleration;
                     tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                    currentSpeed = tempSpeed < MinSpeed ? MinSpeed : tempSpeed;
+                    currentSpeed = tempSpeed < minSpeed ? minSpeed : tempSpeed;
                 }
             }
             else
             {
-                accelerate = currentSpeed > 0 ? -BrakingAcceleration : BrakingAcceleration;
+                accelerate = currentSpeed > 0 ? -breakingAcceleration : breakingAcceleration;
                 tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
                 currentSpeed = (currentSpeed > 0 && tempSpeed > 0) || (currentSpeed < 0 && tempSpeed < 0) ? tempSpeed : 0;
             }
@@ -134,7 +150,7 @@ namespace Assets.Scripts.Tank
         {
             if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
             {
-                StateChanged.Invoke(currentSpeed, currentRotationSpeed);
+                StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
             }
         }
 
@@ -146,6 +162,10 @@ namespace Assets.Scripts.Tank
         private void OnRotate(InputValue value)
         {
             rotateInputValue = value.Get<float>();
+        }
+
+        public class Factory : PlaceholderFactory<MoveController>
+        {
         }
     }
 }
