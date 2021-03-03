@@ -41,24 +41,24 @@ namespace Assets.Scripts.GameEntities.Creators
             logService.Loggger.ZLogTrace($"Tank Root was created.");
             
             // Create hull
-            var hullGO = await builder.CreateHull(hull.PrefabName, hullName.ToString(), tankRoot.transform);
+            var hullGO = await builder.CreateHull(hull.PrefabName, hullName, tankRoot.transform);
             logService.Loggger.ZLogTrace($"Hull was created.");
 
             // Create tracks
             var hullBindings = hullGO.GetComponent<HullBindings>();
             var leftPosition = hullGO.transform.position + (Vector3)hullBindings.LeftTruckPosition;
             var rightPosition = hullGO.transform.position + (Vector3)hullBindings.RightTruckPosition;
-            await builder.CreateTracks(track.PrefabName, trackName.ToString(), leftPosition, rightPosition, hullGO.transform);
+            await builder.CreateTracks(track.PrefabName, trackName, leftPosition, rightPosition, hullGO.transform);
             logService.Loggger.ZLogTrace($"Tracks was created.");
 
             // Create tower
-            var towerGO = await builder.CreateTower(tower.PrefabName, towerName.ToString(), hullGO.transform, tower, tag);
+            var towerGO = await builder.CreateTower(tower.PrefabName, towerName, hullGO.transform, tower, tag);
             logService.Loggger.ZLogTrace($"Tower was created.");
 
             // Create gun
             var towerBindings = towerGO.GetComponent<TowerBindings>();
             var gunPosition = towerGO.transform.position + (Vector3)towerBindings.GunPosition;
-            await builder.CreateGun(gun, gunName.ToString(), gunPosition, towerGO.transform);
+            await builder.CreateGun(gun, gunName, gunPosition, towerGO.transform);
             logService.Loggger.ZLogTrace($"Gun was created.");
 
             tankRoot.SetActive(true);

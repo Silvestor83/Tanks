@@ -122,7 +122,7 @@ MonoBehaviour:
     - type: 3
       explosionType: 3
       Damage: 150
-      Speed: 10
+      Speed: 0.005
     - type: 4
       explosionType: 3
       Damage: 500

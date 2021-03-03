@@ -39,15 +39,15 @@ namespace Assets.Scripts.GameEntities.Creators
             var cannonRoot = await builder.CreateCannonRoot(CANNON_ROOT_PREFAB, name, tag, health, position, false);
             logService.Loggger.ZLogTrace($"Cannon Root was created.");
 
-            var platformGO = await builder.CreateHull(platform.PrefabName, platformName.ToString(), cannonRoot.transform);
+            var platformGO = await builder.CreatePlatform(platform.PrefabName, platformName, cannonRoot.transform);
             logService.Loggger.ZLogTrace($"Platform was created.");
 
-            var towerGO = await builder.CreateTower(tower.PrefabName, towerName.ToString(), platformGO.transform, tower, tag);
+            var towerGO = await builder.CreateTower(tower.PrefabName, towerName, platformGO.transform, tower, tag);
             logService.Loggger.ZLogTrace($"Tower was created.");
 
             var towerBindings = towerGO.GetComponent<TowerBindings>();
             var gunPosition = towerGO.transform.position + (Vector3)towerBindings.GunPosition;
-            await builder.CreateGun(gun, gunName.ToString(), gunPosition, towerGO.transform);
+            await builder.CreateGun(gun, gunName, gunPosition, towerGO.transform);
             logService.Loggger.ZLogTrace($"Gun was created.");
 
             cannonRoot.SetActive(true);

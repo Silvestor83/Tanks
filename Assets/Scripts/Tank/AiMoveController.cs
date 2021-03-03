@@ -1,28 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Assets.Scripts.Core.GameData;
-using Assets.Scripts.Services;
-using Microsoft.Extensions.Logging;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
-using Zenject;
-using ZLogger;
-using Assets.Scripts.Core.Settings;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
-using Button = UnityEngine.UIElements.Button;
-using PlayerSettings = Assets.Scripts.Core.Settings.PlayerSettings;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
+using Assets.Scripts.Services;
+using UnityEngine;
+using UnityEngine.Events;
+using Zenject;
+using ZLogger;
 
 namespace Assets.Scripts.Tank
 {
-    public class MoveController : MonoBehaviour
+    public class AiMoveController : MonoBehaviour
     {
         private float maxSpeed;
         private float minSpeed;
@@ -40,7 +32,7 @@ namespace Assets.Scripts.Tank
         private LogService logService;
         private PlayerData playerData;
 
-        public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
+        public readonly UnityEvent<float, float> StateChanged = new UnityEvent<float, float>();
 
         [Inject]
         public void Init(PlayerData playerData, LogService logService, Track track)
@@ -50,7 +42,7 @@ namespace Assets.Scripts.Tank
             this.track = track;
         }
 
-        // Start is called before the first frame update
+        // Start is called before the first frame updates
         void Start()
         {
             maxSpeed = track.MaxSpeed;
@@ -68,16 +60,8 @@ namespace Assets.Scripts.Tank
 
             Rotate();
             Move();
-            //OtherActions();
-
-            SavePlayerData();
 
             EventsInvocation(startingSpeed, startingRotationSpeed);
-        }
-
-        private void SavePlayerData()
-        {
-            playerData.position = transform.position;
         }
 
         private void Rotate()
@@ -131,40 +115,12 @@ namespace Assets.Scripts.Tank
             transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
         }
 
-        private void OtherActions()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                var posX = gameObject.transform.position.x;
-                var posY = gameObject.transform.position.y;
-                var posZ = gameObject.transform.position.z;
-
-                Debug.Log($"X: {posX}, Y: {posY}, Z: {posZ}");
-            }
-
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                logService.Loggger.ZLogTrace("Application quite");
-                Application.Quit();
-            }
-        }
-
         private void EventsInvocation(float startingSpeed, float startingRotationSpeed)
         {
             if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
             {
                 StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
             }
-        }
-
-        private void OnMove(InputValue value)
-        {
-            moveInputValue = value.Get<float>();
-        }
-
-        private void OnRotate(InputValue value)
-        {
-            rotateInputValue = value.Get<float>();
         }
     }
 }

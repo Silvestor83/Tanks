@@ -23,12 +23,21 @@ namespace Assets.Scripts.GameEntities.Creators
             tank.name = name;
             tank.tag = tag.ToString();
 
-            if (!tank.HasComponent<MoveController>())
+            if (tag == GameObjectTag.Player)
             {
-                throw new Exception($"TankRoot GO from {prefabKey} prefab doesn't contain MoveController component.");
+                tank.AddComponent<MoveController>();
+                container.InjectGameObjectForComponent<MoveController>(tank, new object[] { track });
             }
-            container.InjectGameObjectForComponent<MoveController>(tank, new object[] { track });
-
+            else if (tag == GameObjectTag.Enemy)
+            {
+                tank.AddComponent<AiMoveController>();
+                container.InjectGameObjectForComponent<AiMoveController>(tank, new object[] { track });
+            }
+            else
+            {
+                throw new Exception($"Сan't create tank root with '{tag.ToString()}' tag.");
+            }
+            
             if (!tank.HasComponent<HealthController>())
             {
                 throw new Exception($"TankRoot GO from {prefabKey} prefab doesn't contain HealthController component.");
@@ -56,18 +65,26 @@ namespace Assets.Scripts.GameEntities.Creators
             return cannon;
         }
 
-        public async UniTask<GameObject> CreateHull(string prefabKey, string name, Transform parentTransform)
+        public async UniTask<GameObject> CreateHull(string prefabKey, HullName name, Transform parentTransform)
         {
             var hullGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
-            hullGO.name = name;
+            hullGO.name = name.ToString();
             
             return hullGO;
         }
 
-        public async UniTask<GameObject> CreateTower(string prefabKey, string name, Transform parentTransform, Tower tower, GameObjectTag tag)
+        public async UniTask<GameObject> CreatePlatform(string prefabKey, PlatformName name, Transform parentTransform)
+        {
+            var platformGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
+            platformGO.name = name.ToString();
+
+            return platformGO;
+        }
+
+        public async UniTask<GameObject> CreateTower(string prefabKey, TowerName name, Transform parentTransform, Tower tower, GameObjectTag tag)
         {
             var towerGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
-            towerGO.name = name;
+            towerGO.name = name.ToString();
 
             if (tag == GameObjectTag.Player)
             {
@@ -87,7 +104,7 @@ namespace Assets.Scripts.GameEntities.Creators
             return towerGO;
         }
 
-        public async UniTask CreateTracks(string prefabKey, string name, Vector3 leftPosition, Vector3 rightPosition, Transform parentTransform)
+        public async UniTask CreateTracks(string prefabKey, TrackName name, Vector3 leftPosition, Vector3 rightPosition, Transform parentTransform)
         {
             var trackPrefab = await Addressables.LoadAssetAsync<GameObject>(prefabKey).ToUniTask();
 
@@ -98,10 +115,10 @@ namespace Assets.Scripts.GameEntities.Creators
             rightTrack.name = name + "Right";
         }
 
-        public async UniTask CreateGun(Gun gun, string name, Vector3 position, Transform parentTransform)
+        public async UniTask CreateGun(Gun gun, GunName name, Vector3 position, Transform parentTransform)
         {
             var gunGO = await Addressables.InstantiateAsync(gun.PrefabName, position, Quaternion.identity, parentTransform).ToUniTask();
-            gunGO.name = name;
+            gunGO.name = name.ToString();
 
             container.InjectGameObjectForComponent<FiringController>(gunGO, new object[] {gun.ProjectileType});
         }
