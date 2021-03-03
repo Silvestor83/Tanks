@@ -14,6 +14,7 @@ namespace Assets.Scripts.Core
         public override void InstallBindings()
         {
             Container.Bind<TankCreator>().AsSingle();
+            Container.Bind<CannonCreator>().AsSingle();
             Container.Bind<MechanicalPartsBuilder>().AsSingle();
             Container.Bind(typeof(ProjectileCreator), typeof(IDisposable)).To<ProjectileCreator>().AsSingle();
             Container.Bind(typeof(ExplosionCreator), typeof(IDisposable)).To<ExplosionCreator>().AsSingle();

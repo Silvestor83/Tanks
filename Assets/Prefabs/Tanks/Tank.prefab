@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4334180316004353132}
   - component: {fileID: 4334180316004353042}
   - component: {fileID: 4334180316004353133}
+  - component: {fileID: 6925210605433433154}
   m_Layer: 0
-  m_Name: SmallTankA
+  m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,3 +150,17 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6925210605433433154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4334180316004353134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3b5cb8e1260c0b4d99a0d1bac6525b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 0
+  CurrentHealth: 0

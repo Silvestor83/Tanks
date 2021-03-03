@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.GameEntities;
 using Assets.Scripts.GameEntities.Creators;
+using Assets.Scripts.Infrastructure.Enums;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -34,8 +35,23 @@ namespace Assets.Scripts.Tank
         private void OnCollisionEnter2D(Collision2D collision)
         {
             explosionCreator.CreateExplosion(projectile.explosionType, collision.contacts[0].point);
-            
+            CheckDestruction(collision.gameObject);
             Destroy(gameObject);
+        }
+
+        private void CheckDestruction(GameObject collisionGameObject)
+        {
+            if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString()) 
+                || collisionGameObject.CompareTag(GameObjectTag.Enemy.ToString()))
+            {
+                var healthController = collisionGameObject.GetComponent<HealthController>();
+                healthController.CurrentHealth -= projectile.Damage;
+
+                if (healthController.CurrentHealth <= 0)
+                {
+                    Destroy(collisionGameObject);
+                }
+            }
         }
     }
 }

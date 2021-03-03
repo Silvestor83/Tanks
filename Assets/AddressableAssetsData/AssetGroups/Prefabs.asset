@@ -163,6 +163,14 @@ MonoBehaviour:
     - Explosion
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: ebccdd31213474145ae624fe1c98499a
+    m_Address: Assets/Prefabs/Tanks/Cannon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 297917579772262452, guid: ebccdd31213474145ae624fe1c98499a,
+      type: 3}
+    m_TargetAsset: {fileID: 297917579772262452, guid: ebccdd31213474145ae624fe1c98499a,
+      type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9abaf93e9b5d39549a3432a232bf6d46, type: 2}
   m_SchemaSet:

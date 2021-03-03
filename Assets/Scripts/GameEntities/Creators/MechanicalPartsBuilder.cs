@@ -31,6 +31,23 @@ namespace Assets.Scripts.GameEntities.Creators
             return tank;
         }
 
+        public async UniTask<GameObject> CreateCannonRoot(string prefabKey, string name, string tag, int health, Vector3 position, bool isActive)
+        {
+            var cannon = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity).ToUniTask();
+            cannon.SetActive(isActive);
+            cannon.name = name;
+            cannon.tag = tag;
+
+            if (!cannon.HasComponent<HealthController>())
+            {
+                throw new Exception($"CannonRoot GO from {prefabKey} prefab doesn't contain HealthController component.");
+            }
+            var healthController = cannon.GetComponent<HealthController>();
+            healthController.Init(health);
+
+            return cannon;
+        }
+
         public async UniTask<GameObject> CreateHull(string prefabKey, string name, Transform parentTransform)
         {
             var hullGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();

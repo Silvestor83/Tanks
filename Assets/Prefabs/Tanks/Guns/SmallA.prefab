@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 6211387445095433308, guid: 7de38dd16430ff04d99581c14fb7befe,
         type: 3}
       propertyPath: ProjectileOffset
-      value: 1
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 6211387445095433308, guid: 7de38dd16430ff04d99581c14fb7befe,
         type: 3}

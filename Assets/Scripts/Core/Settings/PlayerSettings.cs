@@ -16,5 +16,6 @@ namespace Assets.Scripts.Core.Settings
         public List<Track> Tracks;
         public List<Gun> Guns;
         public List<Projectile> Projectiles;
+        public List<Platform> Platforms;
     }
 }

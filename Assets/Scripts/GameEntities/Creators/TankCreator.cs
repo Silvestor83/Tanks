@@ -18,7 +18,7 @@ namespace Assets.Scripts.GameEntities.Creators
         private PlayerSettings playerSettings;
         private LogService logService;
         private MechanicalPartsBuilder builder;
-        private const string TANK_PREFAB = "Assets/Prefabs/Tanks/Tank.prefab";
+        private const string TANK_ROOT_PREFAB = "Assets/Prefabs/Tanks/Tank.prefab";
 
 
         public TankCreator(PlayerSettings settings, LogService logService, MechanicalPartsBuilder builder)
@@ -28,14 +28,18 @@ namespace Assets.Scripts.GameEntities.Creators
             this.builder = builder;
         }
 
-        public async UniTask CreateTankAsync(HullName hullName, TowerName towerName, TrackName trackName, GunName gunName, Vector3 position, string name = "Tank_clone")
+        public async UniTask CreateTankAsync(HullName hullName, TowerName towerName, TrackName trackName, GunName gunName, Vector3 position, string name = "Tank_clone", string tag = "Untagged")
         {
             var hull = playerSettings.Hulls.First(h => h.Name == hullName);
             var tower = playerSettings.Towers.First(t => t.Name == towerName);
             var track = playerSettings.Tracks.First(t => t.Name == trackName);
             var gun = playerSettings.Guns.First(g => g.Name == gunName);
+            var health = hull.Durability + tower.Durability + track.Durability;
 
-            var tankRoot = await builder.CreateTankRoot(TANK_PREFAB, name, track, position, false);
+            var tankRoot = await builder.CreateTankRoot(TANK_ROOT_PREFAB, name, track, position, false);
+            tankRoot.tag = tag;
+            var healthController = tankRoot.GetComponent<HealthController>();
+            healthController.Init(health);
             logService.Loggger.ZLogTrace($"Tank Root was created.");
             
             var hullGO = await builder.CreateHull(hull.PrefabName, hullName.ToString(), tankRoot.transform);
