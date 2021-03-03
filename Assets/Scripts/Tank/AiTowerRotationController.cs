@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Linq;
+using Assets.Scripts.Core.GameData;
+using Assets.Scripts.Core.Settings;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
-using Assets.Scripts.Services;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
-using PlayerSettings = Assets.Scripts.Core.Settings.PlayerSettings;
 
 namespace Assets.Scripts.Tank
 {
-    public class TowerRotationController : MonoBehaviour
+    public class AiTowerRotationController : MonoBehaviour
     {
         // in degrees per second
         private float rotationSpeed;
         private Camera mainCamera;
+        private PlayerData playerData;
         private Tower tower;
 
         [Inject]
-        public void Init(Tower tower)
+        public void Init(PlayerData playerData, Tower tower)
         {
+            this.playerData = playerData;
             this.tower = tower;
         }
 
@@ -29,19 +30,9 @@ namespace Assets.Scripts.Tank
             rotationSpeed = tower.RotationSpeed;
         }
 
-        void Awake()
-        {
-            var cameras = GameObject.FindGameObjectsWithTag("MainCamera");
-            mainCamera = cameras.First(c => c.name == "LevelCamera").GetComponent<Camera>();
-        }
-
         void FixedUpdate()
         {
-            var mouseScreenPosition = Mouse.current.position.ReadValue();
-            var mouseWorldPosition = (Vector2)mainCamera.ScreenToWorldPoint(mouseScreenPosition);
-            var objectPosition = (Vector2)transform.position;
-
-            var direction = mouseWorldPosition - objectPosition;
+            var direction = playerData.position - (Vector2)transform.position;
 
             var angle = -Vector2.SignedAngle(direction, transform.up);
 

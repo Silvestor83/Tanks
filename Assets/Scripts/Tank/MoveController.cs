@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Assets.Scripts.Core.GameData;
 using Assets.Scripts.Services;
 using Microsoft.Extensions.Logging;
 using UnityEditor;
@@ -38,13 +39,15 @@ namespace Assets.Scripts.Tank
         private Track track;
         private LogService logService;
         private PlayerSettings playerSettings;
+        private PlayerData playerData;
 
         public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
 
         [Inject]
-        public void Init(PlayerSettings playerSettings, LogService logService, Track track = null)
+        public void Init(PlayerSettings playerSettings, PlayerData playerData, LogService logService, Track track = null)
         {
             this.playerSettings = playerSettings;
+            this.playerData = playerData;
             this.logService = logService;
             this.track = track;
         }
@@ -74,7 +77,14 @@ namespace Assets.Scripts.Tank
             Move();
             //OtherActions();
 
+            SavePlayerData();
+
             EventsInvocation(startingSpeed, startingRotationSpeed);
+        }
+
+        private void SavePlayerData()
+        {
+            playerData.position = transform.position;
         }
 
         private void Rotate()

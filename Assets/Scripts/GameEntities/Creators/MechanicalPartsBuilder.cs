@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure;
+using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Tank;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -15,28 +16,35 @@ namespace Assets.Scripts.GameEntities.Creators
         [Inject]
         private DiContainer container;
 
-        public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, Track track, Vector3 position, bool isActive)
+        public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, bool isActive)
         {
             var tank = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity).ToUniTask();
             tank.SetActive(isActive);
             tank.name = name;
+            tank.tag = tag.ToString();
 
             if (!tank.HasComponent<MoveController>())
             {
                 throw new Exception($"TankRoot GO from {prefabKey} prefab doesn't contain MoveController component.");
             }
-
             container.InjectGameObjectForComponent<MoveController>(tank, new object[] { track });
+
+            if (!tank.HasComponent<HealthController>())
+            {
+                throw new Exception($"TankRoot GO from {prefabKey} prefab doesn't contain HealthController component.");
+            }
+            var healthController = tank.GetComponent<HealthController>();
+            healthController.Init(health);
 
             return tank;
         }
 
-        public async UniTask<GameObject> CreateCannonRoot(string prefabKey, string name, string tag, int health, Vector3 position, bool isActive)
+        public async UniTask<GameObject> CreateCannonRoot(string prefabKey, string name, GameObjectTag tag, int health, Vector3 position, bool isActive)
         {
             var cannon = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity).ToUniTask();
             cannon.SetActive(isActive);
             cannon.name = name;
-            cannon.tag = tag;
+            cannon.tag = tag.ToString();
 
             if (!cannon.HasComponent<HealthController>())
             {
@@ -56,17 +64,25 @@ namespace Assets.Scripts.GameEntities.Creators
             return hullGO;
         }
 
-        public async UniTask<GameObject> CreateTower(string prefabKey, string name, Transform parentTransform, Tower tower)
+        public async UniTask<GameObject> CreateTower(string prefabKey, string name, Transform parentTransform, Tower tower, GameObjectTag tag)
         {
             var towerGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
             towerGO.name = name;
 
-            if (!towerGO.HasComponent<TowerRotationController>())
+            if (tag == GameObjectTag.Player)
             {
-                throw new Exception($"Tower GO from {prefabKey} prefab doesn't contain TowerRotationController component.");
+                towerGO.AddComponent<TowerRotationController>();
+                container.InjectGameObjectForComponent<TowerRotationController>(towerGO, new object[] { tower });
             }
-
-            container.InjectGameObjectForComponent<TowerRotationController>(towerGO, new object[] { tower });
+            else if (tag == GameObjectTag.Enemy)
+            {
+                towerGO.AddComponent<AiTowerRotationController>();
+                container.InjectGameObjectForComponent<AiTowerRotationController>(towerGO, new object[] { tower });
+            }
+            else
+            {
+                throw new Exception($"Сan't create towerGO with '{tag.ToString()}' tag.");
+            }
 
             return towerGO;
         }

@@ -28,7 +28,8 @@ namespace Assets.Scripts.Tank
 
         private void OnClick(InputValue value)
         {
-            projectileCreator.CreateProjectile(projectileType, projectileOffset * transform.up + transform.position, transform.rotation, transform.up);
+            var root = transform.root;
+            projectileCreator.CreateProjectile(projectileType, projectileOffset * transform.up + transform.position, transform.rotation, transform.up, root);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Assets.Scripts
         private async void Start()
         {
             Debug.Log("Creating tank!!!");
-            await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallB, new Vector3(5f, 5f), "PlayerTank", GameObjectTag.Player.ToString());
+            await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallB, new Vector3(5f, 5f), "PlayerTank", GameObjectTag.Player);
         }
     }
 }

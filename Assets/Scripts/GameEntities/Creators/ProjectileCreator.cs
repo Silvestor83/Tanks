@@ -41,7 +41,15 @@ namespace Assets.Scripts.GameEntities.Creators
             handle.Completed += HandleOnCompleted;
         }
 
-        public void CreateProjectile(ProjectileType type, Vector2 position, Quaternion rotation, Vector2 direction)
+        /// <summary>
+        /// Create projectile
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        /// <param name="direction"></param>
+        /// <param name="root">Root GameObject that contains all Colliders which we need to exclude from collisions</param>
+        public void CreateProjectile(ProjectileType type, Vector2 position, Quaternion rotation, Vector2 direction, Transform root)
         {
             if (projectilePrefabs != null)
             {
@@ -50,10 +58,22 @@ namespace Assets.Scripts.GameEntities.Creators
                 var projectileGO = Object.Instantiate(projectilePrefab, position, rotation, projectilesGO.transform);
 
                 container.InjectGameObjectForComponent<ShotController>(projectileGO, new object[] { projectile, direction });
+                Ignorecolliders(projectileGO, root);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
                 logService.Loggger.ZLogError("Failed to get projectiles prefab");
+            }
+        }
+
+        public void Ignorecolliders(GameObject baseGO, Transform root)
+        {
+            var baseCollider = baseGO.GetComponent<Collider2D>();
+            var colliders = root.GetComponentsInChildren<Collider2D>();
+
+            foreach (var collider2D in colliders)
+            {
+                Physics2D.IgnoreCollision(baseCollider, collider2D);
             }
         }
 

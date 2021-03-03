@@ -18,7 +18,7 @@ namespace Assets.Scripts
         private async void Start()
         {
             Debug.Log("Creating cannon!!!");
-            await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallC, new Vector3(2f, 2f), "Cannon", GameObjectTag.Enemy.ToString());
+            await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallC, new Vector3(2f, 2f), "Cannon", GameObjectTag.Enemy);
         }
     }
 }

@@ -120,7 +120,7 @@ MonoBehaviour:
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 5a40702af1b0c7646bbfa006ab6102b0
-    m_Address: Assets/Prefabs/Projectiles/Lazer.prefab
+    m_Address: Assets/Prefabs/Projectiles/Laser.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - Projectiles
@@ -133,8 +133,10 @@ MonoBehaviour:
     m_SerializedLabels:
     - Projectiles
     - Projectile
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 307679121082854135, guid: a91d7f71aaaaabf44ad1d8a23af98f85,
+      type: 3}
+    m_TargetAsset: {fileID: 307679121082854135, guid: a91d7f71aaaaabf44ad1d8a23af98f85,
+      type: 3}
   - m_GUID: 0fc1c672e6484884f8a387d0fc742279
     m_Address: Assets/Prefabs/Explosions/LargeExplosion.prefab
     m_ReadOnly: 0
@@ -171,6 +173,26 @@ MonoBehaviour:
       type: 3}
     m_TargetAsset: {fileID: 297917579772262452, guid: ebccdd31213474145ae624fe1c98499a,
       type: 3}
+  - m_GUID: 1f98468868140fa4fbc94d891a9caafc
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1343050813142448199, guid: 1f98468868140fa4fbc94d891a9caafc,
+      type: 3}
+    m_TargetAsset: {fileID: 1343050813142448199, guid: 1f98468868140fa4fbc94d891a9caafc,
+      type: 3}
+  - m_GUID: ebdc0fd9c221ca746811a89027942c2c
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 54f0922bfad759e4680b7725d5f3b6e8
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9abaf93e9b5d39549a3432a232bf6d46, type: 2}
   m_SchemaSet:

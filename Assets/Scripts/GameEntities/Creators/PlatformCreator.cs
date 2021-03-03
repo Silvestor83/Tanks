@@ -29,7 +29,7 @@ namespace Assets.Scripts.GameEntities.Creators
             this.builder = builder;
         }
 
-        public async UniTask CreateCannonAsync(PlatformName platformName, TowerName towerName, GunName gunName, Vector3 position, string name = "Cannon_Clone", string tag = "Untagged")
+        public async UniTask CreateCannonAsync(PlatformName platformName, TowerName towerName, GunName gunName, Vector3 position, string name, GameObjectTag tag)
         {
             var platform = playerSettings.Platforms.First(p => p.Name == platformName);
             var tower = playerSettings.Towers.First(t => t.Name == towerName);
@@ -42,7 +42,7 @@ namespace Assets.Scripts.GameEntities.Creators
             var platformGO = await builder.CreateHull(platform.PrefabName, platformName.ToString(), cannonRoot.transform);
             logService.Loggger.ZLogTrace($"Platform was created.");
 
-            var towerGO = await builder.CreateTower(tower.PrefabName, towerName.ToString(), platformGO.transform, tower);
+            var towerGO = await builder.CreateTower(tower.PrefabName, towerName.ToString(), platformGO.transform, tower, tag);
             logService.Loggger.ZLogTrace($"Tower was created.");
 
             var towerBindings = towerGO.GetComponent<TowerBindings>();

@@ -127,4 +127,17 @@ MonoBehaviour:
       explosionType: 3
       Damage: 500
       Speed: 1
+    Platforms:
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformA.prefab
+      Durability: 1000
+      Cost: 0
+      Name: 0
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformB.prefab
+      Durability: 1800
+      Cost: 0
+      Name: 1
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformC.prefab
+      Durability: 2500
+      Cost: 0
+      Name: 2
   rewriteSettingFiles: 1
