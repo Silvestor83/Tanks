@@ -10,7 +10,12 @@ PrefabInstance:
     - target: {fileID: 392558046766043739, guid: cdc827418d9055e45be550ac889caad3,
         type: 3}
       propertyPath: m_Name
-      value: Explosion
+      value: SmallExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 768843959910561130, guid: cdc827418d9055e45be550ac889caad3,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4380611188661695578, guid: cdc827418d9055e45be550ac889caad3,
         type: 3}

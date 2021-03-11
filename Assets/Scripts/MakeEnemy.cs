@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameEntities.Creators;
+﻿using System;
+using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
 using Zenject;
@@ -15,10 +16,32 @@ namespace Assets.Scripts
             this.tankCreator = creator;
         }
 
-        private async void Start()
+        private async void Awake()
         {
-            Debug.Log("Creating enemy!!!");
-            await tankCreator.CreateTankAsync(HullName.SmallA, TowerName.SmallA, TrackName.TrackB, GunName.SmallA, new Vector3(5f, 0), "EnemyTank", GameObjectTag.Enemy);
+            var childTransforms = GetComponentsInChildren<Transform>();
+
+            foreach (var childTransform in childTransforms)
+            {
+                if (childTransform.CompareTag(GameObjectTag.Portal.ToString()))
+                {
+                    await tankCreator.CreateTankAsync(HullName.SmallA, TowerName.SmallA, TrackName.TrackB, GunName.SmallA, childTransform.position, "EnemyTank", GameObjectTag.Enemy);
+                }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            var childTransforms = GetComponentsInChildren<Transform>();
+
+            Gizmos.color = Color.red;
+
+            foreach (var childTransform in childTransforms)
+            {
+                if (childTransform.CompareTag(GameObjectTag.Portal.ToString()))
+                {
+                    Gizmos.DrawSphere(childTransform.position, 1);
+                }
+            }
         }
     }
 }

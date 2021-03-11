@@ -6,6 +6,10 @@ TagManager:
   tags:
   - ShouldBeActive
   - Enemy
+  - ship
+  - asteroid
+  - Portal
+  - Cannon
   layers:
   - Default
   - TransparentFX

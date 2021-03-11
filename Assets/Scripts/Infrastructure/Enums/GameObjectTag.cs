@@ -10,6 +10,8 @@ namespace Assets.Scripts.Infrastructure.Enums
     {
         Untagged,
         Player,
-        Enemy
+        Enemy,
+        Portal,
+        Cannon
     }
 }

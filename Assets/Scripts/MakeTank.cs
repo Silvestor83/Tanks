@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
+using Cinemachine;
 using UnityEngine;
 using Zenject;
 
@@ -18,8 +19,12 @@ namespace Assets.Scripts
 
         private async void Start()
         {
-            Debug.Log("Creating tank!!!");
-            await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallB, new Vector3(5f, 5f), "PlayerTank", GameObjectTag.Player);
+            var playerTank = await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallB, new Vector3(5f, 5f), "PlayerTank", GameObjectTag.Player);
+
+            var camera = Camera.main;
+            var brain = camera.GetComponent<CinemachineBrain>();
+            var vcam = brain.ActiveVirtualCamera as CinemachineVirtualCamera;
+            vcam.Follow = playerTank.transform;
         }
     }
 }

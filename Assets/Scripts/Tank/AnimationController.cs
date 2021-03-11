@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Infrastructure;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Tank
@@ -11,7 +12,8 @@ namespace Assets.Scripts.Tank
         void Awake()
         {
             animator = gameObject.GetComponent<Animator>();
-            stateChanged = gameObject.GetComponentInParent<MoveController>().StateChanged;
+            stateChanged = gameObject.GetComponentInParent<MoveController>()?.StateChanged ?? gameObject
+                .GetComponentInParent<AiMoveController>()?.StateChanged;
         }
 
         private void Start()

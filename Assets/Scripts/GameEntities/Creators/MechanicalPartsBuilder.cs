@@ -15,10 +15,21 @@ namespace Assets.Scripts.GameEntities.Creators
     {
         [Inject]
         private DiContainer container;
+        private const string ENEMIES_NAME_GO = "Enemies";
+        private const string CANNONS_NAME_GO = "Cannons";
+        private GameObject enemiesGO;
+        private GameObject cannonsGO;
+
+        public MechanicalPartsBuilder()
+        {
+            enemiesGO = GameObject.Find(ENEMIES_NAME_GO);
+            cannonsGO = GameObject.Find(CANNONS_NAME_GO);
+        }
 
         public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, bool isActive)
         {
-            var tank = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity).ToUniTask();
+            var parentTransform = tag == GameObjectTag.Enemy ? enemiesGO.transform : null;
+            var tank = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, parentTransform).ToUniTask();
             tank.SetActive(isActive);
             tank.name = name;
             tank.tag = tag.ToString();
@@ -50,7 +61,7 @@ namespace Assets.Scripts.GameEntities.Creators
 
         public async UniTask<GameObject> CreateCannonRoot(string prefabKey, string name, GameObjectTag tag, int health, Vector3 position, bool isActive)
         {
-            var cannon = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity).ToUniTask();
+            var cannon = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, cannonsGO.transform).ToUniTask();
             cannon.SetActive(isActive);
             cannon.name = name;
             cannon.tag = tag.ToString();

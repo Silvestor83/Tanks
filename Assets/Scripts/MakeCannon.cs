@@ -15,10 +15,32 @@ namespace Assets.Scripts
             this.cannonCreator = creator;
         }
 
-        private async void Start()
+        private async void Awake()
         {
-            Debug.Log("Creating cannon!!!");
-            await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallC, new Vector3(2f, 2f), "Cannon", GameObjectTag.Enemy);
+            var childTransforms = GetComponentsInChildren<Transform>();
+
+            foreach (var childTransform in childTransforms)
+            {
+                if (childTransform.CompareTag(GameObjectTag.Cannon.ToString()))
+                {
+                    await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallC, childTransform.position, "Cannon", GameObjectTag.Enemy);
+                }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            var childTransforms = GetComponentsInChildren<Transform>();
+
+            Gizmos.color = Color.yellow;
+
+            foreach (var childTransform in childTransforms)
+            {
+                if (childTransform.CompareTag(GameObjectTag.Cannon.ToString()))
+                {
+                    Gizmos.DrawSphere(childTransform.position, 1);
+                }
+            }
         }
     }
 }

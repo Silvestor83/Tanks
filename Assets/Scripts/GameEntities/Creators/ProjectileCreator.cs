@@ -58,7 +58,7 @@ namespace Assets.Scripts.GameEntities.Creators
                 var projectileGO = Object.Instantiate(projectilePrefab, position, rotation, projectilesGO.transform);
 
                 container.InjectGameObjectForComponent<ShotController>(projectileGO, new object[] { projectile, direction });
-                Ignorecolliders(projectileGO, root);
+                IgnoreСolliders(projectileGO, root);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -66,7 +66,7 @@ namespace Assets.Scripts.GameEntities.Creators
             }
         }
 
-        public void Ignorecolliders(GameObject baseGO, Transform root)
+        public void IgnoreСolliders(GameObject baseGO, Transform root)
         {
             var baseCollider = baseGO.GetComponent<Collider2D>();
             var colliders = root.GetComponentsInChildren<Collider2D>();

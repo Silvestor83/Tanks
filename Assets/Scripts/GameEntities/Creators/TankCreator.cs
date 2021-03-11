@@ -28,7 +28,7 @@ namespace Assets.Scripts.GameEntities.Creators
             this.builder = builder;
         }
 
-        public async UniTask CreateTankAsync(HullName hullName, TowerName towerName, TrackName trackName, GunName gunName, Vector3 position, string name, GameObjectTag tag)
+        public async UniTask<GameObject> CreateTankAsync(HullName hullName, TowerName towerName, TrackName trackName, GunName gunName, Vector3 position, string name, GameObjectTag tag)
         {
             var hull = playerSettings.Hulls.First(h => h.Name == hullName);
             var tower = playerSettings.Towers.First(t => t.Name == towerName);
@@ -62,6 +62,8 @@ namespace Assets.Scripts.GameEntities.Creators
             logService.Loggger.ZLogTrace($"Gun was created.");
 
             tankRoot.SetActive(true);
+
+            return tankRoot;
         }
     }
 }
