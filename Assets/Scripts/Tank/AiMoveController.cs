@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Zenject;
 using ZLogger;
 using Random = UnityEngine.Random;
@@ -23,38 +26,46 @@ namespace Assets.Scripts.Tank
         private float forwardAcceleration;
         private float rearAcceleration;
         private float breakingAcceleration;
-        private float rotateSpeed;
+        private float rotationSpeed;
+        private float distanceToFullBreaking;
 
         private float currentSpeed;
         private float currentRotationSpeed;
-        private float rotateInputValue;
-        private float moveInputValue;
 
         private Track track;
         private LogService logService;
         private PlayerData playerData;
+        private PathfindingTagsManager tagsManager;
 
         private Seeker seeker;
         private Path path;
-        private float nextWaypointDistance = 3;
-        private int currentWaypoint;
-        private float repathRate = 0.5f;
+        public float repathRate = 2f;
         private float lastRepath = float.NegativeInfinity;
-
-        public bool reachedEndOfPath;
+        private bool endOfPathReached = true;
+        // Must be more or equal to nextWaypointMinDistance
+        public float endWaypointMinDistance = 0.5f;
+        public float nextWaypointMinDistance = 0.1f;
+        private int currentWaypoint;
+        private float currentDistanceToWaypoint;
+        private Vector3 directionFromTankToWaypoint;
+        private float signedAngleFromTankToWaypoint;
+        
+        private List<GraphNode> nodes = new List<GraphNode>();
+        public uint nodetag;
 
 
         public readonly UnityEvent<float, float> StateChanged = new UnityEvent<float, float>();
 
         [Inject]
-        public void Init(PlayerData playerData, LogService logService, Track track)
+        public void Init(PlayerData playerData, LogService logService, PathfindingTagsManager tagsManager, Track track, uint tag)
         {
             this.playerData = playerData;
             this.logService = logService;
+            this.tagsManager = tagsManager;
             this.track = track;
+            this.nodetag = tag;
         }
 
-        // Start is called before the first frame updates
         void Start()
         {
             maxSpeed = track.MaxSpeed;
@@ -62,11 +73,13 @@ namespace Assets.Scripts.Tank
             forwardAcceleration = track.ForwardAcceleration;
             rearAcceleration = track.RearAcceleration;
             breakingAcceleration = track.BreakingAcceleration;
-            rotateSpeed = track.rotateSpeed;
+            rotationSpeed = track.rotateSpeed;
+            distanceToFullBreaking = maxSpeed * maxSpeed / (2 * breakingAcceleration);
 
             seeker = GetComponent<Seeker>();
             var p = seeker.StartPath(transform.position, playerData.position, OnPathCompleted);
-            
+            seeker.traversableTags = (1 << 0) | (1 << (int)nodetag);
+
             Debug.Log("Yay, we got a path back. Did it have an error? " + p.error);
         }
 
@@ -84,6 +97,7 @@ namespace Assets.Scripts.Tank
             {
                 if (path != null) path.Release(this);
                 path = p;
+                endOfPathReached = false;
                 // Reset the waypoint counter so that we start to move towards the first point in the path
                 currentWaypoint = 0;
             }
@@ -93,59 +107,44 @@ namespace Assets.Scripts.Tank
             }
         }
 
-        void FixedUpdate()
-        {
-            var startingSpeed = currentSpeed;
-            var startingRotationSpeed = currentRotationSpeed;
-
-            Rotate();
-            Move();
-
-            EventsInvocation(startingSpeed, startingRotationSpeed);
-        }
-
         public void Update()
         {
+            // Update path of object and obstacles for objects in scene
             if (Time.time > lastRepath + repathRate && seeker.IsDone())
             {
                 lastRepath = Time.time;
 
+                UpdateTags();
                 // Start a new path to the targetPosition, call the the OnPathComplete function
                 // when the path has been calculated (which may take a few frames depending on the complexity)
                 seeker.StartPath(transform.position, playerData.position, OnPathCompleted);
             }
 
-            if (path == null)
+            if (path == null || endOfPathReached)
             {
                 // We have no path to follow yet, so don't do anything
                 return;
             }
 
-            // Check in a loop if we are close enough to the current waypoint to switch to the next one.
-            // We do this in a loop because many waypoints might be close to each other and we may reach
-            // several of them in the same frame.
-            reachedEndOfPath = false;
-            // The distance to the next waypoint in the path
-            float distanceToWaypoint;
-            while (true)
+            var distanceToEndPoint = Vector3.Distance(transform.position, path.vectorPath[path.vectorPath.Count - 1]);
+
+            if (distanceToEndPoint < endWaypointMinDistance)
             {
-                // If you want maximum performance you can check the squared distance instead to get rid of a
-                // square root calculation. But that is outside the scope of this tutorial.
-                distanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-                if (distanceToWaypoint < nextWaypointDistance)
+                endOfPathReached = true;
+
+                return;
+            }
+
+            // If you want maximum performance you can check the squared distance instead to get rid of a
+            // square root calculation. But that is outside the scope of this tutorial.
+            currentDistanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+
+            while (currentWaypoint + 1 < path.vectorPath.Count)
+            {
+                if (currentDistanceToWaypoint < nextWaypointMinDistance)
                 {
-                    // Check if there is another waypoint or if we have reached the end of the path
-                    if (currentWaypoint + 1 < path.vectorPath.Count)
-                    {
-                        currentWaypoint++;
-                    }
-                    else
-                    {
-                        // Set a status variable to indicate that the agent has reached the end of the path.
-                        // You can use this to trigger some special code if your game requires that.
-                        reachedEndOfPath = true;
-                        break;
-                    }
+                    currentWaypoint++;
+                    currentDistanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
                 }
                 else
                 {
@@ -153,83 +152,153 @@ namespace Assets.Scripts.Tank
                 }
             }
 
-            // Slow down smoothly upon approaching the end of the path
-            // This value will smoothly go from 1 to 0 as the agent approaches the last waypoint in the path.
-            var speedFactor = reachedEndOfPath ? Mathf.Sqrt(distanceToWaypoint / nextWaypointDistance) : 1f;
-
             // Direction to the next waypoint
             // Normalize it so that it has a length of 1 world unit
-            Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-            // Multiply the direction by our desired speed to get a velocity
-            Vector3 velocity = dir * (track.MaxSpeed * speedFactor);
+            directionFromTankToWaypoint = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+            signedAngleFromTankToWaypoint = Vector3.SignedAngle(transform.up, directionFromTankToWaypoint, Vector3.forward);
 
-            // Move the agent using the CharacterController component
-            // Note that SimpleMove takes a velocity in meters/second, so we should not multiply by Time.deltaTime
-            //controller.SimpleMove(velocity);
-
-            // If you are writing a 2D game you may want to remove the CharacterController and instead modify the position directly
-            // transform.position += velocity * Time.deltaTime;
-            transform.Translate(velocity * Time.deltaTime, Space.World);
-            transform.Rotate(Vector3.forward, rotateSpeed * Time.unscaledDeltaTime);
         }
 
-        private void Rotate()
+        void FixedUpdate()
         {
-            currentRotationSpeed = rotateSpeed;
+            var startingSpeed = currentSpeed;
+            var startingRotationSpeed = currentRotationSpeed;
 
-            if (rotateInputValue > 0)
+            Debug.Log("Angle:                                     " + signedAngleFromTankToWaypoint);
+            Debug.Log("Speed:                                     " + currentSpeed);
+
+            // Enemy can only move or rotate, not both simultaneously
+            if (!endOfPathReached)
             {
-                transform.Rotate(Vector3.forward, -rotateSpeed * Time.fixedUnscaledDeltaTime);
+                if (Mathf.Abs(signedAngleFromTankToWaypoint) > 0.1f)
+                {
+                    if (currentSpeed > 0)
+                    {
+                        // We need to be stopped before we can rotate
+                        NaturalBreaking();
+                    }
+                    else
+                    {
+                        Rotate(signedAngleFromTankToWaypoint);
+                    }
+                }
+                else
+                {
+                    Move();
+                }
             }
-            else if (rotateInputValue < 0)
+            else if (currentSpeed > 0)
             {
-                transform.Rotate(Vector3.forward, rotateSpeed * Time.fixedUnscaledDeltaTime);
+                // We need to be stopped at the end of the path
+                NaturalBreaking();
+            }
+
+            // If we change speed or rotation in loop update we need to invoke events (e.g. Animations depends on it)
+            if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
+            {
+                StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
+            }
+        }
+
+        private void Rotate(float angle)
+        {
+            currentRotationSpeed = rotationSpeed;
+
+            var maxPossibleAngle = rotationSpeed * Time.fixedDeltaTime * Mathf.Sign(angle);
+
+            if (Mathf.Abs(angle) > Mathf.Abs(maxPossibleAngle))
+            {
+                transform.Rotate(Vector3.forward, maxPossibleAngle);
             }
             else
             {
+                transform.Rotate(Vector3.forward, angle);
                 currentRotationSpeed = 0;
             }
         }
 
         private void Move()
         {
-            float accelerate;
-            float tempSpeed;
+            var maxSpeedBetweenTwoPoints = Mathf.Sqrt(2 * distanceToFullBreaking * forwardAcceleration *
+                breakingAcceleration / (forwardAcceleration + breakingAcceleration));
+            var maxBreakingDistance = maxSpeed * maxSpeed / (2 * breakingAcceleration);
+            var currentBreakingDistance = currentSpeed * currentSpeed / (2 * breakingAcceleration);
 
-            if (moveInputValue > 0)
+            //distanceToFullBreaking = currentSpeed * currentSpeed / (2 * breakingAcceleration);
+
+            if (currentDistanceToWaypoint <= currentBreakingDistance)
             {
-                if (currentSpeed <= maxSpeed)
-                {
-                    accelerate = currentSpeed >= 0 ? forwardAcceleration : breakingAcceleration;
-                    tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                    currentSpeed = tempSpeed > maxSpeed ? maxSpeed : tempSpeed;
-                }
-            }
-            else if (moveInputValue < 0)
-            {
-                if (currentSpeed >= minSpeed)
-                {
-                    accelerate = currentSpeed <= 0 ? -rearAcceleration : -breakingAcceleration;
-                    tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                    currentSpeed = tempSpeed < minSpeed ? minSpeed : tempSpeed;
-                }
+                Breaking();
             }
             else
             {
-                accelerate = currentSpeed > 0 ? -breakingAcceleration : breakingAcceleration;
-                tempSpeed = accelerate * Time.fixedUnscaledDeltaTime + currentSpeed;
-                currentSpeed = (currentSpeed > 0 && tempSpeed > 0) || (currentSpeed < 0 && tempSpeed < 0) ? tempSpeed : 0;
+                if (currentSpeed < maxSpeed)
+                {
+                    Acceleration();
+                }
             }
 
             transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
         }
 
-        private void EventsInvocation(float startingSpeed, float startingRotationSpeed)
+        private void NaturalBreaking()
         {
-            if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
+            Breaking();
+
+            transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
+        }
+
+        private void Acceleration()
+        {
+            var tempSpeed = forwardAcceleration * Time.fixedUnscaledDeltaTime + currentSpeed;
+            currentSpeed = tempSpeed > maxSpeed ? maxSpeed : tempSpeed;
+        }
+
+        private void Breaking()
+        {
+            var tempSpeed = -breakingAcceleration * Time.fixedDeltaTime + currentSpeed;
+            currentSpeed = tempSpeed > 0 ? tempSpeed : 0;
+        }
+
+        /// <summary>
+        /// This method gather 9 nodes under the object to use them as obstacles for other objects.
+        /// For this aim we mark them with tags, with number of object.
+        /// And clear old marked nodes to default tag state. 
+        /// </summary>
+        private void UpdateTags()
+        {
+            var nodeInfo = AstarPath.active.GetNearest(transform.position);
+
+            foreach (var node in nodes)
             {
-                StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
+                if (node.Tag == nodetag)
+                {
+                    node.Tag = 0;
+                }
             }
+
+            nodes.Clear();
+            
+            nodes.Add(nodeInfo.node);
+            nodeInfo.node.GetConnections(AddNodes);
+
+            foreach (var node in nodes)
+            {
+                if (node.Walkable)
+                {
+                    node.Tag = nodetag;
+                }
+            }
+        }
+
+        private void AddNodes(GraphNode node)
+        {
+            nodes.Add(node);
+        }
+
+        private void OnDestroy()
+        {
+            tagsManager.ReleaseTag(nodetag);
         }
     }
 }

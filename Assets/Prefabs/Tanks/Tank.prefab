@@ -197,10 +197,10 @@ MonoBehaviour:
   useRaycasting: 1
   mask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 768
   thickRaycast: 0
   thickRaycastRadius: 0
   use2DPhysics: 1
   raycastOffset: {x: 0, y: 0, z: 0}
-  useGraphRaycasting: 0
-  quality: 1
+  useGraphRaycasting: 1
+  quality: 2

@@ -36,9 +36,9 @@ namespace Assets.Scripts.Tank
 
             var angle = -Vector2.SignedAngle(direction, transform.up);
 
-            var maxPossibleAngle = rotationSpeed * Time.fixedDeltaTime * Math.Sign(angle);
+            var maxPossibleAngle = rotationSpeed * Time.fixedDeltaTime * Mathf.Sign(angle);
 
-            transform.Rotate(Vector3.forward, Math.Abs(angle) > Math.Abs(maxPossibleAngle) ? maxPossibleAngle : angle);
+            transform.Rotate(Vector3.forward, Mathf.Abs(angle) > Mathf.Abs(maxPossibleAngle) ? maxPossibleAngle : angle);
         }
     }
 }

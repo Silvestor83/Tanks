@@ -24,7 +24,7 @@ namespace Assets.Scripts
             {
                 if (childTransform.CompareTag(GameObjectTag.Portal.ToString()))
                 {
-                    await tankCreator.CreateTankAsync(HullName.SmallA, TowerName.SmallA, TrackName.TrackB, GunName.SmallA, childTransform.position, "EnemyTank", GameObjectTag.Enemy);
+                    await tankCreator.CreateTankAsync(HullName.SmallA, TowerName.SmallA, TrackName.TrackC, GunName.SmallA, childTransform.position, "EnemyTank", GameObjectTag.Enemy);
                 }
             }
         }

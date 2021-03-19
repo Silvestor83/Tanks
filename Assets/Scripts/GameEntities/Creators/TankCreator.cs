@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.Scripts.Core.Settings;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using Assets.Scripts.Tank;
 using Cysharp.Threading.Tasks;
@@ -19,13 +20,14 @@ namespace Assets.Scripts.GameEntities.Creators
         private LogService logService;
         private MechanicalPartsBuilder builder;
         private const string TANK_ROOT_PREFAB = "Assets/Prefabs/Tanks/Tank.prefab";
+        private PathfindingTagsManager tagsManager;
 
-
-        public TankCreator(PlayerSettings settings, LogService logService, MechanicalPartsBuilder builder)
+        public TankCreator(PlayerSettings settings, LogService logService, MechanicalPartsBuilder builder, PathfindingTagsManager tagsManager)
         {
             this.playerSettings = settings;
             this.logService = logService;
             this.builder = builder;
+            this.tagsManager = tagsManager;
         }
 
         public async UniTask<GameObject> CreateTankAsync(HullName hullName, TowerName towerName, TrackName trackName, GunName gunName, Vector3 position, string name, GameObjectTag tag)
@@ -37,7 +39,7 @@ namespace Assets.Scripts.GameEntities.Creators
             var health = hull.Durability + tower.Durability + track.Durability;
 
             // Create root
-            var tankRoot = await builder.CreateTankRoot(TANK_ROOT_PREFAB, name, tag, health, track, position, false);
+            var tankRoot = await builder.CreateTankRoot(TANK_ROOT_PREFAB, name, tag, health, track, position, tagsManager.GetFreeNumber(), false);
             logService.Loggger.ZLogTrace($"Tank Root was created.");
             
             // Create hull

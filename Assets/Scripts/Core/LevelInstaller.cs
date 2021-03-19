@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.GameEntities.Creators;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using Zenject;
 
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Core
             Container.Bind<TankCreator>().AsSingle();
             Container.Bind<CannonCreator>().AsSingle();
             Container.Bind<MechanicalPartsBuilder>().AsSingle();
+            Container.Bind<PathfindingTagsManager>().AsSingle();
             Container.Bind(typeof(ProjectileCreator), typeof(IDisposable)).To<ProjectileCreator>().AsSingle();
             Container.Bind(typeof(ExplosionCreator), typeof(IDisposable)).To<ExplosionCreator>().AsSingle();
         }

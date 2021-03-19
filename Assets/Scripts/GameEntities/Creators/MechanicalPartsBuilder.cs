@@ -26,7 +26,7 @@ namespace Assets.Scripts.GameEntities.Creators
             cannonsGO = GameObject.Find(CANNONS_NAME_GO);
         }
 
-        public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, bool isActive)
+        public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, uint tankNumber, bool isActive)
         {
             var parentTransform = tag == GameObjectTag.Enemy ? enemiesGO.transform : null;
             var tank = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, parentTransform).ToUniTask();
@@ -42,7 +42,7 @@ namespace Assets.Scripts.GameEntities.Creators
             else if (tag == GameObjectTag.Enemy)
             {
                 tank.AddComponent<AiMoveController>();
-                container.InjectGameObjectForComponent<AiMoveController>(tank, new object[] { track });
+                container.InjectGameObjectForComponent<AiMoveController>(tank, new object[] { track, tankNumber });
             }
             else
             {
