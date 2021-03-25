@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.GameData;
+﻿using System;
+using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Assets.Scripts.Tank
 {
-    public class AiTowerRotationController : AiRotationControllerBase
+    public class AiPlatformRotationController : AiRotationControllerBase
     {
         void Start()
         {
@@ -17,8 +18,8 @@ namespace Assets.Scripts.Tank
         void Update()
         {
             distanceToPlayer = Vector2.Distance(transform.position, playerData.position);
-
-            if (distanceToPlayer < levelData.EnemyAimingDistance)
+            
+            if (distanceToPlayer < levelData.CannonAimingDistance)
             {
                 var direction = playerData.position - (Vector2)transform.position;
                 var layerMask = LayerMask.GetMask(GameObjectLayer.Obstacles.ToString());
@@ -28,29 +29,22 @@ namespace Assets.Scripts.Tank
                 {
                     currentAngle = -Vector2.SignedAngle(direction, transform.up);
 
-                    if (currentAngle == 0)
+                    if (currentAngle != 0)
+                    {
+                        var maxPossibleAngle = rotationSpeed * Time.deltaTime * Mathf.Sign(currentAngle);
+
+                        transform.Rotate(Vector3.forward, Mathf.Abs(currentAngle) > Mathf.Abs(maxPossibleAngle) ? maxPossibleAngle : currentAngle);
+                    }
+                    else
                     {
                         InLineOfSight = true;
+
+                        return;
                     }
                 }
-                else
-                {
-                    currentAngle = -Vector2.SignedAngle(parent.transform.up, transform.up);
-                    InLineOfSight = false;
-                }
-            }
-            else
-            {
-                currentAngle = -Vector2.SignedAngle(parent.transform.up, transform.up);
-                InLineOfSight = false;
             }
 
-            if (currentAngle != 0)
-            {
-                var maxPossibleAngle = rotationSpeed * Time.deltaTime * Mathf.Sign(currentAngle);
-
-                transform.Rotate(Vector3.forward, Mathf.Abs(currentAngle) > Mathf.Abs(maxPossibleAngle) ? maxPossibleAngle : currentAngle);
-            }
+            InLineOfSight = false;
         }
     }
 }

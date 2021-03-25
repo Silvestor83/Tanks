@@ -47,7 +47,7 @@ namespace Assets.Scripts.GameEntities.Creators
 
             var towerBindings = towerGO.GetComponent<TowerBindings>();
             var gunPosition = towerGO.transform.position + (Vector3)towerBindings.GunPosition;
-            await builder.CreateGun(gun, gunName, gunPosition, towerGO.transform);
+            await builder.CreateGun(gun, gunName, gunPosition, towerGO.transform, tag);
             logService.Loggger.ZLogTrace($"Gun was created.");
 
             cannonRoot.SetActive(true);

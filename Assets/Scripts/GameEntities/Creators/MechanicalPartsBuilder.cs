@@ -107,6 +107,11 @@ namespace Assets.Scripts.GameEntities.Creators
                 towerGO.AddComponent<AiTowerRotationController>();
                 container.InjectGameObjectForComponent<AiTowerRotationController>(towerGO, new object[] { tower });
             }
+            else if (tag == GameObjectTag.Cannon)
+            {
+                towerGO.AddComponent<AiPlatformRotationController>();
+                container.InjectGameObjectForComponent<AiPlatformRotationController>(towerGO, new object[] { tower });
+            }
             else
             {
                 throw new Exception($"Сan't create towerGO with '{tag.ToString()}' tag.");
@@ -126,12 +131,28 @@ namespace Assets.Scripts.GameEntities.Creators
             rightTrack.name = name + "Right";
         }
 
-        public async UniTask CreateGun(Gun gun, GunName name, Vector3 position, Transform parentTransform)
+        public async UniTask CreateGun(Gun gun, GunName name, Vector3 position, Transform parentTransform, GameObjectTag tag)
         {
             var gunGO = await Addressables.InstantiateAsync(gun.PrefabName, position, Quaternion.identity, parentTransform).ToUniTask();
             gunGO.name = name.ToString();
 
-            container.InjectGameObjectForComponent<FiringController>(gunGO, new object[] {gun.ProjectileType});
+            var gunBindings = gunGO.GetComponentInChildren<GunBindings>();
+            var barrelGO = gunBindings.gameObject;
+
+            if (tag == GameObjectTag.Player)
+            {
+                barrelGO.AddComponent<FiringController>();
+                container.InjectGameObjectForComponent<FiringController>(barrelGO, new object[] { gun });
+            }
+            else if (tag == GameObjectTag.Enemy || tag == GameObjectTag.Cannon)
+            {
+                barrelGO.AddComponent<AiFiringController>();
+                container.InjectGameObjectForComponent<AiFiringController>(barrelGO, new object[] { gun });
+            }
+            else
+            {
+                throw new Exception($"Сan't create towerGO with '{tag.ToString()}' tag.");
+            }
         }
     }
 }

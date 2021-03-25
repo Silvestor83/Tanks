@@ -42,7 +42,8 @@ namespace Assets.Scripts.Tank
         private void CheckDestruction(GameObject collisionGameObject)
         {
             if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString()) 
-                || collisionGameObject.CompareTag(GameObjectTag.Enemy.ToString()))
+                || collisionGameObject.CompareTag(GameObjectTag.Enemy.ToString())
+                || collisionGameObject.CompareTag(GameObjectTag.Cannon.ToString()))
             {
                 var healthController = collisionGameObject.GetComponent<HealthController>();
                 healthController.CurrentHealth -= projectile.Damage;

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1352952491315521667}
   - component: {fileID: 9087618044510395641}
   - component: {fileID: 5453811234687968879}
-  - component: {fileID: -1100241971862475835}
   - component: {fileID: 6211387445095433308}
   m_Layer: 0
   m_Name: Gun
@@ -116,18 +115,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &-1100241971862475835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9130250939063863317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0949eeda52c38014bac66420b8e38686, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6211387445095433308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8469b90203517fb43898670433755d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileOffset: 0

@@ -23,7 +23,7 @@ namespace Assets.Scripts
             {
                 if (childTransform.CompareTag(GameObjectTag.Cannon.ToString()))
                 {
-                    await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallC, childTransform.position, "Cannon", GameObjectTag.Enemy);
+                    await cannonCreator.CreateCannonAsync(PlatformName.PlatformA, TowerName.SmallA, GunName.SmallB, childTransform.position, "Cannon", GameObjectTag.Cannon);
                 }
             }
         }

@@ -88,19 +88,19 @@ MonoBehaviour:
       BreakingAcceleration: 16
       rotateSpeed: 120
     Guns:
-    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallA.prefab
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallA.prefab
       Durability: 0
       Cost: 100
       Name: 0
       FiringRate: 1
       ProjectileType: 0
-    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallB.prefab
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallB.prefab
       Durability: 0
       Cost: 200
       Name: 1
       FiringRate: 1
       ProjectileType: 0
-    - PrefabName: Assets/Prefabs/Tanks/GunConnectors/GunSmallC.prefab
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallC.prefab
       Durability: 0
       Cost: 300
       Name: 2

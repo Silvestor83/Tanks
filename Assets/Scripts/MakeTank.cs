@@ -19,12 +19,19 @@ namespace Assets.Scripts
 
         private async void Start()
         {
-            var playerTank = await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallB, new Vector3(5f, 5f), "PlayerTank", GameObjectTag.Player);
+            var playerTank = await tankCreator.CreateTankAsync(HullName.SmallC, TowerName.SmallC, TrackName.TrackA, GunName.SmallC, 
+                transform.position, "PlayerTank", GameObjectTag.Player);
 
             var camera = Camera.main;
             var brain = camera.GetComponent<CinemachineBrain>();
             var vcam = brain.ActiveVirtualCamera as CinemachineVirtualCamera;
             vcam.Follow = playerTank.transform;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, 1);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -8,6 +9,7 @@ using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Providers;
 using Assets.Scripts.Services;
 using Pathfinding;
 using UnityEngine;
@@ -36,15 +38,23 @@ namespace Assets.Scripts.Tank
         private LogService logService;
         private PlayerData playerData;
         private PathfindingTagsManager tagsManager;
+        private PathfindingProvider pathProvider;
+        private PathfindingService pathfindingService;
 
         private Seeker seeker;
         private Path path;
-        public float repathRate = 2f;
+        // in seconds
+        public float pathRecalculatingRate = 0.5f;
+        public float endPointRecalculatingRate = 10f;
         private float lastRepath = float.NegativeInfinity;
+        private float lastEndPointTime = float.NegativeInfinity;
+        private Vector2 endPoint;
         private bool endOfPathReached = true;
         // Must be more or equal to nextWaypointMinDistance
         public float endWaypointMinDistance = 0.5f;
         public float nextWaypointMinDistance = 0.1f;
+        public float distanceToPlayerToRecalculateEndPoint = 30f;
+        private Vector3 currentPosition;
         private int currentWaypoint;
         private float currentDistanceToWaypoint;
         private Vector3 directionFromTankToWaypoint;
@@ -57,11 +67,13 @@ namespace Assets.Scripts.Tank
         public readonly UnityEvent<float, float> StateChanged = new UnityEvent<float, float>();
 
         [Inject]
-        public void Init(PlayerData playerData, LogService logService, PathfindingTagsManager tagsManager, Track track, uint tag)
+        public void Init(PlayerData playerData, LogService logService, PathfindingTagsManager tagsManager, PathfindingProvider pathProvider, PathfindingService pathfindingService, Track track, uint tag)
         {
             this.playerData = playerData;
             this.logService = logService;
             this.tagsManager = tagsManager;
+            this.pathProvider = pathProvider;
+            this.pathfindingService = pathfindingService;
             this.track = track;
             this.nodetag = tag;
         }
@@ -77,48 +89,22 @@ namespace Assets.Scripts.Tank
             distanceToFullBreaking = maxSpeed * maxSpeed / (2 * breakingAcceleration);
 
             seeker = GetComponent<Seeker>();
-            var p = seeker.StartPath(transform.position, playerData.position, OnPathCompleted);
             seeker.traversableTags = (1 << 0) | (1 << (int)nodetag);
-
-            Debug.Log("Yay, we got a path back. Did it have an error? " + p.error);
         }
 
-        public void OnPathCompleted(Path p)
+        private void OnPathCompleted(Path p)
         {
-            Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
-
-            // Path pooling. To avoid unnecessary allocations paths are reference counted.
-            // Calling Claim will increase the reference count by 1 and Release will reduce
-            // it by one, when it reaches zero the path will be pooled and then it may be used
-            // by other scripts. The ABPath.Construct and Seeker.StartPath methods will
-            // take a path from the pool if possible. See also the documentation page about path pooling.
-            p.Claim(this);
-            if (!p.error)
-            {
-                if (path != null) path.Release(this);
-                path = p;
-                endOfPathReached = false;
-                // Reset the waypoint counter so that we start to move towards the first point in the path
-                currentWaypoint = 0;
-            }
-            else
-            {
-                p.Release(this);
-            }
+            path = p;
+            endOfPathReached = false;
+            // Reset the waypoint counter so that we start to move towards the first point in the path
+            currentWaypoint = 0;
         }
 
         public void Update()
         {
-            // Update path of object and obstacles for objects in scene
-            if (Time.time > lastRepath + repathRate && seeker.IsDone())
-            {
-                lastRepath = Time.time;
+            currentPosition = transform.position;
 
-                UpdateTags();
-                // Start a new path to the targetPosition, call the the OnPathComplete function
-                // when the path has been calculated (which may take a few frames depending on the complexity)
-                seeker.StartPath(transform.position, playerData.position, OnPathCompleted);
-            }
+            UpdatePath();
 
             if (path == null || endOfPathReached)
             {
@@ -126,7 +112,7 @@ namespace Assets.Scripts.Tank
                 return;
             }
 
-            var distanceToEndPoint = Vector3.Distance(transform.position, path.vectorPath[path.vectorPath.Count - 1]);
+            var distanceToEndPoint = Vector3.Distance(currentPosition, path.vectorPath[path.vectorPath.Count - 1]);
 
             if (distanceToEndPoint < endWaypointMinDistance)
             {
@@ -137,14 +123,14 @@ namespace Assets.Scripts.Tank
 
             // If you want maximum performance you can check the squared distance instead to get rid of a
             // square root calculation. But that is outside the scope of this tutorial.
-            currentDistanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+            currentDistanceToWaypoint = Vector3.Distance(currentPosition, path.vectorPath[currentWaypoint]);
 
             while (currentWaypoint + 1 < path.vectorPath.Count)
             {
                 if (currentDistanceToWaypoint < nextWaypointMinDistance)
                 {
                     currentWaypoint++;
-                    currentDistanceToWaypoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+                    currentDistanceToWaypoint = Vector3.Distance(currentPosition, path.vectorPath[currentWaypoint]);
                 }
                 else
                 {
@@ -154,18 +140,43 @@ namespace Assets.Scripts.Tank
 
             // Direction to the next waypoint
             // Normalize it so that it has a length of 1 world unit
-            directionFromTankToWaypoint = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+            directionFromTankToWaypoint = (path.vectorPath[currentWaypoint] - currentPosition).normalized;
             signedAngleFromTankToWaypoint = Vector3.SignedAngle(transform.up, directionFromTankToWaypoint, Vector3.forward);
+        }
 
+        public void UpdatePath()
+        {
+            var distanceToPlayer = Vector2.Distance(currentPosition, playerData.position);
+
+            if (distanceToPlayer < distanceToPlayerToRecalculateEndPoint)
+            {
+                // change target to random position near player
+                pathfindingService.UpdateRandomFreePointNearPlayer(ref endPoint, endPointRecalculatingRate, ref lastEndPointTime, endOfPathReached);
+            }
+            else
+            {
+                // Update end point of path
+                pathfindingService.UpdateRandomFreePoint(ref endPoint, endPointRecalculatingRate, currentPosition,
+                    ref lastEndPointTime, endOfPathReached);
+            }
+
+            // Update path of object and obstacles for objects in scene
+            if (Time.time > lastRepath + pathRecalculatingRate && seeker.IsDone())
+            {
+                lastRepath = Time.time;
+
+                UpdateTags();
+                // Start a new path to the targetPosition, call the the OnPathComplete function
+                // when the path has been calculated (which may take a few frames depending on the complexity)
+
+                pathProvider.GeneratePath(seeker, currentPosition, endPoint, OnPathCompleted);
+            }
         }
 
         void FixedUpdate()
         {
             var startingSpeed = currentSpeed;
             var startingRotationSpeed = currentRotationSpeed;
-
-            Debug.Log("Angle:                                     " + signedAngleFromTankToWaypoint);
-            Debug.Log("Speed:                                     " + currentSpeed);
 
             // Enemy can only move or rotate, not both simultaneously
             if (!endOfPathReached)
@@ -299,6 +310,15 @@ namespace Assets.Scripts.Tank
         private void OnDestroy()
         {
             tagsManager.ReleaseTag(nodetag);
+        }
+        
+        private void OnDrawGizmos()
+        {
+            foreach (var graphNode in nodes)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere((Vector3)graphNode.position, 0.25f);
+            }
         }
     }
 }
