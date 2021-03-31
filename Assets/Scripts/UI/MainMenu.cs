@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Settings;
+﻿using System;
+using Assets.Scripts.Core.Settings;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
@@ -7,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.UI
 {
@@ -50,7 +52,7 @@ namespace Assets.Scripts.UI
 
         private void OptionsButtonPressed()
         {
-            _ = sceneManager.LoadScene(SceneName.Workshop);
+
         }
 
         private void ExitButtonPressed()

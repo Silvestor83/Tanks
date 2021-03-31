@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   playerData:
-    position: {x: -23.9976, y: 19.68603}
+    position: {x: 3.42, y: -20.43}
   levelData:
     GameFieldWidth: 99.5
     GameFieldHeight: 48.5
@@ -22,3 +22,5 @@ MonoBehaviour:
     PlayerTrackingDistance: 15
     EnemyAimingDistance: 20
     CannonAimingDistance: 35
+    EnemyFirerateFactor: 3
+    EnemyBulletsSpreadAngle: 5

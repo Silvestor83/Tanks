@@ -30,18 +30,6 @@ namespace Assets.Scripts.Core
             await sceneManager.LoadScene(SceneName.GameMenu);
         }
 
-        private void OnDrawGizmos()
-        {
-            //Gizmos.color = Color.cyan;
-            //Gizmos.DrawCube(Vector3.zero, Vector3.one * 10f);
-
-            //Gizmos.color = Color.magenta;
-            //Gizmos.DrawCube(new Vector3(20 , 0) , Vector3.one * 10f);
-
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawCube(new Vector3(0, mainSettings.DistanceForRed), Vector3.one * 10f);
-        }
-
         private void OnApplicationQuit()
         {
             settingsSo.UpdateSettingFiles();

@@ -19,14 +19,17 @@ namespace Assets.Scripts.Services
             return SceneManager.UnloadSceneAsync(sceneName.GetString()).ToUniTask();
         }
 
-        public void ActivateSceneObjects(SceneName sceneName, bool isActive, string withoutTagged = null)
+        /// <summary>
+        /// Change state from active to not active or vise versa, for scene
+        /// </summary>
+        public void ChangeStateForObjectsInScene(SceneName sceneName, bool isActive, string exceptTagged = null)
         {
             var scene = SceneManager.GetSceneByName(sceneName.GetString());
             var objects = scene.GetRootGameObjects();
 
             foreach (var obj in objects)
             {
-                if (withoutTagged == null || !obj.CompareTag(withoutTagged))
+                if (exceptTagged == null || !obj.CompareTag(exceptTagged))
                 {
                     obj.SetActive(isActive);
                 }

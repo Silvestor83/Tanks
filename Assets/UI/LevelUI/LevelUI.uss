@@ -1,0 +1,44 @@
+.LevelUI {
+    height: 100%;
+    width: 100%;
+    left: auto;
+    position: relative;
+    -unity-slice-left: 0;
+    -unity-text-align: upper-left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#healthbarBack {
+    background-image: url('/Assets/3rdParty/SimplePixelUI/artwork/halfcustomizible/rounded/bar_rounded_HCC_horizontal.png');
+    background-color: rgba(0, 0, 0, 0);
+    width: 200px;
+    height: 20px;
+    -unity-background-image-tint-color: rgb(165, 165, 165);
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-left: 1;
+    -unity-slice-right: 1;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+#healthbar {
+    background-image: url('/Assets/3rdParty/SimplePixelUI/artwork/halfcustomizible/rounded/bar_rounded_HCC_horizontal.png');
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+    height: 100%;
+    -unity-slice-left: 1;
+    -unity-slice-right: 1;
+    width: 100%;
+}
+
+#health {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -unity-text-align: upper-center;
+    padding-top: 1px;
+    margin-left: auto;
+    margin-right: auto;
+}

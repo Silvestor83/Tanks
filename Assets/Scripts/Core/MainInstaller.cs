@@ -13,6 +13,7 @@ namespace Assets.Scripts.Core
             Container.Bind<LogService>().AsSingle();
             Container.Bind<SceneService>().AsSingle();
             Container.Bind<SceneManager>().AsSingle();
+            Container.Bind<DestructionService>().AsSingle();
         }
     }
 }

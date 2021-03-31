@@ -62,7 +62,7 @@ namespace Assets.Scripts.Managers
 
             if (!isSceneObjectsActive)
             {
-                sceneService.ActivateSceneObjects(scene.Name, false, TAG_FOR_NOT_ACTIVATED_OBJECTS);
+                sceneService.ChangeStateForObjectsInScene(scene.Name, false, TAG_FOR_NOT_ACTIVATED_OBJECTS);
                 logService.Loggger.ZLogTrace($"Scene objects deactivated. ({scene.Name.GetString()})");
             }
 
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Managers
 
         private void ActivateSceneObjectsRecursively(SceneComponent scene)
         {
-            sceneService.ActivateSceneObjects(scene.Name, true);
+            sceneService.ChangeStateForObjectsInScene(scene.Name, true);
             logService.Loggger.ZLogTrace($"Scene objects activated. ({scene.Name.GetString()})");
 
             foreach (var dependentScene in scene.DependentScenes)

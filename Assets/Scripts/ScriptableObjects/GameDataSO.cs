@@ -18,8 +18,6 @@ namespace Assets.Scripts.ScriptableObjects
         {
             Container.BindInstance(playerData);
             Container.BindInstance(levelData);
-            Container.Bind<PathfindingService>().AsSingle();
-            Container.Bind<PathfindingProvider>().AsTransient();
         }
     }
 }

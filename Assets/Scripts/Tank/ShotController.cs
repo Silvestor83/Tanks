@@ -2,6 +2,7 @@
 using Assets.Scripts.GameEntities;
 using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -17,11 +18,13 @@ namespace Assets.Scripts.Tank
         private Projectile projectile;
         private Vector2 direction;
         private ExplosionCreator explosionCreator;
+        private DestructionService destructionService;
 
         [Inject]
-        public void Init(ExplosionCreator explosionCreator, Projectile projectile, Vector2 direction)
+        public void Init(ExplosionCreator explosionCreator, DestructionService destructionService, Projectile projectile, Vector2 direction)
         {
             this.explosionCreator = explosionCreator;
+            this.destructionService = destructionService;
             this.projectile = projectile;
             this.direction = direction;
         }
@@ -41,18 +44,7 @@ namespace Assets.Scripts.Tank
 
         private void CheckDestruction(GameObject collisionGameObject)
         {
-            if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString()) 
-                || collisionGameObject.CompareTag(GameObjectTag.Enemy.ToString())
-                || collisionGameObject.CompareTag(GameObjectTag.Cannon.ToString()))
-            {
-                var healthController = collisionGameObject.GetComponent<HealthController>();
-                healthController.CurrentHealth -= projectile.Damage;
-
-                if (healthController.CurrentHealth <= 0)
-                {
-                    Destroy(collisionGameObject);
-                }
-            }
+            destructionService.CheckDestruction(collisionGameObject, projectile);
         }
     }
 }
