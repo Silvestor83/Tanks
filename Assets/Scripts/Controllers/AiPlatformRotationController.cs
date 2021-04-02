@@ -1,11 +1,7 @@
-﻿using System;
-using Assets.Scripts.Core.GameData;
-using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
+﻿using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
-using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AiPlatformRotationController : AiRotationControllerBase
     {

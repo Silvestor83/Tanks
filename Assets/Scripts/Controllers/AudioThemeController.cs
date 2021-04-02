@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AudioThemeController : MonoBehaviour
     {

@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Providers;
 using Assets.Scripts.Services;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Zenject;
-using ZLogger;
-using Random = UnityEngine.Random;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AiMoveController : MonoBehaviour
     {

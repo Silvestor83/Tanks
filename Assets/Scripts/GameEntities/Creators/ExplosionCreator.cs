@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Assets.Scripts.Core.Settings;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Services;
-using Assets.Scripts.Tank;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

@@ -1,14 +1,11 @@
-﻿using System;
-using Assets.Scripts.Core.GameData;
+﻿using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 using Random = UnityEngine.Random;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AiFiringController : MonoBehaviour
     {

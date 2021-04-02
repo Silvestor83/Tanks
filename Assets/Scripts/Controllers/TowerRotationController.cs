@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
-using Assets.Scripts.Services;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
-using PlayerSettings = Assets.Scripts.Core.Settings.PlayerSettings;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class TowerRotationController : MonoBehaviour
     {

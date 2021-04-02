@@ -1,12 +1,10 @@
-﻿using System;
-using Assets.Scripts.GameEntities.Creators;
+﻿using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class FiringController : MonoBehaviour
     {

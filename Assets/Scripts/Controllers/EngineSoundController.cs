@@ -1,9 +1,8 @@
 ﻿using Assets.Scripts.GameEntities.Units;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class EngineSoundController : MonoBehaviour
     {

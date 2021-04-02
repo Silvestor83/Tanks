@@ -1,26 +1,14 @@
-﻿using System;
-using System.Linq;
-using Assets.Scripts.Core.GameData;
+﻿using Assets.Scripts.Core.GameData;
+using Assets.Scripts.GameEntities.Units;
 using Assets.Scripts.Services;
-using Microsoft.Extensions.Logging;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Zenject;
 using ZLogger;
-using Assets.Scripts.Core.Settings;
-using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
-using Button = UnityEngine.UIElements.Button;
-using PlayerSettings = Assets.Scripts.Core.Settings.PlayerSettings;
-using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class MoveController : MonoBehaviour
     {

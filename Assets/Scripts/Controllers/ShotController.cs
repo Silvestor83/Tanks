@@ -1,15 +1,11 @@
-﻿using System;
-using Assets.Scripts.GameEntities;
+﻿using Assets.Scripts.GameEntities;
 using Assets.Scripts.GameEntities.Creators;
-using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Services;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
 using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class ShotController : MonoBehaviour
     {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Resources;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class ExplosionController : MonoBehaviour
     {

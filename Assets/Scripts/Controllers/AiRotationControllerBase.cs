@@ -3,7 +3,7 @@ using Assets.Scripts.GameEntities.Units;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AiRotationControllerBase : MonoBehaviour
     {

@@ -1,11 +1,10 @@
 ﻿using Assets.Scripts.Core.Settings;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure;
 using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-namespace Assets.Scripts.Tank
+namespace Assets.Scripts.Controllers
 {
     public class AnimationController : MonoBehaviour
     {

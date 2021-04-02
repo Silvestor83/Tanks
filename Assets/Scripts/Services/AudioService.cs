@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Enums;
-using Assets.Scripts.Tank;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
