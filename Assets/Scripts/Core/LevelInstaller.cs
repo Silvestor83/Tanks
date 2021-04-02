@@ -23,6 +23,7 @@ namespace Assets.Scripts.Core
             Container.Bind(typeof(ExplosionCreator), typeof(IDisposable)).To<ExplosionCreator>().AsSingle();
             Container.Bind<PathfindingService>().AsSingle();
             Container.Bind<PathfindingProvider>().AsTransient();
+            Container.Bind<EnemiesManager>().AsSingle();
         }
     }
 }

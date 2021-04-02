@@ -24,3 +24,5 @@ MonoBehaviour:
     CannonAimingDistance: 35
     EnemyFirerateFactor: 3
     EnemyBulletsSpreadAngle: 5
+    TotalEnemies: 20
+    MaxEnemiesOnScene: 6

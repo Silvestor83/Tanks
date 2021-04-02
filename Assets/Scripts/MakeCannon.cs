@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameEntities.Creators;
+﻿using System;
+using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
 using Zenject;
@@ -8,6 +9,7 @@ namespace Assets.Scripts
     public class MakeCannon : MonoBehaviour
     {
         private CannonCreator cannonCreator;
+        private Transform[] childTransforms;
 
         [Inject]
         public void Init(CannonCreator creator)
@@ -15,10 +17,13 @@ namespace Assets.Scripts
             this.cannonCreator = creator;
         }
 
-        private async void Awake()
+        private void Awake()
         {
-            var childTransforms = GetComponentsInChildren<Transform>();
+            childTransforms = GetComponentsInChildren<Transform>();
+        }
 
+        private async void Start()
+        {
             foreach (var childTransform in childTransforms)
             {
                 if (childTransform.CompareTag(GameObjectTag.Cannon.ToString()))

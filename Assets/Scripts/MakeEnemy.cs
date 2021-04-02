@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using UnityEngine;
 using Zenject;
 
@@ -8,25 +10,23 @@ namespace Assets.Scripts
 {
     public class MakeEnemy : MonoBehaviour
     {
-        private TankCreator tankCreator;
+        private EnemiesManager enemiesManager;
 
         [Inject]
-        public void Init(TankCreator creator)
+        public void Init(EnemiesManager enemiesManager)
         {
-            this.tankCreator = creator;
+            this.enemiesManager = enemiesManager;
         }
 
-        private async void Awake()
+        private void Awake()
         {
             var childTransforms = GetComponentsInChildren<Transform>();
+            enemiesManager.SpawnPoints.AddRange(childTransforms.Where(c => c.CompareTag(GameObjectTag.Portal.ToString())).Select(c => c.position));
+        }
 
-            foreach (var childTransform in childTransforms)
-            {
-                if (childTransform.CompareTag(GameObjectTag.Portal.ToString()))
-                {
-                    await tankCreator.CreateTankAsync(HullName.SmallA, TowerName.SmallA, TrackName.TrackC, GunName.SmallA, childTransform.position, "EnemyTank", GameObjectTag.Enemy);
-                }
-            }
+        private async void Start()
+        {
+            await enemiesManager.SpawnEnemies();
         }
 
         private void OnDrawGizmos()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Infrastructure.Enums;
 
 namespace Assets.Scripts.GameEntities.Units
 {
@@ -13,5 +14,6 @@ namespace Assets.Scripts.GameEntities.Units
         public string PrefabName;
         public int Durability;
         public int Cost;
+        public MechanicalPartSize Size;
     }
 }

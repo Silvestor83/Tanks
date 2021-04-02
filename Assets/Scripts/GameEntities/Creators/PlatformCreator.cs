@@ -18,7 +18,6 @@ namespace Assets.Scripts.GameEntities.Creators
         private PlayerSettings playerSettings;
         private LogService logService;
         private MechanicalPartsBuilder builder;
-        private const string TANK_ROOT_PREFAB = "Assets/Prefabs/Tanks/Tank.prefab";
         private const string CANNON_ROOT_PREFAB = "Assets/Prefabs/Tanks/Cannon.prefab";
 
 

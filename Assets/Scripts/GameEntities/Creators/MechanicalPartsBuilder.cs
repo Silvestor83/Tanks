@@ -70,6 +70,8 @@ namespace Assets.Scripts.GameEntities.Creators
             {
                 throw new Exception($"CannonRoot GO from {prefabKey} prefab doesn't contain HealthController component.");
             }
+
+            container.InjectGameObjectForComponent<HealthController>(cannon);
             var healthController = cannon.GetComponent<HealthController>();
             healthController.Init(health);
 
