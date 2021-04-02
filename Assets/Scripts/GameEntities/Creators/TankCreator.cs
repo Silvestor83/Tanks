@@ -43,7 +43,7 @@ namespace Assets.Scripts.GameEntities.Creators
             logService.Loggger.ZLogTrace($"Tank Root was created.");
             
             // Create hull
-            var hullGO = await builder.CreateHull(hull.PrefabName, hullName, tankRoot.transform);
+            var hullGO = await builder.CreateHull(hull.PrefabName, hullName, track.EngineSoundAssetName, tankRoot.transform);
             logService.Loggger.ZLogTrace($"Hull was created.");
 
             // Create tracks

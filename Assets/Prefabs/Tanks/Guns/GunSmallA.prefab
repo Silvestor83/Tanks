@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 5672107799306875881, guid: 34185b1f6d65f864cb0ecbd8a465648e,
         type: 3}
       propertyPath: m_Name
-      value: SmallA
+      value: BarrelSmallA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34185b1f6d65f864cb0ecbd8a465648e, type: 3}

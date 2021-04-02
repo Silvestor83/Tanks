@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: b502189114198dd4a9a983d8ce489d47
+  m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
   m_DisableCatalogUpdateOnStart: 0
+  m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 0
@@ -31,6 +33,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c9daf57bc32b7154b8cbdd6ec2e30855, type: 2}
   - {fileID: 11400000, guid: f18d653f92bdad643af9dc6b0e5fa001, type: 2}
   - {fileID: 11400000, guid: fd9fba7d7e319794ca82efc5fde14c47, type: 2}
+  - {fileID: 11400000, guid: 9a2e065740d44594f8cffeea7ed52abe, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -78,6 +81,7 @@ MonoBehaviour:
     - Locale-ru
     - Explosion
     - Projectile
+    - Sound
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: cbb56b81fec6d204886361ab0d59c3c8, type: 2}

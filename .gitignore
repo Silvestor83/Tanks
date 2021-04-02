@@ -71,6 +71,10 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# Audio Assets
+/[Aa]ssets/Gamemaster Audio - Pro Sound Collection
+/[Aa]ssets/Gamemaster Audio - Pro Sound Collection.meta
+
 # Exceptions
 !*.dll
 !*.obj

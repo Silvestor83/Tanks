@@ -7,10 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6782303673930544109, guid: cdc827418d9055e45be550ac889caad3,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4512a666d88a6d2459ca4fd20c05d94f, type: 3}
+    - target: {fileID: -6782303673930544109, guid: cdc827418d9055e45be550ac889caad3,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6749812131560962554, guid: f7ffe180b982ab54383cd6969bd0729a,
+        type: 2}
     - target: {fileID: 392558046766043739, guid: cdc827418d9055e45be550ac889caad3,
         type: 3}
       propertyPath: m_Name
-      value: Explosion
+      value: LargeExplosion
       objectReference: {fileID: 0}
     - target: {fileID: 4380611188661695578, guid: cdc827418d9055e45be550ac889caad3,
         type: 3}

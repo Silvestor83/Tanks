@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI
         private VisualElement root;
         private LocalizationService locService;
         private SceneManager sceneManager;
-        private MainSettings mainSettings;
+        private AudioService audioService;
 
         private void Start()
         {
@@ -39,24 +39,26 @@ namespace Assets.Scripts.UI
         }
 
         [Inject]
-        public void Init(SceneManager sceneManager, MainSettings mainSettings)
+        public void Init(SceneManager sceneManager, AudioService audioService)
         {
             this.sceneManager = sceneManager;
-            this.mainSettings = mainSettings;
+            this.audioService = audioService;
         }
 
         private void StartButtonPressed()
         {
+            audioService.PlaySound(AudioSoundName.ButtonClick3);
             _ = sceneManager.LoadScene(SceneName.Level);
         }
 
         private void OptionsButtonPressed()
         {
-
+            audioService.PlaySound(AudioSoundName.ButtonClick3);
         }
 
         private void ExitButtonPressed()
         {
+            audioService.PlaySound(AudioSoundName.ButtonClick3);
             Application.Quit();
         }
     }

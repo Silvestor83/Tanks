@@ -16,6 +16,7 @@ namespace Assets.Scripts.Tank
         private ProjectileCreator projectileCreator;
         private LevelData levelData;
         private AiRotationControllerBase rotationController;
+        private AudioSource shotSound;
         private float projectileOffset;
         private float lastShotWasAt;
 
@@ -27,11 +28,12 @@ namespace Assets.Scripts.Tank
             this.gun = gun;
         }
 
-        private void Awake()
+        private void Start()
         {
             var bindings = GetComponent<GunBindings>();
             projectileOffset = bindings.ProjectileOffset;
 
+            shotSound = GetComponent<AudioSource>();
             rotationController = GetComponentInParent<AiRotationControllerBase>();
         }
 
@@ -47,6 +49,7 @@ namespace Assets.Scripts.Tank
                     var parent = transform.parent.parent.parent.parent;
 
                     projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, shotDirection, parent);
+                    shotSound.Play();
 
                     lastShotWasAt = Time.time;
                 }

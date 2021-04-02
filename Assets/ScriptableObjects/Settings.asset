@@ -51,42 +51,50 @@ MonoBehaviour:
       Durability: 200
       Cost: 500
       Name: 0
-      MaxSpeed: 4
+      MaxSpeed: 6
       MinSpeed: -2
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
       rotateSpeed: 120
+      AnimationStep: 0.15
+      EngineSoundAssetName: Assets/Audio/Engines/engine_01.wav
     - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackB.prefab
       Durability: 250
       Cost: 500
       Name: 1
-      MaxSpeed: 4
+      MaxSpeed: 8
       MinSpeed: -2
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
       rotateSpeed: 120
+      AnimationStep: 0.17
+      EngineSoundAssetName: Assets/Audio/Engines/engine_02.wav
     - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackC.prefab
       Durability: 300
       Cost: 500
       Name: 2
-      MaxSpeed: 4
+      MaxSpeed: 5
       MinSpeed: -2
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
       rotateSpeed: 120
+      AnimationStep: 0.2
+      EngineSoundAssetName: Assets/Audio/Engines/engine_03.wav
     - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackD.prefab
       Durability: 400
       Cost: 500
       Name: 3
-      MaxSpeed: 4
+      MaxSpeed: 7
       MinSpeed: -2
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
       rotateSpeed: 120
+      AnimationStep: 0.25
+      EngineSoundAssetName: Assets/Audio/Engines/engine_04.wav
     Guns:
     - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallA.prefab
       Durability: 0

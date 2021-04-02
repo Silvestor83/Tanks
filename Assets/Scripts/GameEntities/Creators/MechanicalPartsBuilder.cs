@@ -76,10 +76,13 @@ namespace Assets.Scripts.GameEntities.Creators
             return cannon;
         }
 
-        public async UniTask<GameObject> CreateHull(string prefabKey, HullName name, Transform parentTransform)
+        public async UniTask<GameObject> CreateHull(string prefabKey, HullName name, string engineSoundAssetName, Transform parentTransform)
         {
             var hullGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
             hullGO.name = name.ToString();
+
+            var engineAudioClip = await Addressables.LoadAssetAsync<AudioClip>(engineSoundAssetName);
+            hullGO.GetComponent<AudioSource>().clip = engineAudioClip;
             
             return hullGO;
         }

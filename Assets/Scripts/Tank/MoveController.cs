@@ -40,7 +40,7 @@ namespace Assets.Scripts.Tank
         private LogService logService;
         private PlayerData playerData;
 
-        public readonly UnityEvent<float,float> StateChanged = new UnityEvent<float, float>();
+        public readonly UnityEvent<Track, float, float> StateChanged = new UnityEvent<Track, float, float>();
 
         [Inject]
         public void Init(PlayerData playerData, LogService logService, Track track)
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Tank
 
             SavePlayerData();
 
-            EventsInvocation(startingSpeed, startingRotationSpeed);
+            EventsInvocation(track, startingSpeed, startingRotationSpeed);
         }
 
         private void SavePlayerData()
@@ -149,11 +149,11 @@ namespace Assets.Scripts.Tank
             }
         }
 
-        private void EventsInvocation(float startingSpeed, float startingRotationSpeed)
+        private void EventsInvocation(Track track, float startingSpeed, float startingRotationSpeed)
         {
             if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
             {
-                StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
+                StateChanged.Invoke(track, Mathf.Abs(currentSpeed), currentRotationSpeed);
             }
         }
 

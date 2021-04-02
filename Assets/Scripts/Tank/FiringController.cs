@@ -12,6 +12,7 @@ namespace Assets.Scripts.Tank
     {
         private Gun gun;
         private ProjectileCreator projectileCreator;
+        private AudioSource shotSound;
         private float projectileOffset;
 
         [Inject]
@@ -25,12 +26,15 @@ namespace Assets.Scripts.Tank
         {
             var bindings = GetComponent<GunBindings>();
             projectileOffset = bindings.ProjectileOffset;
+
+            shotSound = GetComponent<AudioSource>();
         }
 
         private void OnClick(InputValue value)
         {
             var root = transform.root;
             projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, transform.up, root);
+            shotSound.Play();
         }
     }
 }

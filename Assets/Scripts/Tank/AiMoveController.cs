@@ -63,8 +63,7 @@ namespace Assets.Scripts.Tank
         private List<GraphNode> nodes = new List<GraphNode>();
         public uint nodetag;
 
-
-        public readonly UnityEvent<float, float> StateChanged = new UnityEvent<float, float>();
+        public readonly UnityEvent<Track, float, float> StateChanged = new UnityEvent<Track, float, float>();
 
         [Inject]
         public void Init(PlayerData playerData, LogService logService, PathfindingTagsManager tagsManager, PathfindingProvider pathProvider, PathfindingService pathfindingService, Track track, uint tag)
@@ -207,7 +206,7 @@ namespace Assets.Scripts.Tank
             // If we change speed or rotation in loop update we need to invoke events (e.g. Animations depends on it)
             if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
             {
-                StateChanged.Invoke(Mathf.Abs(currentSpeed), currentRotationSpeed);
+                StateChanged.Invoke(track, Mathf.Abs(currentSpeed), currentRotationSpeed);
             }
         }
 

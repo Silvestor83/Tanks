@@ -22,5 +22,10 @@ namespace Assets.Scripts.GameEntities.Units
         /// In degrees per second
         /// </summary>
         public float rotateSpeed = 120;
+        /// <summary>
+        /// distance between two animation frames in Unity units
+        /// </summary>
+        public float AnimationStep;
+        public string EngineSoundAssetName;
     }
 }
