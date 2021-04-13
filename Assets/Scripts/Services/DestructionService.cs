@@ -28,7 +28,7 @@ namespace Assets.Scripts.Services
                     OnDamageDone(new DamageEventArgs(healthController.MaxHealth, healthController.CurrentHealth));
                 }
 
-                if (healthController.CurrentHealth <= 0)
+                if (healthController.CurrentHealth <= 0 && !collisionGameObject.CompareTag(GameObjectTag.Player.ToString()))
                 {
                     UnityEngine.Object.Destroy(collisionGameObject);
                 }

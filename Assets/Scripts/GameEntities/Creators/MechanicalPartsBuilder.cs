@@ -37,6 +37,7 @@ namespace Assets.Scripts.GameEntities.Creators
             if (tag == GameObjectTag.Player)
             {
                 tank.AddComponent<MoveController>();
+                tank.AddComponent<GameController>();
                 container.InjectGameObjectForComponent<MoveController>(tank, new object[] { track });
             }
             else if (tag == GameObjectTag.Enemy)

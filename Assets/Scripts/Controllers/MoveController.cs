@@ -1,10 +1,15 @@
-﻿using Assets.Scripts.Core.GameData;
+﻿using System;
+using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
+using Assets.Scripts.Infrastructure.Enums;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Zenject;
+using Zenject.SpaceFighter;
 using ZLogger;
 using Vector3 = UnityEngine.Vector3;
 
@@ -25,16 +30,14 @@ namespace Assets.Scripts.Controllers
         private float moveInputValue;
 
         private Track track;
-        private LogService logService;
         private PlayerData playerData;
 
         public readonly UnityEvent<Track, float, float> StateChanged = new UnityEvent<Track, float, float>();
 
         [Inject]
-        public void Init(PlayerData playerData, LogService logService, Track track)
+        public void Init(PlayerData playerData, Track track)
         {
             this.playerData = playerData;
-            this.logService = logService;
             this.track = track;
         }
 
@@ -56,8 +59,6 @@ namespace Assets.Scripts.Controllers
 
             Rotate();
             Move();
-            //OtherActions();
-
             SavePlayerData();
 
             EventsInvocation(track, startingSpeed, startingRotationSpeed);
@@ -117,24 +118,6 @@ namespace Assets.Scripts.Controllers
             }
 
             transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
-        }
-
-        private void OtherActions()
-        {
-            if (Input.GetKey(KeyCode.Space))
-            {
-                var posX = gameObject.transform.position.x;
-                var posY = gameObject.transform.position.y;
-                var posZ = gameObject.transform.position.z;
-
-                Debug.Log($"X: {posX}, Y: {posY}, Z: {posZ}");
-            }
-
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                logService.Loggger.ZLogTrace("Application quite");
-                Application.Quit();
-            }
         }
 
         private void EventsInvocation(Track track, float startingSpeed, float startingRotationSpeed)

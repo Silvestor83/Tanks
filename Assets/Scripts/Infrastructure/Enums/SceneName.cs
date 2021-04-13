@@ -8,11 +8,13 @@ namespace Assets.Scripts.Infrastructure.Enums
 {
     public enum SceneName
     {
-        Main = 0,
+        Main,
         GameMenu,
         LoadingScreen,
         Level,
         Workshop,
-        GUI
+        GUI,
+        LevelMenu,
+        GameOver
     }
 }

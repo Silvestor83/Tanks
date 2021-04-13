@@ -14,7 +14,7 @@ namespace Assets.Scripts.Services
             return SceneManager.LoadSceneAsync(sceneName.GetString(), LoadSceneMode.Additive).ToUniTask();
         }
 
-        public UniTask UnloadScene(SceneName sceneName)
+        public UniTask UnloadSceneAsync(SceneName sceneName)
         {
             return SceneManager.UnloadSceneAsync(sceneName.GetString()).ToUniTask();
         }

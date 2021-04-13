@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Assets.Scripts.Core.GameData;
 using Assets.Scripts.Core.Settings;
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Managers
             SpawnPoints = new List<Vector3>();
         }
 
-        public async UniTask SpawnEnemies()
+        public async UniTask SpawnEnemies(CancellationToken token)
         {
             while (remainingEnemies > 0)
             {
@@ -52,6 +53,10 @@ namespace Assets.Scripts.Managers
 
                     foreach (var spawnPoint in SpawnPoints.Take(remainingEnemies))
                     {
+                        if (token.IsCancellationRequested)
+                        {
+                            break;
+                        }
                         await SpawnEnemy(spawnPoint);
                     }
 
@@ -62,6 +67,10 @@ namespace Assets.Scripts.Managers
 
                 if (activeEnemies < levelData.MaxEnemiesOnScene)
                 {
+                    if (token.IsCancellationRequested)
+                    {
+                        break;
+                    }
                     await TrySpawnEnemy();
                 }
             }

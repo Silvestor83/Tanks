@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
@@ -11,6 +12,7 @@ namespace Assets.Scripts
     public class MakeEnemy : MonoBehaviour
     {
         private EnemiesManager enemiesManager;
+        private CancellationTokenSource cancelSource;
 
         [Inject]
         public void Init(EnemiesManager enemiesManager)
@@ -22,11 +24,13 @@ namespace Assets.Scripts
         {
             var childTransforms = GetComponentsInChildren<Transform>();
             enemiesManager.SpawnPoints.AddRange(childTransforms.Where(c => c.CompareTag(GameObjectTag.Portal.ToString())).Select(c => c.position));
+
+            cancelSource = new CancellationTokenSource();
         }
 
         private async void Start()
         {
-            await enemiesManager.SpawnEnemies();
+            await enemiesManager.SpawnEnemies(cancelSource.Token);
         }
 
         private void OnDrawGizmos()
@@ -42,6 +46,11 @@ namespace Assets.Scripts
                     Gizmos.DrawSphere(childTransform.position, 1);
                 }
             }
+        }
+
+        private void OnDestroy()
+        {
+            cancelSource.Cancel();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Core.Settings;
+﻿using System;
+using Assets.Scripts.Core.Settings;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using UnityEngine;
@@ -39,6 +40,11 @@ namespace Assets.Scripts.UI
         {
             healthbar.style.width = 200 * (e.CurrentHealth / e.MaxHealth);
             health.text = e.CurrentHealth + " / " + e.MaxHealth;
+        }
+
+        private void OnDestroy()
+        {
+            destructionService.DamageDone -= PlayerTookDamage;
         }
     }
 }

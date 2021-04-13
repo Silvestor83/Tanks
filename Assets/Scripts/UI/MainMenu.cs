@@ -4,8 +4,11 @@ using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
+using Assets.Scripts.UI.Templates;
 using Cysharp.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -17,49 +20,70 @@ namespace Assets.Scripts.UI
         private VisualElement root;
         private LocalizationService locService;
         private SceneManager sceneManager;
+        private MainSettings mainSettings;
         private AudioService audioService;
+        private OptionsMenuTempalte optionsMenuTemplate;
+
+        private VisualElement mainMenu;
+        private VisualElement optionsMenu;
 
         private void Start()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
 
-            var startButton = root.Q<Button>("start");
-            var optionsButton = root.Q<Button>("options");
-            var exitButton = root.Q<Button>("exit");
+            mainMenu = root.Q("mainMenu");
+            optionsMenu = root.Q("optionsMenu");
 
-            //startButton.text = locService.GetString(LocalizationTables.UI, "");
+            root.Q<Button>("start").clicked += StartButtonPressed;
+            root.Q<Button>("options").clicked += OptionsButtonPressed; 
+            root.Q<Button>("exit").clicked += ExitButtonPressed;
 
-            //root.Q<Button>("exit").RegisterCallback<MouseDownEvent>();
+            root.Q<Button>("back").clicked += BackButtonPressed;
 
+            root.Q<TextElement>("version").text = "ver.: " + Application.version;
 
+            optionsMenuTemplate.Init(optionsMenu);
 
-            startButton.clicked += StartButtonPressed;
-            optionsButton.clicked += OptionsButtonPressed;
-            exitButton.clicked += ExitButtonPressed;
+            //ToDo startButton.text = locService.GetString(LocalizationTables.UI, "");
         }
 
         [Inject]
-        public void Init(SceneManager sceneManager, AudioService audioService)
+        public void Init(MainSettings mainSettings, SceneManager sceneManager, AudioService audioService)
         {
+            this.mainSettings = mainSettings;
             this.sceneManager = sceneManager;
             this.audioService = audioService;
+            optionsMenuTemplate = new OptionsMenuTempalte(mainSettings, audioService);
         }
 
         private void StartButtonPressed()
         {
             audioService.PlaySound(AudioSoundName.ButtonClick3);
-            _ = sceneManager.LoadScene(SceneName.Level);
+            _ = sceneManager.LoadSceneAsync(SceneName.Level);
         }
 
         private void OptionsButtonPressed()
         {
             audioService.PlaySound(AudioSoundName.ButtonClick3);
+
+            mainMenu.style.display = DisplayStyle.None;
+            optionsMenu.style.display = DisplayStyle.Flex;
         }
 
         private void ExitButtonPressed()
         {
             audioService.PlaySound(AudioSoundName.ButtonClick3);
             Application.Quit();
+        }
+
+        // Options menu
+
+        private void BackButtonPressed()
+        {
+            audioService.PlaySound(AudioSoundName.ButtonClick3);
+
+            mainMenu.style.display = DisplayStyle.Flex;
+            optionsMenu.style.display = DisplayStyle.None;
         }
     }
 }

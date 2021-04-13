@@ -31,30 +31,30 @@ namespace Assets.Scripts.Managers
             scenes = new Dictionary<SceneName, SceneComponent>();
         }
 
-        public async UniTask LoadScene(SceneName name, bool isActive = true)
+        public async UniTask LoadSceneAsync(SceneName name, bool isActive = true)
         {
             var scene = scenes.First(pair => pair.Key == name).Value;
 
             if (scene.LoadingScreenNeeded)
             {
-                await LoadLoadingScreen();
-                await UnloadScenesWithExcept(SceneName.LoadingScreen);
+                await LoadLoadingScreenAsync();
+                await UnloadScenesWithExceptAsync(SceneName.LoadingScreen);
 
-                await UniTask.WhenAll(LoadSceneRecursively(scene, false), UniTask.Delay(3000));
-                await UnloadScenesWithExcept(scene.Name);
+                await UniTask.WhenAll(LoadSceneRecursivelyAsync(scene, false), UniTask.Delay(3000));
+                await UnloadScenesWithExceptAsync(scene.Name);
                 ActivateSceneObjectsRecursively(scene);
             }
             else
             {
-                await LoadSceneRecursively(scene);
-                await UnloadScenesWithExcept(scene.Name);
+                await LoadSceneRecursivelyAsync(scene);
+                await UnloadScenesWithExceptAsync(scene.Name);
             }
 
             sceneService.SetActiveScene(scene.Name);
             logService.Loggger.ZLogTrace($"Scene was set to active state. ({scene.Name.GetString()})");
         }
 
-        private async UniTask LoadSceneRecursively(SceneComponent scene, bool isSceneObjectsActive = true)
+        private async UniTask LoadSceneRecursivelyAsync(SceneComponent scene, bool isSceneObjectsActive = true)
         {
             await sceneService.LoadSceneAsync(scene.Name);
             scene.Loaded = true;
@@ -68,26 +68,36 @@ namespace Assets.Scripts.Managers
 
             foreach (var dependentScene in scene.DependentScenes)
             {
-                await LoadSceneRecursively(dependentScene, isSceneObjectsActive);
+                await LoadSceneRecursivelyAsync(dependentScene, isSceneObjectsActive);
             }
         }
 
-        private async UniTask LoadLoadingScreen()
+        private async UniTask UnloadSceneRecursivelyAsync(SceneComponent scene)
+        {
+            foreach (var dependentScene in scene.DependentScenes)
+            {
+                await UnloadSceneRecursivelyAsync(dependentScene);
+            }
+
+            await sceneService.UnloadSceneAsync(scene.Name);
+            scene.Loaded = false;
+            logService.Loggger.ZLogTrace($"Scene unloaded. ({scene.Name.GetString()})");
+        }
+
+        private async UniTask LoadLoadingScreenAsync()
         {
             var loadingScene = scenes.FirstOrDefault(pair => pair.Key == SceneName.LoadingScreen).Value;
 
-            await LoadSceneRecursively(loadingScene);
+            await LoadSceneRecursivelyAsync(loadingScene);
         }
 
-        private async UniTask UnloadScenesWithExcept(SceneName exceptSceneName)
+        private async UniTask UnloadScenesWithExceptAsync(SceneName exceptSceneName)
         {
             foreach (var scene in scenes)
             {
-                if (scene.Key != exceptSceneName && scene.Value.Loaded)
+                if (scene.Key != exceptSceneName && scene.Value.Loaded && scene.Key != SceneName.Main)
                 {
-                    await sceneService.UnloadScene(scene.Key);
-                    scene.Value.Loaded = false;
-                    logService.Loggger.ZLogTrace($"Scene unloaded. ({scene.Key.GetString()})");
+                    await UnloadSceneRecursivelyAsync(scene.Value);
                 }
             }
         }
@@ -110,12 +120,30 @@ namespace Assets.Scripts.Managers
             var guiScene = new SceneComponent(SceneName.GUI);
             var levelScene = new SceneComponent(SceneName.Level, true);
             var workshopScene = new SceneComponent(SceneName.Workshop, true);
+            var levelMenuScene = new SceneComponent(SceneName.LevelMenu);
+            var gameOver = new SceneComponent(SceneName.GameOver);
 
             scenes.Add(SceneName.GameMenu, menuScene);
             scenes.Add(SceneName.LoadingScreen, loadingScreenScene);
             scenes.Add(SceneName.Level, levelScene);
             levelScene.Add(guiScene);
             scenes.Add(SceneName.Workshop, workshopScene);
+            scenes.Add(SceneName.LevelMenu, levelMenuScene);
+            scenes.Add(SceneName.GameOver, gameOver);
+        }
+
+        public async UniTask LoadSceneAdditiveAsync(SceneName name)
+        {
+            var scene = scenes.First(pair => pair.Key == name).Value;
+            
+            await LoadSceneRecursivelyAsync(scene);
+        }
+
+        public async UniTask UnloadSceneAdditiveAsync(SceneName name)
+        {
+            var scene = scenes.First(pair => pair.Key == name).Value;
+
+            await UnloadSceneRecursivelyAsync(scene);
         }
     }
 }

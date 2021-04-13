@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">    
+    <ui:VisualElement style="height: 100%;">
+		<Style src="LevelUI.uss" />
+        <ui:VisualElement name="healthbarBack">
+          <ui:VisualElement name="healthbar" />
+          <ui:Label name="health" text="1400/1400" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

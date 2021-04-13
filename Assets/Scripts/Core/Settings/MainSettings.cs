@@ -16,6 +16,13 @@ namespace Assets.Scripts.Core.Settings
 
         #endregion
 
-        public int DistanceForRed;
+        #region Sound options
+
+        public const int MAX_RELATIVE_VOLUME = 10;
+        public int MasterVolume;
+        public int MusicVolume;
+        public int EffectsVolume;
+
+        #endregion
     }
 }

@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+  <ui:Template name="Options" src="../Templates/OptionsMenu.uxml" />
+  <ui:VisualElement name="screen" class="align_center" style="height: 100%; background-color: rgba(0, 0, 0, 0.5);">
+    <ui:Style src="../Styles/Default.uss" />
+    <ui:VisualElement class="plate">
+        <ui:VisualElement name="levelMenu" class="align_center">
+          <ui:Label text="Pause" class="text"/>
+          <ui:Button focusable="True" text="Options" name="options" class="button" />
+          <ui:Button focusable="True" text="Resume" name="resume" class="button" />
+          <ui:Button focusable="True" text="Menu" name="menu" class="button" />
+        </ui:VisualElement>
+        <ui:Instance template="Options" name="optionsMenu" class="align_center" style="display: none;" />
+      </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>

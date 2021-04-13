@@ -1,11 +1,14 @@
 ﻿using Assets.Scripts.Services;
 using UnityEngine;
+using UnityEngine.Audio;
 using Zenject;
 
 namespace Assets.Scripts.Controllers
 {
     public class SoundsController : MonoBehaviour
     {
+        public AudioMixer AudioMixer;
+
         private AudioService audioService;
 
         [Inject]
@@ -18,6 +21,7 @@ namespace Assets.Scripts.Controllers
         {
             var audioSource = GetComponent<AudioSource>();
             audioService.Audio = audioSource;
+            audioService.AudioMixer = AudioMixer;
         }
     }
 }

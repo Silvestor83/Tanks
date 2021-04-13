@@ -1,35 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
-using ModestTree;
 using Pathfinding;
 using UnityEngine;
 
-public class GraphUpdater : MonoBehaviour
+namespace Assets.Scripts
 {
-    private NavGraph graph;
-
-    // Start is called before the first frame update
-    async void Start()
+    public class GraphUpdater : MonoBehaviour
     {
-        // This holds all graph data
-        AstarData data = AstarPath.active.data;
+        private NavGraph graph;
+        private CancellationTokenSource cancelSource;
 
-        // This creates a Grid Graph
-        graph = data.graphs.Single();
+        private void Awake()
+        {
+            cancelSource = new CancellationTokenSource();
+        }
+
+        // Start is called before the first frame update
+        async void Start()
+        {
+            // This holds all graph data
+            AstarData data = AstarPath.active.data;
+
+            // This creates a Grid Graph
+            graph = data.graphs.Single();
         
 
-        await UpdateGraph();
-    }
+            await UpdateGraph(cancelSource.Token);
+        }
 
-    private async UniTask UpdateGraph()
-    {
-        while (true)
+        private async UniTask UpdateGraph(CancellationToken token)
         {
-            await UniTask.Delay(2000);
+            while (true)
+            {
+                await UniTask.Delay(2000);
 
-            graph.Scan();
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                graph.Scan();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            cancelSource.Cancel();
         }
     }
 }

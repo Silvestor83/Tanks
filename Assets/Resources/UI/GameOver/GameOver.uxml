@@ -1,0 +1,7 @@
+<UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="UnityEngine.UIElements" xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+  <VisualElement class="align_center" style="height: 100%;">
+    <Style src="../Styles/Default.uss" />
+    <Label text="GAME OVER" class="large_text" style="color: rgba(250, 250, 250, 255);" />
+    <Label name="esc" text="Press ESC to return to the main menu..." class="small_text" style="color: rgb(250, 250, 250); position: absolute; bottom: 5%;"/>
+  </VisualElement>
+</UXML>

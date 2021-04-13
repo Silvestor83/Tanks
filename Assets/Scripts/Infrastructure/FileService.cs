@@ -31,7 +31,7 @@ namespace Assets.Scripts.Infrastructure
 
         public static void WriteObjToFile<T>(T obj, string path) where T : class
         {
-            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
+            using (FileStream stream = new FileStream(path, FileMode.Create))
             {
                 Serialization.Serialize(stream,obj);
             }
