@@ -13,19 +13,15 @@ using ZLogger;
 
 namespace Assets.Scripts.GameEntities.Creators
 {
-    public class CannonCreator
+    public class CannonCreator : BasePartsCreator
     {
         private PlayerSettings playerSettings;
-        private LogService logService;
-        private MechanicalPartsBuilder builder;
         private const string CANNON_ROOT_PREFAB = "Assets/Prefabs/Tanks/Cannon.prefab";
 
 
-        public CannonCreator(PlayerSettings settings, LogService logService, MechanicalPartsBuilder builder)
+        public CannonCreator(PlayerSettings settings, LogService logService, MechanicalPartsBuilder builder) : base(logService, builder)
         {
             this.playerSettings = settings;
-            this.logService = logService;
-            this.builder = builder;
         }
 
         public async UniTask CreateCannonAsync(PlatformName platformName, TowerName towerName, GunName gunName, Vector3 position, string name, GameObjectTag tag)
@@ -35,20 +31,16 @@ namespace Assets.Scripts.GameEntities.Creators
             var gun = playerSettings.Guns.First(g => g.Name == gunName);
             var health = platform.Durability + tower.Durability;
 
-            var cannonRoot = await builder.CreateCannonRoot(CANNON_ROOT_PREFAB, name, tag, health, position, false);
+            var cannonRoot = await builder.CreateCannonRootAsync(CANNON_ROOT_PREFAB, name, tag, health, position, false);
             logService.Loggger.ZLogTrace($"Cannon Root was created.");
 
-            var platformGO = await builder.CreatePlatform(platform.PrefabName, platformName, cannonRoot.transform);
+            var platformGO = await builder.CreatePlatformAsync(platform.PrefabName, platformName.ToString(), cannonRoot.transform, tag);
             logService.Loggger.ZLogTrace($"Platform was created.");
+            
+            var towerGO = await CreateTowerAsync(tower, platformGO.transform, tag);
+            await CreateGunAsync(gun, towerGO, tag);
 
-            var towerGO = await builder.CreateTower(tower.PrefabName, towerName, platformGO.transform, tower, tag);
-            logService.Loggger.ZLogTrace($"Tower was created.");
-
-            var towerBindings = towerGO.GetComponent<TowerBindings>();
-            var gunPosition = towerGO.transform.position + (Vector3)towerBindings.GunPosition;
-            await builder.CreateGun(gun, gunName, gunPosition, towerGO.transform, tag);
-            logService.Loggger.ZLogTrace($"Gun was created.");
-
+            logService.Loggger.ZLogTrace($"GameObject ({name}) was created.");
             cannonRoot.SetActive(true);
         }
     }

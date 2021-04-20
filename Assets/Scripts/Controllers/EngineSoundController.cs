@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameEntities.Units;
+﻿using System;
+using Assets.Scripts.GameEntities.Units;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,11 @@ namespace Assets.Scripts.Controllers
             audioSource = GetComponent<AudioSource>();
             stateChanged = gameObject.GetComponentInParent<MoveController>()?.StateChanged ?? gameObject
                 .GetComponentInParent<AiMoveController>()?.StateChanged;
+        }
+
+        private void Start()
+        {
+            audioSource.Play();
         }
 
         private void OnEnable()

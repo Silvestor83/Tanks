@@ -56,6 +56,14 @@ namespace Assets.Scripts.Managers
 
         private async UniTask LoadSceneRecursivelyAsync(SceneComponent scene, bool isSceneObjectsActive = true)
         {
+            // Info Dependent scenes should be loaded before the parent scene.
+            // it depends on the behavior of the Zenject injection model when first of all scenes with the DecoratorContext should be loaded before the scene with the SceneContext.
+            // https://github.com/modesttree/Zenject#scene-decorators
+            foreach (var dependentScene in scene.DependentScenes)
+            {
+                await LoadSceneRecursivelyAsync(dependentScene, isSceneObjectsActive);
+            }
+
             await sceneService.LoadSceneAsync(scene.Name);
             scene.Loaded = true;
             logService.Loggger.ZLogTrace($"Scene loaded. ({scene.Name.GetString()})");
@@ -64,11 +72,6 @@ namespace Assets.Scripts.Managers
             {
                 sceneService.ChangeStateForObjectsInScene(scene.Name, false, TAG_FOR_NOT_ACTIVATED_OBJECTS);
                 logService.Loggger.ZLogTrace($"Scene objects deactivated. ({scene.Name.GetString()})");
-            }
-
-            foreach (var dependentScene in scene.DependentScenes)
-            {
-                await LoadSceneRecursivelyAsync(dependentScene, isSceneObjectsActive);
             }
         }
 

@@ -40,7 +40,7 @@ namespace Assets.Scripts.UI
 
         private void FixedUpdate()
         {
-            float timeShift = (Time.frameCount / 300f) - (Time.frameCount / 300);
+            float timeShift = (Time.frameCount / 300f) - (Time.frameCount / (int)300);
             esc.style.color = new StyleColor(Color.Lerp(Color.black, Color.white, timeShift));
 
             Debug.Log(timeShift);

@@ -1,10 +1,13 @@
 ﻿using System;
+using Assets.Scripts.Controllers;
 using Assets.Scripts.Core.Settings;
+using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.UI
 {
@@ -13,30 +16,23 @@ namespace Assets.Scripts.UI
         private VisualElement healthbar;
         private Label health;
         private LocalizationService locService;
-        private SceneManager sceneManager;
-        private MainSettings mainSettings;
-        private DestructionService destructionService;
-
-        private void Awake()
-        {
-            destructionService.DamageDone += PlayerTookDamage;
-        }
+        private HealthService healthService;
 
         private void Start()
         {
+            healthService.HealthChanged += PlayerHealthChanged;
+
             healthbar = GetComponent<UIDocument>().rootVisualElement.Q("healthbar");
             health = GetComponent<UIDocument>().rootVisualElement.Q<Label>("health");
         }
 
         [Inject]
-        public void Init(SceneManager sceneManager, MainSettings mainSettings, DestructionService destructionService)
+        public void Init(HealthService healthService)
         {
-            this.sceneManager = sceneManager;
-            this.mainSettings = mainSettings;
-            this.destructionService = destructionService;
+            this.healthService = healthService;
         }
 
-        private void PlayerTookDamage(object o, DamageEventArgs e)
+        private void PlayerHealthChanged(object o, HealthEventArgs e)
         {
             healthbar.style.width = 200 * (e.CurrentHealth / e.MaxHealth);
             health.text = e.CurrentHealth + " / " + e.MaxHealth;
@@ -44,7 +40,7 @@ namespace Assets.Scripts.UI
 
         private void OnDestroy()
         {
-            destructionService.DamageDone -= PlayerTookDamage;
+            healthService.HealthChanged += PlayerHealthChanged;
         }
     }
 }

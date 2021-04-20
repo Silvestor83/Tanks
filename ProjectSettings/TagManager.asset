@@ -10,6 +10,7 @@ TagManager:
   - asteroid
   - Portal
   - Cannon
+  - Enhancement
   layers:
   - Default
   - TransparentFX

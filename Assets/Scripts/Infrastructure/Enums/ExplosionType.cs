@@ -11,6 +11,7 @@ namespace Assets.Scripts.Infrastructure.Enums
         SmallExplosion,
         MediumExplosion,
         LargeExplosion,
-        LaserBurst
+        LaserBurst,
+        TankExplosion
     }
 }

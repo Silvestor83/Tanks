@@ -12,6 +12,7 @@ namespace Assets.Scripts.Infrastructure.Enums
         Player,
         Enemy,
         Portal,
-        Cannon
+        Cannon,
+        Enhancement
     }
 }

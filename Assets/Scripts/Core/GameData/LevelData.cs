@@ -24,5 +24,7 @@ namespace Assets.Scripts.Core.GameData
         public int TotalEnemies;
         public int MaxEnemiesOnScene;
         public MechanicalPartSize MaxEnemiesSize;
+        // In percentages
+        public int ChanceCreateEnhancement;
     }
 }

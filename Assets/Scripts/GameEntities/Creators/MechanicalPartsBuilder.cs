@@ -17,16 +17,19 @@ namespace Assets.Scripts.GameEntities.Creators
         private DiContainer container;
         private const string ENEMIES_NAME_GO = "Enemies";
         private const string CANNONS_NAME_GO = "Cannons";
+        private const string ENHANCEMENTS_NAME_GO = "Enhancements";
         private GameObject enemiesGO;
         private GameObject cannonsGO;
+        private GameObject enhancementsGO;
 
         public MechanicalPartsBuilder()
         {
             enemiesGO = GameObject.Find(ENEMIES_NAME_GO);
             cannonsGO = GameObject.Find(CANNONS_NAME_GO);
+            enhancementsGO = GameObject.Find(ENHANCEMENTS_NAME_GO);
         }
 
-        public async UniTask<GameObject> CreateTankRoot(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, uint tankNumber, bool isActive)
+        public async UniTask<GameObject> CreateTankRootAsync(string prefabKey, string name, GameObjectTag tag, int health, Track track, Vector3 position, uint tankNumber, bool isActive)
         {
             var parentTransform = tag == GameObjectTag.Enemy ? enemiesGO.transform : null;
             var tank = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, parentTransform).ToUniTask();
@@ -60,7 +63,7 @@ namespace Assets.Scripts.GameEntities.Creators
             return tank;
         }
 
-        public async UniTask<GameObject> CreateCannonRoot(string prefabKey, string name, GameObjectTag tag, int health, Vector3 position, bool isActive)
+        public async UniTask<GameObject> CreateCannonRootAsync(string prefabKey, string name, GameObjectTag tag, int health, Vector3 position, bool isActive)
         {
             var cannon = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, cannonsGO.transform).ToUniTask();
             cannon.SetActive(isActive);
@@ -79,29 +82,45 @@ namespace Assets.Scripts.GameEntities.Creators
             return cannon;
         }
 
-        public async UniTask<GameObject> CreateHull(string prefabKey, HullName name, string engineSoundAssetName, Transform parentTransform)
+        public async UniTask<GameObject> CreateEnhancementRootAsync(string prefabKey, MechanicalPart part,
+            string name, Vector3 position, bool isActive)
+        {
+            var enhancement = await Addressables.InstantiateAsync(prefabKey, position, Quaternion.identity, enhancementsGO.transform).ToUniTask();
+
+            container.InjectGameObjectForComponent<EnhancementController>(enhancement);
+            enhancement.GetComponent<EnhancementController>().MechanicalPart = part;
+            enhancement.SetActive(isActive);
+            enhancement.name = name;
+            enhancement.tag = GameObjectTag.Enhancement.ToString();
+            
+            return enhancement;
+        }
+
+        public async UniTask<GameObject> CreateHullAsync(string prefabKey, string name, Transform parentTransform, GameObjectTag tag)
         {
             var hullGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
-            hullGO.name = name.ToString();
+            hullGO.name = name;
+            hullGO.tag = tag.ToString();
 
-            var engineAudioClip = await Addressables.LoadAssetAsync<AudioClip>(engineSoundAssetName);
-            hullGO.GetComponent<AudioSource>().clip = engineAudioClip;
             
+
             return hullGO;
         }
 
-        public async UniTask<GameObject> CreatePlatform(string prefabKey, PlatformName name, Transform parentTransform)
+        public async UniTask<GameObject> CreatePlatformAsync(string prefabKey, string name, Transform parentTransform, GameObjectTag tag)
         {
             var platformGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
-            platformGO.name = name.ToString();
+            platformGO.name = name;
+            platformGO.tag = tag.ToString();
 
             return platformGO;
         }
 
-        public async UniTask<GameObject> CreateTower(string prefabKey, TowerName name, Transform parentTransform, Tower tower, GameObjectTag tag)
+        public async UniTask<GameObject> CreateTowerAsync(string prefabKey, string name, Transform parentTransform, Tower tower, GameObjectTag tag)
         {
             var towerGO = await Addressables.InstantiateAsync(prefabKey, parentTransform).ToUniTask();
-            towerGO.name = name.ToString();
+            towerGO.name = name;
+            towerGO.tag = tag.ToString();
 
             if (tag == GameObjectTag.Player)
             {
@@ -118,6 +137,7 @@ namespace Assets.Scripts.GameEntities.Creators
                 towerGO.AddComponent<AiPlatformRotationController>();
                 container.InjectGameObjectForComponent<AiPlatformRotationController>(towerGO, new object[] { tower });
             }
+            else if (tag == GameObjectTag.Enhancement) { }
             else
             {
                 throw new Exception($"Сan't create towerGO with '{tag.ToString()}' tag.");
@@ -126,21 +146,41 @@ namespace Assets.Scripts.GameEntities.Creators
             return towerGO;
         }
 
-        public async UniTask CreateTracks(string prefabKey, TrackName name, Vector3 leftPosition, Vector3 rightPosition, Transform parentTransform)
+        public async UniTask CreateTracksAsync(string prefabKey, string name, string engineSoundAssetName, Vector3 leftPosition, Vector3 rightPosition, Transform parentTransform, GameObjectTag tag)
         {
             var trackPrefab = await Addressables.LoadAssetAsync<GameObject>(prefabKey).ToUniTask();
 
-            var leftTrack = Object.Instantiate(trackPrefab, leftPosition, Quaternion.identity, parentTransform);
+            var leftTrack = Object.Instantiate(trackPrefab, leftPosition, parentTransform.rotation, parentTransform);
             leftTrack.name = name + "Left";
+            leftTrack.tag = tag.ToString();
             
-            var rightTrack = Object.Instantiate(trackPrefab, rightPosition, Quaternion.identity, parentTransform);
+            var rightTrack = Object.Instantiate(trackPrefab, rightPosition, parentTransform.rotation, parentTransform);
             rightTrack.name = name + "Right";
+            rightTrack.tag = tag.ToString();
+
+            if (tag != GameObjectTag.Enhancement)
+            {
+                leftTrack.AddComponent<AnimationController>();
+                container.InjectGameObjectForComponent<AnimationController>(leftTrack);
+                rightTrack.AddComponent<AnimationController>();
+                container.InjectGameObjectForComponent<AnimationController>(rightTrack);
+            }
+
+            if (tag != GameObjectTag.Enhancement)
+            {
+                var engineAudioClip = await Addressables.LoadAssetAsync<AudioClip>(engineSoundAssetName);
+                leftTrack.GetComponent<AudioSource>().clip = engineAudioClip;
+
+                leftTrack.AddComponent<EngineSoundController>();
+                container.InjectGameObjectForComponent<EngineSoundController>(leftTrack);
+            }
         }
 
-        public async UniTask CreateGun(Gun gun, GunName name, Vector3 position, Transform parentTransform, GameObjectTag tag)
+        public async UniTask<GameObject> CreateGunAsync(Gun gun, string name, Vector3 position, Transform parentTransform, GameObjectTag tag)
         {
-            var gunGO = await Addressables.InstantiateAsync(gun.PrefabName, position, Quaternion.identity, parentTransform).ToUniTask();
-            gunGO.name = name.ToString();
+            var gunGO = await Addressables.InstantiateAsync(gun.PrefabName, position, parentTransform.rotation, parentTransform).ToUniTask();
+            gunGO.name = name;
+            gunGO.tag = tag.ToString();
 
             var gunBindings = gunGO.GetComponentInChildren<GunBindings>();
             var barrelGO = gunBindings.gameObject;
@@ -155,10 +195,13 @@ namespace Assets.Scripts.GameEntities.Creators
                 barrelGO.AddComponent<AiFiringController>();
                 container.InjectGameObjectForComponent<AiFiringController>(barrelGO, new object[] { gun });
             }
+            else if (tag == GameObjectTag.Enhancement) { }
             else
             {
                 throw new Exception($"Сan't create towerGO with '{tag.ToString()}' tag.");
             }
+
+            return gunGO;
         }
     }
 }

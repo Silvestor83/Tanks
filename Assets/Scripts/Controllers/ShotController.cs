@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.GameEntities;
 using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Services;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Controllers
         private Vector2 direction;
         private ExplosionCreator explosionCreator;
         private DestructionService destructionService;
+        private bool inCollision = false;
 
         [Inject]
         public void Init(ExplosionCreator explosionCreator, DestructionService destructionService, Projectile projectile, Vector2 direction)
@@ -31,16 +33,20 @@ namespace Assets.Scripts.Controllers
             bulletRB.AddForce(direction * projectile.Speed, ForceMode2D.Impulse);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private async void OnCollisionEnter2D(Collision2D collision)
         {
-            explosionCreator.CreateExplosion(projectile.explosionType, collision.contacts[0].point);
-            CheckDestruction(collision.gameObject);
-            Destroy(gameObject);
+            if (!inCollision)
+            {
+                inCollision = true;
+                explosionCreator.CreateExplosion(projectile.explosionType, collision.contacts[0].point);
+                await CheckDestruction(collision.gameObject);
+                Destroy(gameObject);
+            }
         }
 
-        private void CheckDestruction(GameObject collisionGameObject)
+        private async UniTask CheckDestruction(GameObject collisionGameObject)
         {
-            destructionService.CheckDestruction(collisionGameObject, projectile);
+            await destructionService.CheckDestruction(collisionGameObject, projectile);
         }
     }
 }

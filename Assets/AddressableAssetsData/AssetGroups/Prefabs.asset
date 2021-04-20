@@ -21,26 +21,20 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Tanks/Guns/GunSmallA.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 4258163461236243789, guid: 6e755e97a0900a54dab4f7601e46e098,
-      type: 3}
-    m_TargetAsset: {fileID: 4258163461236243789, guid: 6e755e97a0900a54dab4f7601e46e098,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 862b4fffa65acc7438ce017f60fac5a3
     m_Address: Assets/Prefabs/Tanks/Guns/GunSmallB.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 1390641346524200341, guid: 862b4fffa65acc7438ce017f60fac5a3,
-      type: 3}
-    m_TargetAsset: {fileID: 1390641346524200341, guid: 862b4fffa65acc7438ce017f60fac5a3,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: 96de35966c712b4449bf7fd4e1dde605
     m_Address: Assets/Prefabs/Tanks/Guns/GunSmallC.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 7953201968956575458, guid: 96de35966c712b4449bf7fd4e1dde605,
-      type: 3}
-    m_TargetAsset: {fileID: 7953201968956575458, guid: 96de35966c712b4449bf7fd4e1dde605,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: d9235552855240e4198904d23ddc5007
     m_Address: Assets/Prefabs/Tanks/Hulls/SmallA.prefab
     m_ReadOnly: 0
@@ -51,10 +45,8 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/Tanks/Hulls/SmallB.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 5418714941800112551, guid: 7f7f38ea282175941992cd7e01dfba90,
-      type: 3}
-    m_TargetAsset: {fileID: 5418714941800112551, guid: 7f7f38ea282175941992cd7e01dfba90,
-      type: 3}
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
   - m_GUID: bc616b29243e92c49b9489d8fbc7a0f1
     m_Address: Assets/Prefabs/Tanks/Hulls/SmallC.prefab
     m_ReadOnly: 0
@@ -189,6 +181,27 @@ MonoBehaviour:
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
+  - m_GUID: 449c0959eea72044cbaa5f4b21dc5aaf
+    m_Address: Assets/Prefabs/Explosions/TankExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2b8dbedfdacacfa4b97f43d45ba2065e
+    m_Address: Assets/Prefabs/Tanks/Enhancement.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1a78f5ea5c138d440a9e78288bde80ee
+    m_Address: Assets/Prefabs/Tanks/Enhancements/Health.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6968690099429810964, guid: 1a78f5ea5c138d440a9e78288bde80ee,
+      type: 3}
+    m_TargetAsset: {fileID: 6968690099429810964, guid: 1a78f5ea5c138d440a9e78288bde80ee,
+      type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9abaf93e9b5d39549a3432a232bf6d46, type: 2}
   m_SchemaSet:

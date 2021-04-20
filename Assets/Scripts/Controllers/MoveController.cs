@@ -1,16 +1,9 @@
-﻿using System;
-using Assets.Scripts.Core.GameData;
+﻿using Assets.Scripts.Core.GameData;
 using Assets.Scripts.GameEntities.Units;
-using Assets.Scripts.Infrastructure.Enums;
-using Assets.Scripts.Managers;
-using Assets.Scripts.Services;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Zenject;
-using Zenject.SpaceFighter;
-using ZLogger;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Controllers
@@ -43,6 +36,11 @@ namespace Assets.Scripts.Controllers
 
         // Start is called before the first frame update
         void Start()
+        {
+            UpdateTrackTraits(track);
+        }
+
+        public void UpdateTrackTraits(Track track)
         {
             maxSpeed = track.MaxSpeed;
             minSpeed = track.MinSpeed;

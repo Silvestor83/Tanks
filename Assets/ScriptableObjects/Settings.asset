@@ -16,8 +16,8 @@ MonoBehaviour:
     Height: 0
     Width: 0
     MasterVolume: 10
-    MusicVolume: 10
-    EffectsVolume: 10
+    MusicVolume: 0
+    EffectsVolume: 7
   playerSettings:
     Hulls:
     - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallA.prefab
@@ -133,7 +133,7 @@ MonoBehaviour:
     - type: 0
       explosionType: 0
       Damage: 100
-      Speed: 0.001
+      Speed: 0.002
     - type: 1
       explosionType: 1
       Damage: 200

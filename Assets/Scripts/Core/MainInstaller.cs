@@ -14,8 +14,7 @@ namespace Assets.Scripts.Core
             Container.Bind<SceneService>().AsSingle();
             Container.Bind<SceneManager>().AsSingle();
             Container.Bind<AudioManager>().AsSingle();
-            Container.Bind<AudioService>().AsSingle();
-            Container.Bind<DestructionService>().AsSingle();
+            Container.Bind<AudioService>().AsSingle();            
         }
     }
 }

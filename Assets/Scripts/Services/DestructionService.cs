@@ -5,54 +5,57 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.GameEntities;
+using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.Infrastructure.Enums;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using ZLogger;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Services
 {
     public class DestructionService
     {
-        public event EventHandler<DamageEventArgs> DamageDone; 
+        private readonly ExplosionCreator explosionCreator;
+        private readonly EnhancementsCreator enhancementsCreator;
+        private readonly LogService logService;
 
-        public void CheckDestruction(GameObject collisionGameObject, Projectile projectile)
+        public DestructionService(ExplosionCreator explosionCreator, EnhancementsCreator enhancementsCreator, LogService logService)
+        {
+            this.explosionCreator = explosionCreator;
+            this.enhancementsCreator = enhancementsCreator;
+            this.logService = logService;
+        }
+
+        public async UniTask CheckDestruction(GameObject collisionGameObject, Projectile projectile)
         {
             if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString())
                 || collisionGameObject.CompareTag(GameObjectTag.Enemy.ToString())
                 || collisionGameObject.CompareTag(GameObjectTag.Cannon.ToString()))
             {
                 var healthController = collisionGameObject.GetComponent<HealthController>();
-                healthController.CurrentHealth -= projectile.Damage;
 
-                if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString()))
-                {
-                    OnDamageDone(new DamageEventArgs(healthController.MaxHealth, healthController.CurrentHealth));
-                }
+                healthController.ChangeHealth(healthController.CurrentHealth - projectile.Damage);
+
+                //if (collisionGameObject.CompareTag(GameObjectTag.Player.ToString()))
+                //{
+                //    OnDamageDone(new DamageEventArgs(healthController.MaxHealth, healthController.CurrentHealth));
+                //}
 
                 if (healthController.CurrentHealth <= 0 && !collisionGameObject.CompareTag(GameObjectTag.Player.ToString()))
                 {
-                    UnityEngine.Object.Destroy(collisionGameObject);
+                    var position = collisionGameObject.transform.position;
+
+                    explosionCreator.CreateExplosion(ExplosionType.TankExplosion, position);
+
+                    if (collisionGameObject != null)
+                    {
+                        logService.Loggger.ZLogTrace($"GameObject {collisionGameObject.name} was destroyed");
+                        Object.Destroy(collisionGameObject);
+                        await enhancementsCreator.TryCreateEnhancement(position);
+                    }
                 }
             }
-        }
-
-        private void OnDamageDone(DamageEventArgs e)
-        {
-            if (DamageDone != null)
-            {
-                DamageDone(this, e);
-            }
-        }
-    }
-
-    public class DamageEventArgs : EventArgs
-    {
-        public readonly float CurrentHealth;
-        public readonly float MaxHealth;
-
-        public DamageEventArgs(float maxHealth, float currentHealth)
-        {
-            MaxHealth = maxHealth;
-            CurrentHealth = currentHealth;
         }
     }
 }

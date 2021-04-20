@@ -14,20 +14,24 @@ namespace Assets.Scripts.Controllers
         private bool onPause = false;
         private PlayerInput[] playerInputs;
         private SceneManager sceneManager;
-        private DestructionService destructionService;
+        private HealthService healthService;
 
         [Inject]
-        public void Init(SceneManager sceneManager, DestructionService destructionService)
+        public void Init(SceneManager sceneManager, HealthService healthService)
         {
             this.sceneManager = sceneManager;
-            this.destructionService = destructionService;
+            this.healthService = healthService;
         }
 
         private void Awake()
         {
-            playerInputs = GetComponentsInChildren<PlayerInput>();
+            UpdatePlayersInput();
+            healthService.HealthChanged += PlayerTookDamage;
+        }
 
-            destructionService.DamageDone += PlayerTookDamage;
+        public void UpdatePlayersInput()
+        {
+            playerInputs = GetComponentsInChildren<PlayerInput>();
         }
     
         private async void FixedUpdate()
@@ -40,6 +44,7 @@ namespace Assets.Scripts.Controllers
             if (onPause && Time.timeScale != 0)
             {
                 onPause = false;
+                UpdatePlayersInput();
 
                 foreach (var playerInput in playerInputs)
                 {
@@ -51,6 +56,7 @@ namespace Assets.Scripts.Controllers
             {
                 onPause = true;
                 Time.timeScale = 0;
+                UpdatePlayersInput();
 
                 foreach (var playerInput in playerInputs)
                 {
@@ -61,7 +67,7 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        private void PlayerTookDamage(object o, DamageEventArgs e)
+        private void PlayerTookDamage(object o, HealthEventArgs e)
         {
             if (e.CurrentHealth <= 0)
             {
@@ -71,7 +77,7 @@ namespace Assets.Scripts.Controllers
 
         private void OnDestroy()
         {
-            destructionService.DamageDone -= PlayerTookDamage;
+            healthService.HealthChanged -= PlayerTookDamage;
         }
     }
 }

@@ -23,15 +23,16 @@ namespace Assets.Scripts.Infrastructure
 
         void HandleException(string logString, string stackTrace, LogType type)
         {
-            if (type == LogType.Exception || type == LogType.Error)
-            {
-                logService.Loggger.ZLogError(logString + Environment.NewLine + stackTrace);
-            }
+            // ToDo Same as we see at the Console window
+            //if (type == LogType.Exception || type == LogType.Error)
+            //{
+            //    logService.Loggger.ZLogError(logString + Environment.NewLine + stackTrace);
+            //}
 
-            if (type == LogType.Warning)
-            {
-                logService.Loggger.ZLogWarning(logString + Environment.NewLine + stackTrace);
-            }
+            //if (type == LogType.Warning)
+            //{
+            //    logService.Loggger.ZLogWarning(logString + Environment.NewLine + stackTrace);
+            //}
         }
     }
 }
