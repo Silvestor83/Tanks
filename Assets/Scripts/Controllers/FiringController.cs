@@ -12,7 +12,8 @@ namespace Assets.Scripts.Controllers
         private ProjectileCreator projectileCreator;
         private AudioSource shotSound;
         private float projectileOffset;
-
+        private float lastShootTime = 0;
+            
         [Inject]
         public void Init(ProjectileCreator creator, Gun gun)
         {
@@ -30,9 +31,13 @@ namespace Assets.Scripts.Controllers
 
         private void OnClick(InputValue value)
         {
-            var root = transform.root;
-            projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, transform.up, root);
-            shotSound.Play();
+            if (Time.time - lastShootTime >= gun.FiringRate)
+            {
+                lastShootTime = Time.time;
+
+                projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, transform.up, transform.root);
+                shotSound.Play();
+            }
         }
     }
 }

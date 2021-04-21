@@ -11,6 +11,7 @@ TagManager:
   - Portal
   - Cannon
   - Enhancement
+  - Akvila
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - Obstacles
   - MechanicalParts
-  - 
+  - DestructibleObstacles
   - 
   - 
   - 

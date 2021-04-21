@@ -13,18 +13,21 @@ namespace Assets.Scripts.Controllers
         public int MaxHealth { get; private set; }
 
         private EnemiesManager enemiesManager;
-        private HealthService healthService; 
-
-        public void Init(int health)
-        {
-            MaxHealth = CurrentHealth = health;
-        }
+        private HealthService healthService;
 
         [Inject]
         public void InitWithInjection(EnemiesManager enemiesManager, HealthService healthService)
         {
             this.enemiesManager = enemiesManager;
             this.healthService = healthService;
+        }
+
+        private void Start()
+        {
+            if (CompareTag(GameObjectTag.Akvila.ToString()))
+            {
+                MaxHealth = CurrentHealth = 500;
+            }
         }
 
         public void ChangeHealth(int currentHealth, int? maxHealth = null)
@@ -40,13 +43,10 @@ namespace Assets.Scripts.Controllers
             {
                 healthService.PlayerHealthChanged(CurrentHealth, MaxHealth);
             }
-        }
 
-        private void OnDestroy()
-        {
-            if (CompareTag(GameObjectTag.Enemy.ToString()))
+            if (CompareTag(GameObjectTag.Akvila.ToString()))
             {
-                enemiesManager.ExcludeEnemy();
+                healthService.AkvilaHealthChanged(CurrentHealth, MaxHealth);
             }
         }
     }

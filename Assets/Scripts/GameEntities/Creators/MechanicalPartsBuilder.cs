@@ -58,7 +58,7 @@ namespace Assets.Scripts.GameEntities.Creators
                 throw new Exception($"TankRoot GO from {prefabKey} prefab doesn't contain HealthController component.");
             }
             var healthController = tank.GetComponent<HealthController>();
-            healthController.Init(health);
+            healthController.ChangeHealth(health, health);
 
             return tank;
         }
@@ -77,7 +77,7 @@ namespace Assets.Scripts.GameEntities.Creators
 
             container.InjectGameObjectForComponent<HealthController>(cannon);
             var healthController = cannon.GetComponent<HealthController>();
-            healthController.Init(health);
+            healthController.ChangeHealth(health, health);
 
             return cannon;
         }

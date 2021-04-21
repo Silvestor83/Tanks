@@ -42,8 +42,6 @@ namespace Assets.Scripts.UI
         {
             float timeShift = (Time.frameCount / 300f) - (Time.frameCount / (int)300);
             esc.style.color = new StyleColor(Color.Lerp(Color.black, Color.white, timeShift));
-
-            Debug.Log(timeShift);
         }
     }
 }

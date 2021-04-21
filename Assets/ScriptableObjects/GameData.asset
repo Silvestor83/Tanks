@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   playerData:
-    position: {x: 27.931831, y: -0.67959166}
+    position: {x: 29.92785, y: 14.742375}
+    hullName: 0
+    towerName: 2
+    trackName: 3
+    gunName: 1
   levelData:
     GameFieldWidth: 99.5
     GameFieldHeight: 48.5
@@ -22,9 +26,10 @@ MonoBehaviour:
     PlayerTrackingDistance: 15
     EnemyAimingDistance: 20
     CannonAimingDistance: 35
-    EnemyFirerateFactor: 3
-    EnemyBulletsSpreadAngle: 5
+    EnemyFirerateFactor: 10
+    EnemyBulletsSpreadAngle: 8
     TotalEnemies: 10
     MaxEnemiesOnScene: 6
     MaxEnemiesSize: 0
     ChanceCreateEnhancement: 100
+    AkvilaPosition: {x: 2.5, y: -25.5}

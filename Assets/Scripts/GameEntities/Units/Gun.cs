@@ -12,7 +12,7 @@ namespace Assets.Scripts.GameEntities.Units
     public class Gun : MechanicalPart
     {
         public GunName Name;
-        public int FiringRate;
+        public float FiringRate;
         public ProjectileType ProjectileType;
     }
 }

@@ -8,16 +8,8 @@ namespace Assets.Scripts.Services
 {
     public class HealthService
     {
-        public int MaxHealth;
-        public int CurrentHealth;
-
         public event EventHandler<HealthEventArgs> HealthChanged;
-
-
-        public void Init(int health)
-        {
-            MaxHealth = CurrentHealth = health;
-        }
+        public event EventHandler<HealthEventArgs> HealthChangedAkvila;
 
         public void PlayerHealthChanged(int currentHealth, int maxHealth)
         {
@@ -29,6 +21,19 @@ namespace Assets.Scripts.Services
             if (HealthChanged != null)
             {
                 HealthChanged(this, e);
+            }
+        }
+
+        public void AkvilaHealthChanged(int currentHealth, int maxHealth)
+        {
+            OnAkvilaHealthChanged(new HealthEventArgs(maxHealth, currentHealth));
+        }
+
+        private void OnAkvilaHealthChanged(HealthEventArgs e)
+        {
+            if (HealthChangedAkvila != null)
+            {
+                HealthChangedAkvila(this, e);
             }
         }
     }

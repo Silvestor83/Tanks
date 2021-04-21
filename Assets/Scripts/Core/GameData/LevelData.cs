@@ -26,5 +26,6 @@ namespace Assets.Scripts.Core.GameData
         public MechanicalPartSize MaxEnemiesSize;
         // In percentages
         public int ChanceCreateEnhancement;
+        public Vector2 AkvilaPosition;
     }
 }

@@ -15,6 +15,7 @@ namespace Assets.Scripts.Controllers
         protected Transform parent;
 
         protected float distanceToPlayer;
+        protected float distanceToAkvila;
         protected float currentAngle;
         public bool InLineOfSight = false;
 

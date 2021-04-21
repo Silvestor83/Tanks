@@ -14,19 +14,16 @@ namespace Assets.Scripts.Controllers
         private bool onPause = false;
         private PlayerInput[] playerInputs;
         private SceneManager sceneManager;
-        private HealthService healthService;
 
         [Inject]
-        public void Init(SceneManager sceneManager, HealthService healthService)
+        public void Init(SceneManager sceneManager)
         {
             this.sceneManager = sceneManager;
-            this.healthService = healthService;
         }
 
         private void Awake()
         {
             UpdatePlayersInput();
-            healthService.HealthChanged += PlayerTookDamage;
         }
 
         public void UpdatePlayersInput()
@@ -65,19 +62,6 @@ namespace Assets.Scripts.Controllers
 
                 await sceneManager.LoadSceneAdditiveAsync(SceneName.LevelMenu);
             }
-        }
-
-        private void PlayerTookDamage(object o, HealthEventArgs e)
-        {
-            if (e.CurrentHealth <= 0)
-            {
-                _ = sceneManager.LoadSceneAsync(SceneName.GameOver);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            healthService.HealthChanged -= PlayerTookDamage;
         }
     }
 }

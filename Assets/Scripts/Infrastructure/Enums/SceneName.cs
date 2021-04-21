@@ -15,6 +15,7 @@ namespace Assets.Scripts.Infrastructure.Enums
         Workshop,
         GUI,
         LevelMenu,
-        GameOver
+        GameOver,
+        Victory
     }
 }

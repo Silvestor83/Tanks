@@ -125,6 +125,7 @@ namespace Assets.Scripts.Managers
             var workshopScene = new SceneComponent(SceneName.Workshop, true);
             var levelMenuScene = new SceneComponent(SceneName.LevelMenu);
             var gameOver = new SceneComponent(SceneName.GameOver);
+            var victory = new SceneComponent(SceneName.Victory);
 
             scenes.Add(SceneName.GameMenu, menuScene);
             scenes.Add(SceneName.LoadingScreen, loadingScreenScene);
@@ -133,6 +134,7 @@ namespace Assets.Scripts.Managers
             scenes.Add(SceneName.Workshop, workshopScene);
             scenes.Add(SceneName.LevelMenu, levelMenuScene);
             scenes.Add(SceneName.GameOver, gameOver);
+            scenes.Add(SceneName.Victory, victory);
         }
 
         public async UniTask LoadSceneAdditiveAsync(SceneName name)

@@ -23,6 +23,7 @@ namespace Assets.Scripts.Managers
         private readonly PlayerSettings playerSettings;
         private readonly LevelData levelData;
         private readonly TankCreator tankCreator;
+        private readonly SceneManager sceneManager;
         private int activeEnemies;
         private int remainingEnemies;
         private List<HullName> hulls;
@@ -32,11 +33,12 @@ namespace Assets.Scripts.Managers
         private Random random = new Random();
         private int enemyIndex;
 
-        public EnemiesManager(PlayerSettings playerSettings, LevelData levelData, TankCreator tankCreator)
+        public EnemiesManager(PlayerSettings playerSettings, LevelData levelData, TankCreator tankCreator, SceneManager sceneManager)
         {
             this.playerSettings = playerSettings;
             this.levelData = levelData;
             this.tankCreator = tankCreator;
+            this.sceneManager = sceneManager;
             activeEnemies = 0;
             remainingEnemies = levelData.TotalEnemies;
             SpawnPoints = new List<Vector3>();
@@ -103,9 +105,15 @@ namespace Assets.Scripts.Managers
             remainingEnemies--;
         }
 
-        public void ExcludeEnemy()
+        public async UniTask ExcludeEnemy()
         {
             activeEnemies--;
+
+            if (activeEnemies == 0 && remainingEnemies == 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(1));
+                await sceneManager.LoadSceneAsync(SceneName.Victory);
+            }
         }
 
         private async UniTask TrySpawnEnemy()

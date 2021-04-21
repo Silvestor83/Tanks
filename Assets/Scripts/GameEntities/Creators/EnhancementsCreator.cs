@@ -97,7 +97,7 @@ namespace Assets.Scripts.GameEntities.Creators
 
         public async UniTask TryCreateEnhancement(Vector3 position)
         {
-            if (levelData.ChanceCreateEnhancement - Random.Range(1, 100) >= 0)
+            if (levelData.ChanceCreateEnhancement - Random.Range(1, 101) >= 0)
             {
                 var enhancementType = GetRandomEnhancementType();
                 MechanicalPart part = null;
@@ -139,7 +139,7 @@ namespace Assets.Scripts.GameEntities.Creators
 
         private EnhancementType GetRandomEnhancementType()
         {
-            int relativeChance = Random.Range(1, 4);
+            int relativeChance = Random.Range(1, 5);
 
             switch (relativeChance)
             {

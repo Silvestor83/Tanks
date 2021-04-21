@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts.GameEntities;
 using Assets.Scripts.GameEntities.Creators;
+using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Tilemaps;
 using Zenject;
 
 namespace Assets.Scripts.Controllers
@@ -39,8 +41,23 @@ namespace Assets.Scripts.Controllers
             {
                 inCollision = true;
                 explosionCreator.CreateExplosion(projectile.explosionType, collision.contacts[0].point);
-                await CheckDestruction(collision.gameObject);
                 Destroy(gameObject);
+
+                if (collision.gameObject.layer == (int) GameObjectLayer.DestructibleObstacles)
+                {
+                    Vector3 hitPosition = Vector3.zero;
+                    var tilemap = collision.gameObject.GetComponent<Tilemap>();
+                    foreach (ContactPoint2D hit in collision.contacts)
+                    {
+                        hitPosition.x = hit.point.x - 0.01f * hit.normal.x;
+                        hitPosition.y = hit.point.y - 0.01f * hit.normal.y;
+                        tilemap.SetTile(tilemap.WorldToCell(hitPosition), null);
+                    }
+                }
+                else
+                {
+                    await CheckDestruction(collision.gameObject);
+                }
             }
         }
 

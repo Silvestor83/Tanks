@@ -13,6 +13,7 @@ namespace Assets.Scripts.Infrastructure.Enums
         Enemy,
         Portal,
         Cannon,
-        Enhancement
+        Enhancement,
+        Akvila
     }
 }

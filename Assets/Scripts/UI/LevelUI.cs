@@ -15,15 +15,20 @@ namespace Assets.Scripts.UI
     {
         private VisualElement healthbar;
         private Label health;
+        private VisualElement akvilaHealthbar;
+        private Label akvilaHealth;
         private LocalizationService locService;
         private HealthService healthService;
 
         private void Start()
         {
             healthService.HealthChanged += PlayerHealthChanged;
+            healthService.HealthChangedAkvila += AkvilaHealthChanged;
 
             healthbar = GetComponent<UIDocument>().rootVisualElement.Q("healthbar");
             health = GetComponent<UIDocument>().rootVisualElement.Q<Label>("health");
+            akvilaHealthbar = GetComponent<UIDocument>().rootVisualElement.Q("akvilaHealthbar");
+            akvilaHealth = GetComponent<UIDocument>().rootVisualElement.Q<Label>("akvilaHealth");
         }
 
         [Inject]
@@ -34,13 +39,22 @@ namespace Assets.Scripts.UI
 
         private void PlayerHealthChanged(object o, HealthEventArgs e)
         {
-            healthbar.style.width = 200 * (e.CurrentHealth / e.MaxHealth);
-            health.text = e.CurrentHealth + " / " + e.MaxHealth;
+            var currentHealth = e.CurrentHealth < 0 ? 0 : e.CurrentHealth;
+            healthbar.style.width = 200 * (currentHealth / e.MaxHealth);
+            health.text = currentHealth + " / " + e.MaxHealth;
+        }
+
+        private void AkvilaHealthChanged(object o, HealthEventArgs e)
+        {
+            var currentHealth = e.CurrentHealth < 0 ? 0 : e.CurrentHealth;
+            akvilaHealthbar.style.width = 200 * (currentHealth / e.MaxHealth);
+            akvilaHealth.text = currentHealth + " / " + e.MaxHealth;
         }
 
         private void OnDestroy()
         {
-            healthService.HealthChanged += PlayerHealthChanged;
+            healthService.HealthChanged -= PlayerHealthChanged;
+            healthService.HealthChangedAkvila -= AkvilaHealthChanged;
         }
     }
 }

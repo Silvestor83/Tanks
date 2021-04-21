@@ -9,6 +9,7 @@ namespace Assets.Scripts.Infrastructure.Enums
     public enum GameObjectLayer
     {
         Obstacles = 8,
-        MechanicalParts = 9
+        MechanicalParts = 9,
+        DestructibleObstacles = 10
     }
 }

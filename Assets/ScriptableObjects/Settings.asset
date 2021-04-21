@@ -61,7 +61,7 @@ MonoBehaviour:
       Size: 0
       Name: 0
       MaxSpeed: 6
-      MinSpeed: -2
+      MinSpeed: -4
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
@@ -73,8 +73,8 @@ MonoBehaviour:
       Cost: 500
       Size: 0
       Name: 1
-      MaxSpeed: 8
-      MinSpeed: -2
+      MaxSpeed: 10
+      MinSpeed: -6
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
@@ -86,8 +86,8 @@ MonoBehaviour:
       Cost: 500
       Size: 0
       Name: 2
-      MaxSpeed: 5
-      MinSpeed: -2
+      MaxSpeed: 6
+      MinSpeed: -4
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
@@ -100,7 +100,7 @@ MonoBehaviour:
       Size: 0
       Name: 3
       MaxSpeed: 7
-      MinSpeed: -2
+      MinSpeed: -5
       ForwardAcceleration: 8
       RearAcceleration: 8
       BreakingAcceleration: 16
@@ -113,26 +113,26 @@ MonoBehaviour:
       Cost: 100
       Size: 0
       Name: 0
-      FiringRate: 1
+      FiringRate: 0.5
       ProjectileType: 0
     - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallB.prefab
       Durability: 0
       Cost: 200
       Size: 0
       Name: 1
-      FiringRate: 1
+      FiringRate: 0.4
       ProjectileType: 0
     - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallC.prefab
       Durability: 0
       Cost: 300
       Size: 0
       Name: 2
-      FiringRate: 1
+      FiringRate: 0.3
       ProjectileType: 3
     Projectiles:
     - type: 0
       explosionType: 0
-      Damage: 100
+      Damage: 200
       Speed: 0.002
     - type: 1
       explosionType: 1
@@ -144,7 +144,7 @@ MonoBehaviour:
       Speed: 10
     - type: 3
       explosionType: 3
-      Damage: 150
+      Damage: 300
       Speed: 0.005
     - type: 4
       explosionType: 3
