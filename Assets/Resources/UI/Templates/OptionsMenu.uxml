@@ -1,0 +1,21 @@
+﻿<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+  <ui:Label text="Options" class="text"/>
+  <ui:VisualElement class="options_block">
+    <ui:VisualElement class="slider_box">
+      <ui:Label text="Overall volume" class="small_text options_sub_block" />
+      <ui:SliderInt name="masterVolume" class="slider" focusable="True" low-value="0" high-value="10" />
+      <ui:Label name="textMasterVolume" class="small_text" />
+    </ui:VisualElement>
+    <ui:VisualElement class="slider_box">
+      <ui:Label text="Music volume" class="small_text options_sub_block" />
+      <ui:SliderInt name="musicVolume" class="slider" focusable="True" low-value="0" high-value="10" />
+      <ui:Label name="textMusicVolume" class="small_text" />
+    </ui:VisualElement>
+    <ui:VisualElement class="slider_box">
+      <ui:Label text="Effects volume" class="small_text options_sub_block" />
+      <ui:SliderInt name="effectsVolume" class="slider" focusable="True" low-value="0" high-value="10" />
+      <ui:Label name="textEffectsVolume" class="small_text" />
+    </ui:VisualElement>
+  </ui:VisualElement>
+  <ui:Button focusable="True" text="Back" name="back" class="button" />
+</ui:UXML>

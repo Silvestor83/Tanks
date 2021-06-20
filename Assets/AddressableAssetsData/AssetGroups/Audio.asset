@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  m_GroupName: Audio
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 37578bd34f3968546af03415ffe1c308
+  m_SerializeEntries:
+  - m_GUID: 46e9a26608d792b42a0236f0e37efa0c
+    m_Address: Assets/Audio/Engines/engine_04.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: b6746e2e9be0fe94db43938f515aa301
+    m_Address: Assets/Audio/Engines/engine_03.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7ff75b8ab22bd3d46aaad9122e5d1c0d
+    m_Address: Assets/Audio/Engines/engine_02.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: cc8c71b429254a04884bec36a15a4214
+    m_Address: Assets/Audio/Engines/engine_01.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ee5de6097761153498eb6a3ce5c8b4f3
+    m_Address: Assets/Audio/Music/MainMusic.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 18939da650360e2408cea6b007a347cd
+    m_Address: Assets/Audio/GUI/retro_ui_menu_popup_07.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1ac6ecae5ec10594fb85304f327c3bb1
+    m_Address: Assets/Audio/GUI/switch_button_push_on_off_11.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 40664e69f84b80d499cf1125910cf665
+    m_Address: Assets/Audio/GUI/ui_menu_button_click_03.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 6b31f760945348a40b45b67580083b11
+    m_Address: Assets/Audio/GUI/ui_menu_button_click_16.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Sound
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9abaf93e9b5d39549a3432a232bf6d46, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: df6a419ee1db4a647a681a30027c9f64, type: 2}

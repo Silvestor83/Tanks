@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+  <ui:Template name="Options" src="../Templates/OptionsMenu.uxml" />
+  <ui:VisualElement name="screen" class="align_center" style="height: 100%;">
+    <ui:Style src="../Styles/Default.uss" />
+    <ui:VisualElement class="align_center" style="height: 100%;">
+      <ui:Label name="title" text="TANKS" class="text"/>
+    </ui:VisualElement>
+    <ui:VisualElement class="align_center" style="height: 100%;">
+      <ui:VisualElement class="plate">
+        <ui:VisualElement name="mainMenu" class="align_center">
+          <ui:Button focusable="True" text="Start" name="start" class="button" />
+          <ui:Button focusable="True" text="Options" name="options" class="button" />
+          <ui:Button focusable="True" text="Exit" name="exit" class="button" />
+        </ui:VisualElement>
+        <ui:Instance template="Options" name="optionsMenu" class="align_center" style="display: none;" />
+      </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement class="align_bottom_right" style="height: 100%; width: 100%;">
+      <ui:Label name="version" text="TANKS" />
+    </ui:VisualElement>
+  </ui:VisualElement>
+</ui:UXML>

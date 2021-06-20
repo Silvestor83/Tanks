@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db35de90ad5644a0be6702baf93b818f, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  playerData:
+    position: {x: 29.92785, y: 14.742375}
+    hullName: 0
+    towerName: 2
+    trackName: 3
+    gunName: 1
+  levelData:
+    GameFieldWidth: 99.5
+    GameFieldHeight: 48.5
+    OriginOffset: {x: -47.9, y: -25.5}
+    PathMaxDistance: 30
+    PlayerTrackingDistance: 15
+    EnemyAimingDistance: 20
+    CannonAimingDistance: 35
+    EnemyFirerateFactor: 10
+    EnemyBulletsSpreadAngle: 8
+    TotalEnemies: 10
+    MaxEnemiesOnScene: 6
+    MaxEnemiesSize: 0
+    ChanceCreateEnhancement: 100
+    AkvilaPosition: {x: 2.5, y: -25.5}

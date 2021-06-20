@@ -1,0 +1,90 @@
+.plate {
+    background-image: url('/Assets/3rdParty/SimplePixelUI/artwork/halfcustomizible/square/Background.png');
+    -unity-background-image-tint-color: rgb(194, 194, 194);
+    padding: 20px;
+}
+
+.align_center {
+    align-items: center;
+    justify-content: center;
+}
+
+.align_bottom_right {
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.button {
+    background-image: url('/Assets/3rdParty/SimplePixelUI/artwork/halfcustomizible/square/Buttons/button_1.png');
+    width: 140px;
+    margin: 0 0 10 0;
+    padding: 10px;
+    border-width: 1px;
+    font-size: 32px;
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf');
+    -unity-text-align: middle-center;
+}
+
+.button:focus {
+    -unity-background-image-tint-color: rgb(230, 230, 230);
+}
+
+.button:hover {
+    -unity-background-image-tint-color: rgb(230, 230, 230);
+}
+
+.button:active {
+    background-image: url('/Assets/3rdParty/SimplePixelUI/artwork/halfcustomizible/square/Buttons/button_2.png');
+}
+
+.text {
+    font-size: 32px;
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf');
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+}
+
+.small_text {
+    font-size: 24px;
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf');
+    white-space: nowrap;
+    -unity-text-align: upper-left;
+}
+
+.large_text {
+    font-size: 64px;
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Roboto-Bold.ttf');
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+}
+
+.slider_box {
+    flex-direction: row;
+    margin-bottom: 10px;
+    padding: 0 10;
+}
+
+.slider_box > * {
+    margin-right: 10px;
+}
+
+.options_block {
+    padding: 10 0;
+}
+
+.options_sub_block {
+    width: 180px;
+}
+
+.slider {
+    width: 200px;
+}
+
+#title {
+    padding-top: 100px;
+    font-size: 128px;
+    -unity-font: url('/Assets/3rdParty/TextMesh Pro/Examples & Extras/Fonts/Electronic Highway Sign.TTF');
+    color: rgb(229, 229, 229);
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+}

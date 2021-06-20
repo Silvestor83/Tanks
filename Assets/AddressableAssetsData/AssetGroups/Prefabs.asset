@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 7291435eb4f89b8408bad686b307f084
+  m_SerializeEntries:
+  - m_GUID: 6e755e97a0900a54dab4f7601e46e098
+    m_Address: Assets/Prefabs/Tanks/Guns/GunSmallA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 862b4fffa65acc7438ce017f60fac5a3
+    m_Address: Assets/Prefabs/Tanks/Guns/GunSmallB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 96de35966c712b4449bf7fd4e1dde605
+    m_Address: Assets/Prefabs/Tanks/Guns/GunSmallC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d9235552855240e4198904d23ddc5007
+    m_Address: Assets/Prefabs/Tanks/Hulls/SmallA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7f7f38ea282175941992cd7e01dfba90
+    m_Address: Assets/Prefabs/Tanks/Hulls/SmallB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: bc616b29243e92c49b9489d8fbc7a0f1
+    m_Address: Assets/Prefabs/Tanks/Hulls/SmallC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 121c6c695b4e9ca4b9e43ed3046d026e
+    m_Address: Assets/Prefabs/Tanks/Towers/SmallA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: eac8edb44f1ccc245ac00bd1d3d8ac3c
+    m_Address: Assets/Prefabs/Tanks/Towers/SmallB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 4c193ae44972894498808a35bb72abbb
+    m_Address: Assets/Prefabs/Tanks/Towers/SmallC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: bcb2f0ae21a7f334bb461d90be765aad
+    m_Address: Assets/Prefabs/Tanks/Tracks/TrackA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: d944c52b664329b4fa7132d0a22f1e6a
+    m_Address: Assets/Prefabs/Tanks/Tracks/TrackB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: bec7a41b6ecb7ab4db7925f1ded0c00a
+    m_Address: Assets/Prefabs/Tanks/Tracks/TrackC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 17ed34773e7906c4284eb390e895c12a
+    m_Address: Assets/Prefabs/Tanks/Tracks/TrackD.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: badce14b19daadc449ecf0e94a51059c
+    m_Address: Assets/Prefabs/Tanks/Tank.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7a82f91480559c548939dbab4dbda0e4
+    m_Address: Assets/Prefabs/Projectiles/LightShell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 61650bea79b55c54c98dfc7626999375
+    m_Address: Assets/Prefabs/Projectiles/MediumShell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 5a40702af1b0c7646bbfa006ab6102b0
+    m_Address: Assets/Prefabs/Projectiles/Laser.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: a91d7f71aaaaabf44ad1d8a23af98f85
+    m_Address: Assets/Prefabs/Projectiles/HeavyShell.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Projectile
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 0fc1c672e6484884f8a387d0fc742279
+    m_Address: Assets/Prefabs/Explosions/LargeExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 7ec8c9acf2aa9b04990cc2db1066243e
+    m_Address: Assets/Prefabs/Explosions/LaserBurst.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 60964914ca20aec46b9fb959e36580c8
+    m_Address: Assets/Prefabs/Explosions/MediumExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 9022d75a8ec450c4a977ab867c397992
+    m_Address: Assets/Prefabs/Explosions/SmallExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ebccdd31213474145ae624fe1c98499a
+    m_Address: Assets/Prefabs/Tanks/Cannon.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1f98468868140fa4fbc94d891a9caafc
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformA.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: ebdc0fd9c221ca746811a89027942c2c
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 54f0922bfad759e4680b7725d5f3b6e8
+    m_Address: Assets/Prefabs/Tanks/Platforms/PlatformC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 449c0959eea72044cbaa5f4b21dc5aaf
+    m_Address: Assets/Prefabs/Explosions/TankExplosion.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Explosion
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 2b8dbedfdacacfa4b97f43d45ba2065e
+    m_Address: Assets/Prefabs/Tanks/Enhancement.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 0}
+    m_TargetAsset: {fileID: 0}
+  - m_GUID: 1a78f5ea5c138d440a9e78288bde80ee
+    m_Address: Assets/Prefabs/Tanks/Enhancements/Health.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6968690099429810964, guid: 1a78f5ea5c138d440a9e78288bde80ee,
+      type: 3}
+    m_TargetAsset: {fileID: 6968690099429810964, guid: 1a78f5ea5c138d440a9e78288bde80ee,
+      type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9abaf93e9b5d39549a3432a232bf6d46, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b660ee5c496853e4f9b0deb060aa73aa, type: 2}
+    - {fileID: 11400000, guid: d785bfa33f315584a801c9bee1a27aad, type: 2}

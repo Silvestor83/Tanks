@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1397f0b208ec62f43be19e20d70af5ee, type: 3}
+  m_Name: Settings
+  m_EditorClassIdentifier: 
+  mainSettings:
+    Height: 0
+    Width: 0
+    MasterVolume: 10
+    MusicVolume: 0
+    EffectsVolume: 7
+  playerSettings:
+    Hulls:
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallA.prefab
+      Durability: 500
+      Cost: 1000
+      Size: 0
+      Name: 0
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallB.prefab
+      Durability: 600
+      Cost: 1200
+      Size: 0
+      Name: 1
+    - PrefabName: Assets/Prefabs/Tanks/Hulls/SmallC.prefab
+      Durability: 700
+      Cost: 1500
+      Size: 0
+      Name: 2
+    Towers:
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallA.prefab
+      Durability: 300
+      Cost: 1000
+      Size: 0
+      Name: 0
+      RotationSpeed: 90
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallB.prefab
+      Durability: 400
+      Cost: 1200
+      Size: 0
+      Name: 1
+      RotationSpeed: 90
+    - PrefabName: Assets/Prefabs/Tanks/Towers/SmallC.prefab
+      Durability: 500
+      Cost: 1500
+      Size: 0
+      Name: 2
+      RotationSpeed: 100
+    Tracks:
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackA.prefab
+      Durability: 200
+      Cost: 500
+      Size: 0
+      Name: 0
+      MaxSpeed: 6
+      MinSpeed: -4
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+      AnimationStep: 0.15
+      EngineSoundAssetName: Assets/Audio/Engines/engine_01.wav
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackB.prefab
+      Durability: 250
+      Cost: 500
+      Size: 0
+      Name: 1
+      MaxSpeed: 10
+      MinSpeed: -6
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+      AnimationStep: 0.17
+      EngineSoundAssetName: Assets/Audio/Engines/engine_02.wav
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackC.prefab
+      Durability: 300
+      Cost: 500
+      Size: 0
+      Name: 2
+      MaxSpeed: 6
+      MinSpeed: -4
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+      AnimationStep: 0.2
+      EngineSoundAssetName: Assets/Audio/Engines/engine_03.wav
+    - PrefabName: Assets/Prefabs/Tanks/Tracks/TrackD.prefab
+      Durability: 400
+      Cost: 500
+      Size: 0
+      Name: 3
+      MaxSpeed: 7
+      MinSpeed: -5
+      ForwardAcceleration: 8
+      RearAcceleration: 8
+      BreakingAcceleration: 16
+      rotateSpeed: 120
+      AnimationStep: 0.25
+      EngineSoundAssetName: Assets/Audio/Engines/engine_04.wav
+    Guns:
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallA.prefab
+      Durability: 0
+      Cost: 100
+      Size: 0
+      Name: 0
+      FiringRate: 0.5
+      ProjectileType: 0
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallB.prefab
+      Durability: 0
+      Cost: 200
+      Size: 0
+      Name: 1
+      FiringRate: 0.4
+      ProjectileType: 0
+    - PrefabName: Assets/Prefabs/Tanks/Guns/GunSmallC.prefab
+      Durability: 0
+      Cost: 300
+      Size: 0
+      Name: 2
+      FiringRate: 0.3
+      ProjectileType: 3
+    Projectiles:
+    - type: 0
+      explosionType: 0
+      Damage: 200
+      Speed: 0.002
+    - type: 1
+      explosionType: 1
+      Damage: 200
+      Speed: 10
+    - type: 2
+      explosionType: 2
+      Damage: 300
+      Speed: 10
+    - type: 3
+      explosionType: 3
+      Damage: 300
+      Speed: 0.005
+    - type: 4
+      explosionType: 3
+      Damage: 500
+      Speed: 1
+    Platforms:
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformA.prefab
+      Durability: 1000
+      Cost: 0
+      Size: 0
+      Name: 0
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformB.prefab
+      Durability: 1800
+      Cost: 0
+      Size: 1
+      Name: 1
+    - PrefabName: Assets/Prefabs/Tanks/Platforms/PlatformC.prefab
+      Durability: 2500
+      Cost: 0
+      Size: 2
+      Name: 2
+  rewriteSettingFiles: 1

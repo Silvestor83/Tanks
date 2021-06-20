@@ -1,0 +1,6 @@
+﻿<UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="UnityEngine.UIElements" xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+  <VisualElement class="align_center" style="height: 100%;">
+    <Style src="../Styles/Default.uss" />
+    <Label text="Level 1" class="large_text" />
+  </VisualElement>
+</UXML>
