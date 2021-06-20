@@ -119,12 +119,12 @@ namespace Assets.Scripts.Managers
         private async UniTask TrySpawnEnemy()
         {
             var randomSpawnPoint = SpawnPoints[random.Next(0, SpawnPoints.Count)];
-            var collider = Physics2D.OverlapCircle(randomSpawnPoint, 1f);
+            //var collider = Physics2D.OverlapCircle(randomSpawnPoint, 1f);
 
-            if (collider == null)
-            {
+            //if (collider == null)
+            //{
                 await SpawnEnemy(randomSpawnPoint);
-            }
+            //}
         }
 
         private HullName GetRandomHull()

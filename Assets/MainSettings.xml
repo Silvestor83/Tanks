@@ -1,1 +1,8 @@
-<MainSettings xmlns="http://schemas.datacontract.org/2004/07/Assets.Scripts.Core.Settings" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><EffectsVolume>7</EffectsVolume><Height>0</Height><MasterVolume>10</MasterVolume><MusicVolume>0</MusicVolume><Width>0</Width></MainSettings>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MainSettings xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Assets.Scripts.Core.Settings">
+  <EffectsVolume>7</EffectsVolume>
+  <Height>0</Height>
+  <MasterVolume>10</MasterVolume>
+  <MusicVolume>4</MusicVolume>
+  <Width>0</Width>
+</MainSettings>
