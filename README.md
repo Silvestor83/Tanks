@@ -11,3 +11,4 @@ In this project were applied following tools and packages that are not included 
 * UniTask (tool to replace using of coroutines by C# tasks with async and await code)
 * Addressables
 * Unity Localization
+* New Input System
