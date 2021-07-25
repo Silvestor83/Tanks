@@ -1,27 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.Services
 {
     public class HealthService
     {
-        public event EventHandler<HealthEventArgs> HealthChanged;
+        public event EventHandler<HealthEventArgs> HealthChangedPlayer;
         public event EventHandler<HealthEventArgs> HealthChangedAkvila;
 
         public void PlayerHealthChanged(int currentHealth, int maxHealth)
         {
-            OnHealthChanged(new HealthEventArgs(maxHealth, currentHealth));
+            OnPlayerHealthChanged(new HealthEventArgs(maxHealth, currentHealth));
         }
 
-        private void OnHealthChanged(HealthEventArgs e)
+        private void OnPlayerHealthChanged(HealthEventArgs e)
         {
-            if (HealthChanged != null)
-            {
-                HealthChanged(this, e);
-            }
+            HealthChangedPlayer?.Invoke(this, e);
         }
 
         public void AkvilaHealthChanged(int currentHealth, int maxHealth)
@@ -31,10 +24,7 @@ namespace Assets.Scripts.Services
 
         private void OnAkvilaHealthChanged(HealthEventArgs e)
         {
-            if (HealthChangedAkvila != null)
-            {
-                HealthChangedAkvila(this, e);
-            }
+            HealthChangedAkvila?.Invoke(this, e);
         }
     }
 

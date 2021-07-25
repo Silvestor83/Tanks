@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Services
 {
+    // ToDo Remove if redundant
     public class CoroutineService
     {
         public IEnumerator CoroutineWithDelay(Func<IEnumerator> func, float seconds)

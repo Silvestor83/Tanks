@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.Core.Settings;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Infrastructure.Enums;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
@@ -45,11 +46,20 @@ namespace Assets.Scripts.Services
             }
         }
 
-        public void PlaySound(AudioSoundName audioSound)
+        public void PlaySound(AudioSoundName soundName)
         {
             if (audioClips != null && Audio != null)
             {
-                var clip = audioClips.First(a => a.Key == audioSound).Value;
+                AudioClip clip = null;
+
+                foreach (var audioClip in audioClips)
+                {
+                    if (audioClip.Key == soundName)
+                    {
+                        clip = audioClip.Value;
+                        break; 
+                    }
+                }
 
                 if (clip != null)
                 {
@@ -58,7 +68,7 @@ namespace Assets.Scripts.Services
                 }
                 else
                 {
-                    logService.Loggger.ZLogCritical($"Sound ({audioSound.ToString()}) not found");
+                    logService.Loggger.ZLogCritical($"Sound ({soundName.ToString()}) not found");
                 }
             }
             else if (handle.Status == AsyncOperationStatus.Failed)

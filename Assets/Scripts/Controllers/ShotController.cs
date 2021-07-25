@@ -28,9 +28,8 @@ namespace Assets.Scripts.Controllers
             this.projectile = projectile;
             this.direction = direction;
         }
-        
-        // Start is called before the first frame update
-        void Start()
+
+        private void Start()
         {
             bulletRB.AddForce(direction * projectile.Speed, ForceMode2D.Impulse);
         }

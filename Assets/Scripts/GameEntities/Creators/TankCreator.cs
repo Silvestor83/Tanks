@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Core.GameData;
@@ -10,8 +9,6 @@ using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using Zenject;
 using ZLogger;
 using Object = UnityEngine.Object;
 
@@ -20,7 +17,6 @@ namespace Assets.Scripts.GameEntities.Creators
     public class TankCreator : BasePartsCreator
     {
         private PlayerSettings playerSettings;
-        
         private const string TANK_ROOT_PREFAB = "Assets/Prefabs/Tanks/Tank.prefab";
         private PathfindingTagsManager tagsManager;
         private readonly PlayerData playerData;

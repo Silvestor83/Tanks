@@ -32,16 +32,16 @@ namespace Assets.Scripts.Services
 
             switch (part)
             {
-                case Hull hull:
+                case Hull _:
                     oldPart = playerSettings.Hulls.First(t => t.Name == playerData.hullName);
                     break;
-                case Tower tower:
+                case Tower _:
                     oldPart = playerSettings.Towers.First(t => t.Name == playerData.towerName);
                     break;
-                case Track track:
+                case Track _:
                     oldPart = playerSettings.Tracks.First(t => t.Name == playerData.trackName);
                     break;
-                case Gun gun:
+                case Gun _:
                     oldPart = playerSettings.Guns.First(t => t.Name == playerData.gunName);
                     break;
                 default:

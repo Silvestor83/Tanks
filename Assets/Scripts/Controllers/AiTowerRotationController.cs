@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Scripts.Infrastructure.Enums;
+﻿using Assets.Scripts.Infrastructure.Enums;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,11 +9,13 @@ namespace Assets.Scripts.Controllers
         private readonly float directionChangeRate = 5f;
         private float lastTimeChangeDirection = 0;
         private GameObjectTag currentAim = GameObjectTag.Untagged;
+        private int layerMask;
 
         void Start()
         {
             rotationSpeed = tower.RotationSpeed;
             parent = transform.parent;
+            layerMask = LayerMask.GetMask(GameObjectLayer.Obstacles.ToString());
         }
 
         void Update()
@@ -87,7 +88,6 @@ namespace Assets.Scripts.Controllers
                 direction = levelData.AkvilaPosition - (Vector2)transform.position;
             }
 
-            var layerMask = LayerMask.GetMask(GameObjectLayer.Obstacles.ToString());
             var distance = currentAim == GameObjectTag.Player ? distanceToPlayer : distanceToAkvila;
             var hit = Physics2D.Raycast(transform.position, direction, distance, layerMask);
 

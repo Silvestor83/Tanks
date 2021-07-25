@@ -5,10 +5,13 @@ namespace Assets.Scripts.Controllers
 {
     public class AiPlatformRotationController : AiRotationControllerBase
     {
+        private int layerMask;
+
         void Start()
         {
             rotationSpeed = tower.RotationSpeed;
             parent = transform.parent;
+            layerMask = LayerMask.GetMask(GameObjectLayer.Obstacles.ToString());
         }
 
         void Update()
@@ -18,7 +21,6 @@ namespace Assets.Scripts.Controllers
             if (distanceToPlayer < levelData.CannonAimingDistance)
             {
                 var direction = playerData.position - (Vector2)transform.position;
-                var layerMask = LayerMask.GetMask(GameObjectLayer.Obstacles.ToString());
                 var hit = Physics2D.Raycast(transform.position, direction, distanceToPlayer, layerMask);
                 
                 if (hit != true)

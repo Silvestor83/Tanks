@@ -22,7 +22,7 @@ namespace Assets.Scripts.UI
 
         private void Start()
         {
-            healthService.HealthChanged += PlayerHealthChanged;
+            healthService.HealthChangedPlayer += PlayerHealthChanged;
             healthService.HealthChangedAkvila += AkvilaHealthChanged;
 
             healthbar = GetComponent<UIDocument>().rootVisualElement.Q("healthbar");
@@ -53,7 +53,7 @@ namespace Assets.Scripts.UI
 
         private void OnDestroy()
         {
-            healthService.HealthChanged -= PlayerHealthChanged;
+            healthService.HealthChangedPlayer -= PlayerHealthChanged;
             healthService.HealthChangedAkvila -= AkvilaHealthChanged;
         }
     }

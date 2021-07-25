@@ -35,7 +35,7 @@ namespace Assets.Scripts.Controllers
         private void OnStateChanged(Track track, float currentSpeed, float rotationSpeed)
         {
             // pitch changes from 1.0 to 1.7 (from Idle to MaxSpeed)  
-            var pitchFromSpeed = (0.7f * (currentSpeed / track.MaxSpeed)) + 1;
+            var pitchFromSpeed = (0.7f * (currentSpeed / track.MaxSpeed)) + 1f;
 
             // Change for the pitch when rotate 
             var pitchFromRotation = 1.25f;

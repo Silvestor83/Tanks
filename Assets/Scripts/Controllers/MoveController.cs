@@ -8,46 +8,17 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Controllers
 {
-    public class MoveController : MonoBehaviour
+    public class MoveController : MoveBaseController
     {
-        private float maxSpeed;
-        private float minSpeed;
-        private float forwardAcceleration;
-        private float rearAcceleration;
-        private float breakingAcceleration;
-        private float rotateSpeed;
-
-        private float currentSpeed;
-        private float currentRotationSpeed;
         private float rotateInputValue;
         private float moveInputValue;
-
-        private Track track;
         private PlayerData playerData;
-
-        public readonly UnityEvent<Track, float, float> StateChanged = new UnityEvent<Track, float, float>();
 
         [Inject]
         public void Init(PlayerData playerData, Track track)
         {
             this.playerData = playerData;
-            this.track = track;
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
             UpdateTrackTraits(track);
-        }
-
-        public void UpdateTrackTraits(Track track)
-        {
-            maxSpeed = track.MaxSpeed;
-            minSpeed = track.MinSpeed;
-            forwardAcceleration = track.ForwardAcceleration;
-            rearAcceleration = track.RearAcceleration;
-            breakingAcceleration = track.BreakingAcceleration;
-            rotateSpeed = track.rotateSpeed;
         }
 
         void FixedUpdate()
@@ -58,7 +29,6 @@ namespace Assets.Scripts.Controllers
             Rotate();
             Move();
             SavePlayerData();
-
             EventsInvocation(track, startingSpeed, startingRotationSpeed);
         }
 
@@ -67,17 +37,17 @@ namespace Assets.Scripts.Controllers
             playerData.position = transform.position;
         }
 
-        private void Rotate()
+        protected override void Rotate()
         {
-            currentRotationSpeed = rotateSpeed;
+            currentRotationSpeed = rotationSpeed;
 
             if (rotateInputValue > 0)
             {
-                transform.Rotate(Vector3.forward, -rotateSpeed * Time.fixedUnscaledDeltaTime);
+                transform.Rotate(Vector3.forward, -rotationSpeed * Time.fixedUnscaledDeltaTime);
             }
             else if (rotateInputValue < 0)
             {
-                transform.Rotate(Vector3.forward, rotateSpeed * Time.fixedUnscaledDeltaTime);
+                transform.Rotate(Vector3.forward, rotationSpeed * Time.fixedUnscaledDeltaTime);
             }
             else
             {
@@ -85,7 +55,7 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        private void Move()
+        protected override void Move()
         {
             float accelerate;
             float tempSpeed;
@@ -116,14 +86,6 @@ namespace Assets.Scripts.Controllers
             }
 
             transform.Translate(currentSpeed * Time.fixedDeltaTime * transform.up, Space.World);
-        }
-
-        private void EventsInvocation(Track track, float startingSpeed, float startingRotationSpeed)
-        {
-            if (startingRotationSpeed != currentRotationSpeed || startingSpeed != currentSpeed)
-            {
-                StateChanged.Invoke(track, Mathf.Abs(currentSpeed), currentRotationSpeed);
-            }
         }
 
         private void OnMove(InputValue value)

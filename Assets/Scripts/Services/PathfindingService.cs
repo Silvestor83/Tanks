@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Core.GameData;
-using Pathfinding;
+﻿using Assets.Scripts.Core.GameData;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,7 +17,7 @@ namespace Assets.Scripts.Services
 
         public Vector2 GetRandomFreePoint(Vector2 currentPosition)
         {
-            bool walkable = false;
+            bool walkable;
             Vector2 randomPoint;
 
             do
@@ -36,10 +30,10 @@ namespace Assets.Scripts.Services
 
             return randomPoint;
         }
-
-        private Vector2 GetRandomFreePointNearPlaeyr()
+        
+        public Vector2 GetRandomFreePointNearPlayer()
         {
-            bool walkable = false;
+            bool walkable;
             Vector2 randomPoint;
 
             do
@@ -56,7 +50,7 @@ namespace Assets.Scripts.Services
         /// <summary>
         /// Method to receive random point in level area in given radius
         /// </summary>
-        public Vector2 GetRandomPointInRadius(Vector2 currentPosition)
+        private Vector2 GetRandomPointInRadius(Vector2 currentPosition)
         {
             var randomPoint = GetGameFieldRandomPoint();
 
@@ -95,28 +89,6 @@ namespace Assets.Scripts.Services
             var randomYPoint = Random.Range(0, levelData.GameFieldHeight) + levelData.OriginOffset.y;
 
             return new Vector2(randomXPoint, randomYPoint);
-        }
-
-
-        public void UpdateRandomFreePoint(ref Vector2 endPoint, float endPointRecalculatingRate,
-            Vector3 currentPosition, ref float lastEndPointTime, bool endOfPathReached)
-        {
-            // Update end point of path
-            if (Time.time > lastEndPointTime + endPointRecalculatingRate || endOfPathReached)
-            {
-                lastEndPointTime = Time.time;
-                endPoint = GetRandomFreePoint(currentPosition);
-            }
-        }
-
-        public void UpdateRandomFreePointNearPlayer(ref Vector2 endPoint, float endPointRecalculatingRate, ref float lastEndPointTime, bool endOfPathReached)
-        {
-            // Update end point of path
-            if (Time.time > lastEndPointTime + endPointRecalculatingRate || endOfPathReached)
-            {
-                lastEndPointTime = Time.time;
-                endPoint = GetRandomFreePointNearPlaeyr();
-            }
         }
     }
 }

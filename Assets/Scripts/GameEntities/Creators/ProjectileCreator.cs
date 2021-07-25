@@ -41,13 +41,6 @@ namespace Assets.Scripts.GameEntities.Creators
             handle.Completed += HandleOnCompleted;
         }
 
-        /// <summary>
-        /// Create projectile
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="position"></param>
-        /// <param name="rotation"></param>
-        /// <param name="direction"></param>
         /// <param name="root">Root GameObject that contains all Colliders which we need to exclude from collisions</param>
         public void CreateProjectile(ProjectileType type, Vector2 position, Quaternion rotation, Vector2 direction, Transform root)
         {
@@ -66,7 +59,7 @@ namespace Assets.Scripts.GameEntities.Creators
             }
         }
 
-        public void IgnoreСolliders(GameObject baseGO, Transform root)
+        private void IgnoreСolliders(GameObject baseGO, Transform root)
         {
             var baseCollider = baseGO.GetComponent<Collider2D>();
             var colliders = root.GetComponentsInChildren<Collider2D>();

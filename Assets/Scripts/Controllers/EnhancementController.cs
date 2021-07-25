@@ -15,9 +15,9 @@ namespace Assets.Scripts.Controllers
 {
     public class EnhancementController : MonoBehaviour
     {
+        [NonSerialized]
         public MechanicalPart MechanicalPart;
-        
-        private TankCreator tankCreator;
+
         private EnhancementType enhancementType;
         private EnhancementService enhancementService;
 
@@ -33,29 +33,33 @@ namespace Assets.Scripts.Controllers
         private float remainingLifeTime;
         private float blinkIndicator;
         private SpriteRenderer[] sprites;
+        private Collider2D[] colliders;
         private bool isHidden = false;
         private SpriteRenderer circle;
         private bool inContact = false;
-        
-        private void Start()
-        {
-            startLifeTime = Time.time;
-            sprites = GetComponentsInChildren<SpriteRenderer>();
-            circle = GetComponent<SpriteRenderer>();
-
-            var colliders = GetComponentsInChildren<Collider2D>();
-            for (int i = 1; i < colliders.Length; i++)
-            {
-                colliders[i].enabled = false;
-            }
-        }
 
         [Inject]
         public void Init(TankCreator tankCreator, EnhancementService enhancementService, EnhancementType enhancementType)
         {
-            this.tankCreator = tankCreator;
             this.enhancementType = enhancementType;
             this.enhancementService = enhancementService;
+        }
+
+        private void Awake()
+        {
+            sprites = GetComponentsInChildren<SpriteRenderer>();
+            circle = GetComponent<SpriteRenderer>();
+            colliders = GetComponentsInChildren<Collider2D>();
+        }
+
+        private void Start()
+        {
+            startLifeTime = Time.time;
+
+            for (int i = 1; i < colliders.Length; i++)
+            {
+                colliders[i].enabled = false;
+            }
         }
 
         private void Update()

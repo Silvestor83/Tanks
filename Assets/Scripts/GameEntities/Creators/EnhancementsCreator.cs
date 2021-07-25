@@ -25,8 +25,8 @@ namespace Assets.Scripts.GameEntities.Creators
         private readonly LevelData levelData;
         private readonly MechanicalPartsBuilder builder;
         private readonly LogService logService;
-        public readonly Vector3 trackLeftPosition = new Vector3(-0.45f, 0, 0);
-        public readonly Vector3 trackRightPosition = new Vector3(0.45f, 0, 0);
+        private readonly Vector3 trackLeftPosition = new Vector3(-0.45f, 0, 0);
+        private readonly Vector3 trackRightPosition = new Vector3(0.45f, 0, 0);
         private const string ENHANCEMENT_ROOT_PREFAB = "Assets/Prefabs/Tanks/Enhancement.prefab";
         private const string HEALTH_ENHANCEMENT_PREFAB = "Assets/Prefabs/Tanks/Enhancements/Health.prefab";
         private int count = 0;

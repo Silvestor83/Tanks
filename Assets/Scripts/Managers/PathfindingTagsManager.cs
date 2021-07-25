@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
+using Pathfinding;
 
 namespace Assets.Scripts.Managers
 {
@@ -16,6 +15,37 @@ namespace Assets.Scripts.Managers
             for (uint i = 1; i <= 31; i++)
             {
                 tankNumbers.Add(i, false);
+            }
+        }
+
+        /// <summary>
+        /// This method gather 9 nodes under the object to use them as obstacles for other objects.
+        /// For this aim we mark them with tags, with number of object.
+        /// And clear old marked nodes to default tag state. 
+        /// </summary>
+        public void UpdateTags(Vector3 currentPosition, List<GraphNode> nodes, uint nodetag)
+        {
+            var nodeInfo = AstarPath.active.GetNearest(currentPosition);
+
+            foreach (var node in nodes)
+            {
+                if (node.Tag == nodetag)
+                {
+                    node.Tag = 0;
+                }
+            }
+
+            nodes.Clear();
+
+            nodes.Add(nodeInfo.node);
+            nodeInfo.node.GetConnections(node => nodes.Add(node));
+
+            foreach (var node in nodes)
+            {
+                if (node.Walkable)
+                {
+                    node.Tag = nodetag;
+                }
             }
         }
 

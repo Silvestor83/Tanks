@@ -36,20 +36,17 @@ namespace Assets.Scripts.Controllers
 
         private void Update()
         {
-            if (rotationController.InLineOfSight)
+            if (rotationController.InLineOfSight && (Time.time - lastShotWasAt > gun.FiringRate * levelData.EnemyFirerateFactor))
             {
-                if (Time.time - lastShotWasAt > gun.FiringRate * levelData.EnemyFirerateFactor)
-                {
-                    var shotDirection = Quaternion.AngleAxis(Random.Range(-levelData.EnemyBulletsSpreadAngle, levelData.EnemyBulletsSpreadAngle), transform.forward) * transform.up;
+                var shotDirection = Quaternion.AngleAxis(Random.Range(-levelData.EnemyBulletsSpreadAngle, levelData.EnemyBulletsSpreadAngle), transform.forward) * transform.up;
 
-                    // ToDo rewrite to suitable way to get parent for owner of AiFiringController (Get enemy, cannon or boss or player)
-                    var parent = transform.parent.parent.parent.parent;
+                // ToDo rewrite to suitable way to get parent for owner of AiFiringController (Get enemy, cannon or boss or player)
+                var root = transform.parent.parent.parent.parent;
 
-                    projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, shotDirection, parent);
-                    shotSound.Play();
+                projectileCreator.CreateProjectile(gun.ProjectileType, projectileOffset * transform.up + transform.position, transform.rotation, shotDirection, root);
+                shotSound.Play();
 
-                    lastShotWasAt = Time.time;
-                }
+                lastShotWasAt = Time.time;
             }
         }
     }

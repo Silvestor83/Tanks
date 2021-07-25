@@ -19,8 +19,7 @@ namespace Assets.Scripts.Managers
     public class SceneManager
     {
         private const string TAG_FOR_NOT_ACTIVATED_OBJECTS = "ShouldBeActive";
-        private Dictionary<SceneName, SceneComponent> scenes { get; set; }
-        
+        private Dictionary<SceneName, SceneComponent> scenes { get; } = new Dictionary<SceneName, SceneComponent>();
         private SceneService sceneService;
         private LogService logService;
 
@@ -28,7 +27,6 @@ namespace Assets.Scripts.Managers
         {
             this.sceneService = sceneService;
             this.logService = logService;
-            scenes = new Dictionary<SceneName, SceneComponent>();
         }
 
         public async UniTask LoadSceneAsync(SceneName name, bool isActive = true)

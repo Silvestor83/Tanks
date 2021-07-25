@@ -44,9 +44,7 @@ namespace Assets.Scripts.GameEntities.Creators
             if (explosionPrefabs != null)
             {
                 var explosionPrefab = explosionPrefabs.First(p => p.name == type.ToString());
-                var explosionGO = Object.Instantiate(explosionPrefab, position, Quaternion.identity, explosionsGO.transform);
-
-                //container.InjectGameObjectForComponent<ShotController>(projectileGO, new object[] { projectile, position, direction });
+                Object.Instantiate(explosionPrefab, position, Quaternion.identity, explosionsGO.transform);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {

@@ -6,6 +6,5 @@ namespace Assets.Scripts.Controllers
     {
         public Vector2 LeftTruckPosition;
         public Vector2 RightTruckPosition;
-        public Vector2 TowerPosition;
     }
 }

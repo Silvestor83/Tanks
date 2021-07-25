@@ -11,7 +11,7 @@ namespace Assets.Scripts.GameEntities
     {
         public List<SceneComponent> DependentScenes { get; }
         public SceneName Name { get; }
-        public bool LoadingScreenNeeded { get; private set; }
+        public bool LoadingScreenNeeded { get; }
         public bool Loaded { get; set; }
         
         public SceneComponent(SceneName sceneName, bool loadingScreen = false)

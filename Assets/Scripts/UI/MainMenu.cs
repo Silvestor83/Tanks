@@ -1,17 +1,11 @@
-﻿using System;
-using Assets.Scripts.Core.Settings;
-using Assets.Scripts.Infrastructure;
+﻿using Assets.Scripts.Core.Settings;
 using Assets.Scripts.Infrastructure.Enums;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Services;
 using Assets.Scripts.UI.Templates;
-using Cysharp.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.UI
 {
@@ -23,7 +17,6 @@ namespace Assets.Scripts.UI
         private MainSettings mainSettings;
         private AudioService audioService;
         private OptionsMenuTempalte optionsMenuTemplate;
-
         private VisualElement mainMenu;
         private VisualElement optionsMenu;
 
@@ -37,7 +30,6 @@ namespace Assets.Scripts.UI
             root.Q<Button>("start").clicked += StartButtonPressed;
             root.Q<Button>("options").clicked += OptionsButtonPressed; 
             root.Q<Button>("exit").clicked += ExitButtonPressed;
-
             root.Q<Button>("back").clicked += BackButtonPressed;
 
             root.Q<TextElement>("version").text = "ver.: " + Application.version;
@@ -75,8 +67,6 @@ namespace Assets.Scripts.UI
             audioService.PlaySound(AudioSoundName.ButtonClick3);
             Application.Quit();
         }
-
-        // Options menu
 
         private void BackButtonPressed()
         {

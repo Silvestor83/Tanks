@@ -12,7 +12,6 @@ namespace Assets.Scripts.Core
     {
         [SerializeField]
         private MainSettings mainSettings;
-
         [SerializeField]
         private SettingsSO settingsSo;
         private SceneManager sceneManager;
@@ -26,7 +25,6 @@ namespace Assets.Scripts.Core
             this.audioService = audioService;
         }
 
-        // Start is called before the first frame update
         private async void Start()
         {
             SetAudioSettings();

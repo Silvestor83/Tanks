@@ -9,7 +9,8 @@ namespace Assets.Scripts.Controllers
 {
     public class AudioThemeController : MonoBehaviour
     {
-        public AudioTheme AudioTheme;
+        [SerializeField]
+        private AudioTheme AudioTheme;
 
         private AudioSource audioSource;
         private AudioManager audioManager;
@@ -28,9 +29,9 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        // Start is called before the first frame update
         async void Start()
         {
+            // This for getting rid of audio spikes
             await UniTask.Delay(TimeSpan.FromSeconds(0.3d));
 
             audioManager.PlayAudioTheme(AudioTheme);

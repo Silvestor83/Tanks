@@ -18,8 +18,8 @@ namespace Assets.Scripts.Managers
 {
     public class EnemiesManager
     {
-        public List<Vector3> SpawnPoints { get; set; }
-        
+        public List<Vector3> SpawnPoints { get; } = new List<Vector3>();
+
         private readonly PlayerSettings playerSettings;
         private readonly LevelData levelData;
         private readonly TankCreator tankCreator;
@@ -41,7 +41,6 @@ namespace Assets.Scripts.Managers
             this.sceneManager = sceneManager;
             activeEnemies = 0;
             remainingEnemies = levelData.TotalEnemies;
-            SpawnPoints = new List<Vector3>();
         }
 
         public async UniTask SpawnEnemies(CancellationToken token)
@@ -119,6 +118,7 @@ namespace Assets.Scripts.Managers
         private async UniTask TrySpawnEnemy()
         {
             var randomSpawnPoint = SpawnPoints[random.Next(0, SpawnPoints.Count)];
+            // ToDo
             //var collider = Physics2D.OverlapCircle(randomSpawnPoint, 1f);
 
             //if (collider == null)

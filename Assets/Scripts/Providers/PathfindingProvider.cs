@@ -23,7 +23,7 @@ namespace Assets.Scripts.Providers
         {
             if (p.error)
             {
-                Debug.Log("A path was calculated. Did it fail with an error? " + p.error);
+                Debug.Log("A path was calculated with an error!");
 
                 return;
             }

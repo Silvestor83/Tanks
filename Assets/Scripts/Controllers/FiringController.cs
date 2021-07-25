@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameEntities.Creators;
+﻿using System;
+using Assets.Scripts.GameEntities.Creators;
 using Assets.Scripts.GameEntities.Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,12 +22,11 @@ namespace Assets.Scripts.Controllers
             this.gun = gun;
         }
 
-        private void Start()
+        private void Awake()
         {
+            shotSound = GetComponent<AudioSource>();
             var bindings = GetComponent<GunBindings>();
             projectileOffset = bindings.ProjectileOffset;
-
-            shotSound = GetComponent<AudioSource>();
         }
 
         private void OnClick(InputValue value)

@@ -26,7 +26,6 @@ namespace Assets.Scripts.GameEntities.Creators
 
         protected async UniTask<GameObject> CreateHullAsync(Hull hull, Transform parentTransform, GameObjectTag tag)
         {
-            // Create hull
             var hullGO = await builder.CreateHullAsync(hull.PrefabName, hull.Name.ToString(), parentTransform, tag);
             logService.Loggger.ZLogTrace($"Hull was created.");
 
@@ -35,7 +34,6 @@ namespace Assets.Scripts.GameEntities.Creators
 
         protected async UniTask<GameObject> CreateTowerAsync(Tower tower, Transform parentTransform, GameObjectTag tag)
         {
-            // Create tower
             var towerGO = await builder.CreateTowerAsync(tower.PrefabName, tower.Name.ToString(), parentTransform, tower, tag);
             logService.Loggger.ZLogTrace($"Tower was created.");
 
@@ -44,7 +42,6 @@ namespace Assets.Scripts.GameEntities.Creators
 
         protected async UniTask CreateTracksAsync(Track track, GameObject parentGO, GameObjectTag tag)
         {
-            // Create tracks
             var hullBindings = parentGO.GetComponent<HullBindings>();
             var leftPosition = parentGO.transform.position + parentGO.transform.rotation * hullBindings.LeftTruckPosition;
             var rightPosition = parentGO.transform.position + parentGO.transform.rotation * hullBindings.RightTruckPosition;
@@ -54,7 +51,6 @@ namespace Assets.Scripts.GameEntities.Creators
 
         protected async UniTask<GameObject> CreateGunAsync(Gun gun, GameObject parentGO, GameObjectTag tag)
         {
-            // Create gun
             var towerBindings = parentGO.GetComponent<TowerBindings>();
             var gunPosition = parentGO.transform.position + parentGO.transform.rotation * towerBindings.GunPosition;
             var gunGO = await builder.CreateGunAsync(gun, gun.Name.ToString(), gunPosition, parentGO.transform, tag);

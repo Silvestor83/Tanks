@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Core.Settings;
-using Assets.Scripts.GameEntities.Units;
+﻿using Assets.Scripts.GameEntities.Units;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 
 namespace Assets.Scripts.Controllers
 {
@@ -10,14 +8,7 @@ namespace Assets.Scripts.Controllers
     {
         private Animator animator;
         private UnityEvent<Track, float, float> stateChanged;
-        private PlayerSettings settings;
-
-        [Inject]
-        public void Init(PlayerSettings settings)
-        {
-            this.settings = settings;
-        }
-
+        
         void Awake()
         {
             animator = gameObject.GetComponent<Animator>();

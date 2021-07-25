@@ -12,13 +12,11 @@ namespace Assets.Scripts.Controllers
         public int CurrentHealth { get; private set; }
         public int MaxHealth { get; private set; }
 
-        private EnemiesManager enemiesManager;
         private HealthService healthService;
 
         [Inject]
-        public void InitWithInjection(EnemiesManager enemiesManager, HealthService healthService)
+        public void InitWithInjection(HealthService healthService)
         {
-            this.enemiesManager = enemiesManager;
             this.healthService = healthService;
         }
 
